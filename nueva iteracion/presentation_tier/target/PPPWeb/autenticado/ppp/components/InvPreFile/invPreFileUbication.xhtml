@@ -1,0 +1,174 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"  >
+    <ui:composition>
+
+        #{ubicationPreFileController.initUbication()}
+        #{ubicationPreFileController.setBtnSrvSave(false)} <!--Prosedimiento para colocar el dato de seguridad-->
+        <f:view contentType="text/html">
+            <f:loadBundle basename="com.abs.siif.ppp.resources.msgUI" var="pppMsg"/>
+            <f:loadBundle basename="com.abs.siif.ppp.resources.msgExcepUI" var="pppExcMsg"/>
+
+            <h:form  id="ubication">
+                <div class="divContentPageUbication" >
+                    <p:messages id="msgMensajes"/>
+                    <p:panel id="ubicationP1" header="#{pppMsg['ppp.progr.ambtoTerr']}">
+                        <p:messages  id="msgs"/>
+                        <div>
+                            <p:panel id="headerTotal" >
+                                <table cellpanding="1"
+                                        width="100%">
+                                    <tr>
+                                        <td colspan="2">
+
+                                        </td>
+                                        <th class="cellColorgray" style="border:solid black; width: 105px">
+                                            <h:outputText value="#{ubicationPreFileController.titleAmbSelected}" />
+                                        </th>
+                                        <th class="cellColorgray" style="border:solid black; width: 110px">
+                                            <h:outputText value="#{pppMsg['ppp.progr.munTotal']}" >
+                                                <f:convertNumber pattern="###,###,###" />
+                                            </h:outputText>
+                                        </th>
+                                        <th class="cellColorgray" style="border:solid black; width: 100px">
+                                            <h:outputText value="#{pppMsg['ppp.progr.mujeres']}" >
+                                                <f:convertNumber pattern="###,###,###" />
+                                            </h:outputText>
+                                        </th>
+                                        <th class="cellColorgray" style="border:solid black; width: 100px">
+                                            <h:outputText value="#{pppMsg['ppp.progr.hombres']}" />
+                                        </th>
+                                         <th class="cellColorgray" style="border:solid black; width: 140px">
+                                            <h:outputText value="#{pppMsg['ppp.progr.repartoInegi']}" />
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                            <h:outputText value="#{pppMsg['ppp.progr.ambito']}" />
+                                        </td>
+                                        <td>
+                                            <p:selectOneMenu  id="cboRegions"
+                                                              value="#{ubicationPreFileController.itsSelectedAmbto}" >
+                                                <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}" />
+                                                <f:selectItems value="#{ubicationPreFileController.itsItemsAmbitoCbo}"
+                                                               var="region"
+                                                               itemLabel="#{region.regionalLevelClassifierDescription}"
+                                                               itemValue="#{region.regionalLevelClassifierId}"/>
+                                                <p:ajax update="listUbPeople ltsUbication ubicationP1 gridPeople headerTotal"
+                                                        listener="#{ubicationPreFileController.changeListenerCboUbication()}" />
+                                            </p:selectOneMenu>
+                                        </td>                                       
+                                        <td style="border:solid black" align="right">
+                                            <h:outputText value="#{ubicationPreFileController.itsMuniTotal}" />
+                                        </td>
+                                        <td style="border:solid black" align="right">
+                                            <h:outputText value="#{ubicationPreFileController.itsTotalpeople}" />
+                                        </td>
+                                        <td style="border:solid black" align="right">
+                                            <h:outputText value="#{ubicationPreFileController.itsTotalWomen}" />
+                                        </td>
+                                        <td style="border:solid black" align="right">
+                                            <h:outputText value="#{ubicationPreFileController.itsTotalMen}" />
+                                        </td>
+                                          <td style="border:solid black" align="center">
+                                            <h:outputText value="#{ubicationPreFileController.itsRepInePorc}" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p:panel>
+                        </div>
+                        <div>
+                            <p:panel id="listUbPeople" visible="#{ubicationPreFileController.visibleList}">
+                                <table width="100%">
+                                    <tr>
+                                        <td valign="top"><table>
+                                                <tr>
+                                                    <th>
+                                                        <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                                        <h:outputText value="#{ubicationPreFileController.lblSelected}" />
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p:panel style="overflow-y:scroll; height:300px; width: 230px ">
+                                                            <p:selectManyCheckbox id="ltsUbication" tyle="width:300px"
+                                                                                  value="#{ubicationPreFileController.itsSelectedUbications}"
+                                                                                  layout="pageDirection"
+                                                                                  >
+                                                                <f:selectItems value="#{ubicationPreFileController.itsUbications}"
+                                                                               var="specificAmbito"
+                                                                               itemLabel="#{specificAmbito.regionalClassifierDescription}"
+                                                                               itemValue="#{specificAmbito.regionalClassifierId}"
+                                                                               />
+
+                                                                <p:ajax update="headerTotal gridPeople"
+                                                                        listener="#{ubicationPreFileController.changeListenerLstUbication()}" />
+                                                            </p:selectManyCheckbox>
+                                                        </p:panel>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td witdth="715px" valign="top">
+                                            <p:dataTable id="gridPeople"
+                                                         var="ubicatioPeople"
+                                                         emptyMessage="#{pppMsg['ppp.common.DataTable.NotFound']}"
+                                                         value="#{ubicationPreFileController.ubicationPeople}"
+                                                         sortBy="#{ubicatioPeople.regionalClassifierDescription}" sortOrder="ascending"
+                                                         paginator="true" rows="6"
+                                                         style="width:710px">
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{pppMsg['ppp.progr.habitantes']}"/>
+                                                </f:facet>
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText
+                                                            value="#{pppMsg['ppp.progr.muniSelecc']}" />
+                                                    </f:facet>
+                                                    <h:outputText  value="#{ubicatioPeople.ubication.regionalClassifierDescription}"  />
+                                                </p:column>
+                                                <p:column style="width: 90px">
+                                                    <f:facet name="header">
+                                                        <h:outputText
+                                                            value="#{pppMsg['ppp.progr.ubicacionTotal']}" />
+                                                    </f:facet>
+                                                    <div style="text-align: right"><h:outputText value="#{ubicatioPeople.totalPeople}"/></div>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText
+                                                            value="#{pppMsg['ppp.progr.mujeres']}" />
+                                                    </f:facet>
+                                                    <div style="text-align: right"><h:outputText  value="#{ubicatioPeople.womens}"  /></div>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText
+                                                            value="#{pppMsg['ppp.progr.hombres']}" />
+                                                    </f:facet>
+                                                    <div style="text-align: right"><h:outputText  value="#{ubicatioPeople.mens}"  /></div>
+                                                </p:column>
+                                                 <p:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText
+                                                            value="#{pppMsg['ppp.progr.repartoInegi']}" />
+                                                    </f:facet>
+                                                     <div style="text-align: right"><h:outputText  value="#{ubicatioPeople.inegiDistribution}"  /></div>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </td>
+                                    </tr>                                    
+                                </table>
+                            </p:panel>
+                        </div>
+                    </p:panel>
+                </div>
+            </h:form>
+        </f:view>
+
+</ui:composition>
+</html>

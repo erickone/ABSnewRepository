@@ -1,0 +1,196 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+
+        <h:form id="PEDform">
+            <p:messages id="msgLogicFrame" showDetail="true" showSummary="false" autoUpdate="true"  />
+         
+            <p:panel  id="PEDPanel" header="#{InfoMsg['ppp.progr.PED.Panel']}">
+                <div class="divTablePED">
+                    <div class="divLabelPED">
+                        <h:outputText value="#{InfoMsg['ppp.progr.PED.Vinculation.Labels.EjeEstra']}" />
+                    </div>
+
+                    <div class="divInputTextPED">
+                        <p:inputText id="axisText" style="width: 50%" readonly="true" value="#{pedVinculationDirectDraftProjectController.itsStrategicAxisKey}" />
+                    </div>
+                    <div class="divLabelPED">
+                        <h:outputText value="#{InfoMsg['ppp.progr.PED.Vinculation.Labels.Proposito']}" />
+                    </div>
+
+                    <div class="divInputTextPED">
+                        <p:inputText id="txtlevel1"
+                                     style="width: 50%"
+                                     readonly="true"
+                                     value="#{pedVinculationDirectDraftProjectController.itsStrategicAxisDefinition}"/>
+
+                    </div>
+                    <div class="divLabelPED">
+                        <h:outputText value="#{InfoMsg['ppp.progr.PED.Vinculation.Labels.ProblemaPED']}" />
+                    </div>
+
+                    <div class="divInputTextPED">
+                        <p:selectOneMenu style="width: 400px" styleClass="divTextsizePED" id="cboProblemsOfStrategicAxis"
+                                         value="#{pedVinculationDirectDraftProjectController.AProblemId}">
+                            <f:selectItems value="#{pedVinculationDirectDraftProjectController.itsListOfProblems}"
+                                           var="problemObjectives" itemLabel="#{problemObjectives.problemDescription}" itemValue="#{problemObjectives.problemId}"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <p:separator />
+                    <div class="divLabelPED">
+                        <h:outputText value="#{InfoMsg['ppp.progr.PED.Vinculation.Labels.Programa']}" />
+                    </div>
+
+                    <div class="divInputTextPED">
+                        <p:selectOneMenu  style="width: 400px; word-wrap: break-word; word-break:break-all"  styleClass="divTextsizePED" id="cboProgramObjectives" value="#{pedVinculationController.itsProgramId}"  >
+
+                            <f:selectItems value="#{pedVinculationDirectDraftProjectController.myProgramsNodesObjectives}"
+                                           var="programsObjectives"
+                                           itemLabel="#{programsObjectives.itsNodeText}"
+                                           itemValue="#{programsObjectives.itsObjectiveId}"
+                                           style="width: 400px"/>
+                            <f:ajax  render="cboSubProgramObjectives cboSpecificObjectives" listener= "#{pedVinculationDirectDraftProjectController.loadSubPrograms}"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="divLabelPED">
+                        <h:outputText value="#{InfoMsg['ppp.progr.PED.Vinculation.Labels.subprograma']}" />
+                    </div>
+
+                    <div class="divInputTextPED">
+                        <p:selectOneMenu  style="width: 400px" styleClass="divTextsizePED" 
+                                          id="cboSubProgramObjectives" 
+                                          value="#{pedVinculationDirectDraftProjectController.itsSubProgramId}" >
+
+                            <f:selectItems value="#{pedVinculationDirectDraftProjectController.mySubProgramsNodesObjectives}"
+                                           var="subProgramsObjectives"
+                                           itemLabel="#{subProgramsObjectives.itsNodeText}"
+                                           itemValue="#{subProgramsObjectives.itsObjectiveId}"/>
+                            <f:ajax  render="cboSpecificObjectives" listener= "#{pedVinculationDirectDraftProjectController.loadSpecificObjectives}"/>
+                        </p:selectOneMenu>
+                    </div>
+
+
+                </div>
+                <div class="divTablePED">
+                    <div class="divLabelPED">
+                        <h:outputText value="#{InfoMsg['ppp.progr.PED.ObjetivoEsp']} " />
+                    </div>
+                    <div class="divInputTextPED">
+                        <p:selectOneMenu  style="width: 400px"  panelStyle="width: 380px"
+                                          styleClass="divTextsizePED"
+                                          id="cboSpecificObjectives"
+                                          value="#{pedVinculationDirectDraftProjectController.ASpecificObId}" >
+                            <f:selectItems value="#{pedVinculationDirectDraftProjectController.itsListOfSpecificObjectives}"
+                                           var="SpecificOb"
+                                           itemLabel="#{SpecificOb.specificObjectiveDescription}"
+                                           itemValue="#{SpecificOb.specificObjectiveId}"/>
+                        </p:selectOneMenu>
+
+                    </div>
+                    <div class="divLabelPED">
+                        <h:outputText value="#{InfoMsg['ppp.progr.PED.IndicadorObj']} " />
+                    </div>
+                    <div class="divInputTextPED">
+                        <p:selectOneMenu style="width: 400px"
+                                         styleClass="divTextsizePED" 
+                                         id="cboIndicatorOfSP" 
+                                         value="#{pedVinculationDirectDraftProjectController.aindicatorId}">
+                            <f:selectItems value="#{pedVinculationDirectDraftProjectController.myListOfIndicatorsofSP}"
+                                           var="indicatorsSubProg"
+                                           itemLabel="#{indicatorsSubProg.objIndicatorDescription}"
+                                           itemValue="#{indicatorsSubProg.objIndicatorId}"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="divBlank" />
+                    <!--<div class ="divButtonPEDVinculation"> 
+                        <p:commandButton id="savePEDButton"  ajax="true"  
+                                         disabled="#{draftProjectHeaderController.itsDisabledTab}"
+                                         actionListener="#{pedVinculationController.savePEDVinculation()}"
+                                         value="#{InfoMsg['ppp.progr.DraftProjectGuardar']}"
+                                         style="width: 50%"/>
+                    </div>-->
+                </div>
+            </p:panel>
+           <!-- <p:panel id="panelOfREgions">
+                <div style = "display: table; width: 1000px;">
+                    <div style = "float: left; width: 400px;">
+                
+                        <p:dataTable  id="Regions" var="RegionalClassif" 
+                                     value="#{pedVinculationController.myRegionalDataModel}" 
+                                     paginator="true" rows="12"
+                                     selection="#{pedVinculationController.selectedRow}" 
+                                     selectionMode="single">  
+                            
+                             <p:ajax event="rowSelect" 
+                                     listener="#{pedVinculationController.updateListOfObjectives}"   
+                                     update=":tabDraftProjectDetails:PEDform:basicList :tabDraftProjectDetails:PEDform:panelObjectives" 
+                                     />
+                             
+                            <f:facet name="header">
+                                <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                #{InfoMsg['ppp.progr.select.region']}
+                            </f:facet>  
+                             
+                            <p:column>
+                                <p:selectBooleanCheckbox 
+                                   value="#{RegionalClassif.itsSelectedRegionalPlans}"/>
+                                #{RegionalClassif.regionalClassifierDescription}
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                        
+                    <div style = "float: left; width: 500px;">
+                       
+                        <p:panel id="panelObjectives" 
+                                 header="Objetivos de #{pedVinculationController.selectedRow.regionalClassifierDescription}" 
+                                 style="overflow-y:scroll; height:450px; width: 490px ">
+                        <p:selectManyCheckbox id="basicList"
+                                              value="#{pedVinculationController.selectedPlanRow}"
+                                              layout="pageDirection"
+                                              >
+                            <f:selectItems value="#{pedVinculationController.itsListOfRegionalPlanDto}"
+                                           var="RegionalPlans"
+                                           itemLabel="#{RegionalPlans.regionalPlanObjective}"
+                                           itemValue="#{RegionalPlans.regionalPlanId}"
+                                           />
+
+                            <p:ajax update=":tabDraftProjectDetails:PEDform:Regions"
+                                    listener="#{pedVinculationController.saveListOfObjectives}" />
+                        </p:selectManyCheckbox>
+                     </p:panel>
+                 </div>
+                </div>   
+  
+            </p:panel>-->
+            <!--<p:panel  id="PIPanel" header="#{InfoMsg['ppp.progr.PED.PI']}">
+                <div class="divTablePED">
+                    <div class="divLabelPED">
+                        <h:outputText value="*" style="color: red; font-weight: bold"/>
+                        <h:outputText value="#{InfoMsg['ppp.progr.PED.ObjetivoPI']} " />
+                    </div>
+                    <div class="divInputTextPED">
+                        <p:selectOneMenu  style="width: 400px" id="cboObjectiveOfPIPed"  
+                                          value="#{pedVinculationController.anObjectiveOfPI}">
+                            <f:selectItems value="#{pedVinculationController.itsListOfObjectivesofPI}"
+                                           var="InstitutionalList"
+                                           itemLabel="#{InstitutionalList.objectiveDescription}"
+                                           itemValue="#{InstitutionalList.institutionalPlanObjectiveId}"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="divLabelPED">
+                        <h:outputText value="#{InfoMsg['ppp.progr.PED.IndicadorObjetivo']}" />
+                    </div>
+                    <div class="divInputTextPED">
+                        <p:selectOneMenu style="width: 400px" styleClass="divTextsizePED" id="cboObjectiveIndicatorOfPIPed" />
+                    </div>
+                </div>
+            </p:panel>-->
+
+        </h:form>
+    </ui:composition>
+</html>

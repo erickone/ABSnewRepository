@@ -1,0 +1,30 @@
+.headerTitleStyle
+{
+    color: #3E70B5;
+    font-weight: bold;
+    font-size: 22px;
+    left: 70px;
+    position: absolute;
+    top: 135px
+
+}
+
+.titlesInstitutional
+{
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.commonFontDetailForm
+{ 
+    font-size: 12px;
+}
+
+.text
+{
+    font-family: Verdana,Arial,sans-serif;
+}
+
+.generalStyleFont{
+    font-size: small;
+}

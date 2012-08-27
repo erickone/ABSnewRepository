@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+
+        <table style="width: 100%; "  class="tableDetailForm">
+
+            <tr>
+                <td class="tableDetailsObjectiveStrategyPlanColumnLeft">
+                    <label class="commonFontDetailForm">
+                        #{pppMsg['ppp.planning.problems']}
+                    </label>
+                </td> 
+            </tr>
+            <tr>
+                <td class="tableDetailsObjectiveStrategyPlanColumnLeft">
+
+                    <p:inputTextarea id="txtProblemDescription" value="#{objectiveController.itsProblemDescription}" 
+                                     disabled="#{objectiveController.itsButtonSaveProblemIsDisabled}"       style="width: 100%;"  
+                                     >
+                    </p:inputTextarea>
+
+                </td>
+            </tr>
+            <tr> 
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <p:commandButton id="btnSaveProblem"  value="#{pppMsg['ppp.save']}" 
+                                                 update=":formTreeview:tbDetails:txtProblemDescription
+                                                 :formTreeview:tbDetails:btnSaveProblem
+                                                 :formTreeview:tbDetails:btnCancelProblem                                                 
+                                                 :formTreeview:tbDetails:btnNewProblem
+                                                 :formTreeview:tbDetails:grdProblem"  
+                                                 actionListener="#{objectiveController.saveProblem()}"
+                                                 disabled="#{objectiveController.itsButtonSaveProblemIsDisabled}"/>
+                            </td>
+                            <td>
+                                <p:commandButton id="btnCancelProblem" value="#{pppMsg['ppp.cancel']}" 
+                                                 disabled="#{objectiveController.itsButtonSaveProblemIsDisabled}"
+                                                 update=":formTreeview:tbDetails:txtProblemDescription
+                                                 :formTreeview:tbDetails:btnSaveProblem
+                                                 :formTreeview:tbDetails:btnCancelProblem                                                 
+                                                 :formTreeview:tbDetails:btnNewProblem"
+                                                 actionListener="#{objectiveController.cancelProblem()}" />
+                            </td>
+                            <td>
+                                <p:commandButton id="btnNewProblem" 
+                                                 value="#{pppMsg['ppp.new']}" disabled="#{objectiveController.itsButtonNewProblemIsDisabled}"
+                                                 update=":formTreeview:tbDetails:txtProblemDescription
+                                                 :formTreeview:tbDetails:btnSaveProblem
+                                                 :formTreeview:tbDetails:btnCancelProblem                                                 
+                                                 :formTreeview:tbDetails:btnNewProblem"
+                                                 actionListener="#{objectiveController.prepareNewProblemData()}"       
+                                                 />
+
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td >
+                    <p:dataTable id="grdProblem" var="problem" emptyMessage="#{pppMsg['ppp.planning.emptyMessage']}" 
+                                 paginator="true" rows="5"    value="#{objectiveController.itsProblems}">  
+                        <p:column style="width: 100%"  filterBy="#{problem.itsDescription}"  sortBy="#{problem.itsDescription}"  
+                                  filterMatchMode="contains">  
+
+                            <h:outputText  style="width: 100%" value="#{problem.itsDescription}"  />  
+                        </p:column> 
+                        <p:column>
+                            <p:commandButton 
+                                update=":formTreeview:tbDetails:btnNewProblem
+                                :formTreeview:tbDetails:btnCancelProblem
+                                :formTreeview:tbDetails:btnSaveProblem
+                                :formTreeview:tbDetails:txtProblemDescription"
+                                icon="ui-common-icon-edit">
+                                <f:setPropertyActionListener value="#{problem}" target="#{objectiveController.itsSelectedProblem}" />
+                            </p:commandButton>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton 
+                                update=":formTreeview:tbDetails"
+                                icon="ui-common-icon-delete">
+                                <f:setPropertyActionListener value="#{problem}" target="#{objectiveController.itsSelectedDeleteProblem}" />
+                            </p:commandButton>    
+                        </p:column>
+
+                    </p:dataTable>
+                </td>
+            </tr>
+
+        </table>  
+        <p:blockUI block=":formTreeview:tbDetails" 
+                   trigger="btnNewProblem btnCancelProblem btnSaveProblem"
+                   >
+            <p:graphicImage value="${pageContext.request.contexPath}/styles/images/ajax-loader.gif" />
+        </p:blockUI>
+    </ui:composition>
+</html>

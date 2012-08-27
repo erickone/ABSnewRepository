@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+    <p:outputPanel id="tabUserGeneralData">
+            #{userGeneralDataController.initViewElements()}
+            <div aling="center">            
+            <p:panel id="mainPanel" style="width: 700px">                
+                <table width="100%" align="center">
+                    <tr>
+                        <td colspan="2">
+                            <table class="tableDetailForm2" width="100%">
+                                <tr>
+                                    <td width="150px">
+                                        <h:outputLabel                                
+                                            value="#{InfoMsg['security.generalData.name']}"/>
+                                    </td>    
+                                    <td colspan="2">
+                                        <p:inputText id="txtUserName"
+                                                     style="width: 100%"
+                                                    readonly="true"
+                                                    value="${userGeneralDataController.userDto.name}">
+                                        </p:inputText>
+                                    </td>                                            
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:outputLabel                                
+                                            value="#{InfoMsg['security.generalData.apellidoPat']}"/>
+                                    </td>   
+                                    <td colspan="2">
+                                        <p:inputText id="txtUserLastName"
+                                                     style="width: 100%"
+                                                    readonly="true"
+                                                    value="${userGeneralDataController.userDto.paternalLastName}">
+                                        </p:inputText>
+                                    </td>                                             
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:outputLabel                                
+                                            value="#{InfoMsg['security.generalData.apellidoMat']}"/>
+                                    </td>  
+                                    <td colspan="2">
+                                        <p:inputText id="txtUserMatLastName"
+                                                     style="width: 100%"
+                                                    readonly="true"
+                                                    value="${userGeneralDataController.userDto.maternalLastName}">
+                                        </p:inputText>
+                                    </td>                                              
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60%">
+                            <table class="tableDetailForm2" width="100%">
+                                <tr>
+                                    <td width="152px">
+                                        <h:outputLabel                                
+                                            value="#{InfoMsg['security.generalData.RFC']}"/>
+                                    </td>   
+                                    <td>
+                                        <p:inputText id="txtUserRFC"
+                                                     style="width: 100%"
+                                                    readonly="true"
+                                                    value="${userGeneralDataController.userDto.RFC}">
+                                        </p:inputText>
+                                    </td>                                             
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:outputLabel                                
+                                            value="#{InfoMsg['security.generalData.CURP']}"/>
+                                    </td>  
+                                    <td>
+                                        <p:inputText id="txtUserCURP"
+                                                     style="width: 100%"
+                                                    readonly="true"
+                                                    value="${userGeneralDataController.userDto.CURP}">
+                                        </p:inputText>
+                                    </td>                                              
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:outputLabel                                
+                                            value="#{InfoMsg['security.generalData.phone']}"/>
+                                    </td> 
+                                    <td>
+                                        <p:inputText id="txtUserPN"
+                                                     style="width: 100%"
+                                                    readonly="true"
+                                                    value="${userGeneralDataController.userDto.phoneNumber}">
+                                        </p:inputText>
+                                    </td>                                               
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:outputLabel                                
+                                            value="#{InfoMsg['security.generalData.mail']}"/>
+                                    </td>   
+                                    <td>
+                                        <p:inputText id="txtUserMail"
+                                                     style="width: 100%"
+                                                    readonly="true"
+                                                    value="${userGeneralDataController.userDto.email}">
+                                        </p:inputText>
+                                    </td>                                             
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:outputLabel                                
+                                            value="#{InfoMsg['security.generalData.NIP']}"/>
+                                    </td>  
+                                    <td width="250px">
+                                        <p:inputText id="txtUserNIP"
+                                                     style="width: 100%"
+                                                    readonly="true"
+                                                    value="${userGeneralDataController.userDto.NIP}">
+                                        </p:inputText>
+                                    </td>                                              
+                                </tr>
+                            </table>
+                        </td> 
+                        <td>
+                            <p:panel id="imgPanel">
+                                <table class="tableDetailForm2" width="100%" height="120px">
+                                    <tr>
+                                        <td width="250px">
+                                            <p:graphicImage value="#{car.manufacturer}.jpg"/>
+                                        </td>
+                                    </tr>
+                                </table>                                
+                            </p:panel>                            
+                        </td>                    
+                    </tr>
+                </table>
+            </p:panel>
+            </div>
+        </p:outputPanel>
+    </ui:composition>
+</html>
+    

@@ -1,0 +1,109 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
+
+    <f:view contentType="text/html">
+        <f:loadBundle basename="com.abs.siif.ppp.resources.msgUI" var="pppMsg"/>
+        <f:loadBundle basename="com.abs.siif.ppp.resources.msgExcepUI" var="pppExcMsg"/>
+        <h:head>
+            <title>PPPWeb</title>
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/styles/css/layout.css" />
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/styles/css/typography.css" />
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/styles/css/images.css" />
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/styles/css/syntaxishighlighter.css" />
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/styles/css/default.css" />
+
+            <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+        </h:head>
+        <body>
+            <h:form >
+                #{loginController.init()}
+                <p:dialog modal="true" widgetVar="statusDialog" header="Status" 
+                          resizable="false"
+                          draggable="false" closable="false">
+                    <p:graphicImage value="/styles/images/ajaxloadingbar.gif" />
+                </p:dialog>
+                <table style=" width: 100%; height: 100%">
+                    <tr style="height: 85px; background-image:url(#{request.contextPath}//styles/images/banner.jpg)">
+                        <td>                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top; background-color: #F0F0F0">
+                            <div class="divContentMainlogin">
+                                <div class="divImageSIIF">
+                                    <img src="#{request.contextPath}/styles/images/logoSIIF2.gif" />
+                                </div>
+                                <div class="divSeparator">
+                                    <img src="#{request.contextPath}/styles/images/loginBar.gif" />
+                                </div>
+
+                                <div class="divBoxLogin">
+                                    <div class="divTextLogin">
+                                        <label class="titlesInstitutional">
+                                            #{pppMsg['ppp.login.selectRole']}
+                                        </label>
+                                    </div>
+                                    <div class="divBoxLoginBar">
+
+                                    </div>
+                                    <div class="divMessageLoginBox">
+                                        <p:messages  id="msgs" autoUpdate="true"/>
+                                    </div>
+                                    <div class="divBoxLabelUser">
+                                        <label class="titlesInstitutional">
+                                            #{pppMsg['ppp.login.txtUser']}
+                                        </label>
+                                        <div class="divTxtUser">
+                                            <p:inputText id="txtUserName" required="true" 
+                                                         requiredMessage="#{pppMsg['ppp.login.userEmpty']}" 
+                                                         disabled="#{loginController.isRolesCboEnabled}"
+                                                         value="#{loginController.itsUserKey}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="divBoxLabelPass">
+                                        <label class="titlesInstitutional">
+                                            #{pppMsg['ppp.login.txtPass']}
+                                        </label>
+                                        <div class="divTxtPass">
+                                            <p:inputText id="txtUserPassword" required="true" 
+                                                         requiredMessage="#{pppMsg['ppp.login.passEmpty']}" 
+                                                         disabled="#{loginController.isRolesCboEnabled}"
+                                                         type="password"  value="#{loginController.itsUserPassword}" />
+                                        </div>
+                                    </div>
+                                    <div class="divBtnLogin">
+
+                                    </div>
+                                    <div class ="divCboRole">
+                                        <p:selectOneMenu id="cboRoles" style="max-width: 150px" effect="fade" disabled="#{!loginController.isRolesCboEnabled}" value="#{loginController.itsAProfileId}" >
+                                            <f:selectItem itemLabel="#{pppMsg['ppp.login.cboRoles']}" itemValue="" />
+                                            <f:selectItems value="#{loginController.itsProfilesResult}" var="role"
+                                                           itemLabel="#{role.profileDescription}"
+                                                           itemValue="#{role.profileId}"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                    <div class ="divBtnRole">
+                                        <p:commandButton   id="btnEntrar" style="min-width: 69px" value="#{pppMsg['ppp.login.btnEnter']}" ajax="true" disabled="#{!loginController.isRolesCboEnabled}"
+                                                           action="#{loginController.autenticateUser()}"
+                                                           actionListener="#{loginController.selectRole()}" />
+                                    </div>
+                                    <div class ="divBtnCancel">
+                                        <p:commandButton   id="btnCancelar" value="#{pppMsg['ppp.cancel']}" ajax="true" disabled="#{!loginController.isRolesCboEnabled}"
+                                                           action="#{loginController.autenticateUser()}"
+                                                           actionListener="#{loginController.cancel()}" />
+                                    </div>
+                                </div>                   
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </h:form>            
+        </body>
+    </f:view>
+</html>

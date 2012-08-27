@@ -1,0 +1,123 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">   
+
+    <ui:define name="body">
+        <h:form id="Anteproyecto">
+        #{directDraftProjectController.init()}
+        <div style="padding-top: 27px">
+            <table>
+                <tr>
+                    <td>                        
+                        <img src="#{request.contextPath}/styles/images/iconHeaderStyle.png" /> 
+                    </td>
+                    <td style="vertical-align: center">
+                        <h:outputText value="#{pppMsg['ppp.programming.DirectDraftProject.Header']}"  styleClass="headerTitleStyle" style="position: absolute; top: 135px"/>
+                    </td>
+                </tr>
+            </table>
+        </div> 
+        <div class="divContentPage">
+            <table class="tableDetailForm">
+                <tr>
+                    <td>
+                        <p:wizard widgetVar="wiz"  backLabel="#{InfoMsg['ppp.progr.directCaptureDrafProject.btnBack']}" 
+                                  nextLabel="#{InfoMsg['ppp.progr.directCaptureDrafProject.btnNext']}" 
+                                  flowListener="#{directDraftProjectController.onFlowProcess}">                            
+                            <p:tab id="draftProjectCapture" title="#{InfoMsg['ppp.progr.directCaptureDrafProject.tabCaptureDraftProj']}" titleStyle="font-size:small" >
+                                <p:messages id="msgMensajes" autoUpdate="true"/>
+                                <p:panel header="#{InfoMsg['ppp.progr.directCaptureDraftProject.CaptureDrafProj']}" >
+                                    <table class="tableDetailForm1">                                        
+                                        <tr>
+                                            <td></td>
+                                            <td class="tableColumnLeft">
+                                                <h:outputText value="#{InfoMsg['ppp.progr.directCaptureDraftProject.Year']}" />
+                                            </td>
+                                            <td>                                                
+                                                <p:inputText value="${optionsController.year}" readonly="true"/>              
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tableColumnRight">
+                                                  <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                            </td>
+                                            <td class="tableColumnLeft">
+                                               
+                                                 <h:outputText value="#{InfoMsg['ppp.progr.directCaptureDrafProject.UR']}" />
+                                            </td>
+                                            <td>                                               
+                                                <p:selectOneMenu  style="width: 515px" styleClass="divTextsizePED" id="Dependencia" 
+                                                                  value="#{directDraftProjectController.itsResponsibleUnitId}"  required="true">
+                                                    <f:selectItem itemLabel="#{InfoMsg['ppp.progr.comboSelectedItem']}" itemValue="" />
+                                                    <f:selectItems value="#{directDraftProjectController.itsListOfResponsibleUnit}" var="dependencia" 
+                                                                   itemLabel="#{dependencia.dependenceKey} #{dependencia.dependenceDescription}" 
+                                                                   itemValue="#{dependencia.dependenceId}"/>                                                   
+                                                </p:selectOneMenu>
+                                            </td>
+                                        </tr>
+                                    </table>                                                                  
+                                </p:panel>                               
+                            </p:tab>
+                             <p:tab id="draftProjectHeader" title="#{InfoMsg['ppp.progr.directCaptureDrafProject.tabDraftProjHeader']}" titleStyle="font-size: small" >                               
+                                 <ui:include src="components/directDraftProject/directDraftProjectDetails.xhtml"/> 
+                            </p:tab>
+                            <p:tab id="draftProjectClassif" title="#{InfoMsg['ppp.progr.directCaptureDrafProject.tabClassifier']}" titleStyle="font-size: small">
+                               <ui:include src="components/directDraftProject/classifierDirectDraftProject.xhtml"/> 
+                            </p:tab>  
+                            <p:tab id="draftProjectValidationPED" title="#{InfoMsg['ppp.progr.directCaptureDrafProject.tabValidationPED']}" titleStyle="font-size: small">
+                                 <ui:include src="components/directDraftProject/pedvinculationDirectDraftProject.xhtml"/> 
+                                 <div align="right">
+                                     <p:commandButton value="#{InfoMsg['common.save']}" /> 
+                                 </div>
+                            </p:tab>  
+                        </p:wizard>
+                    </td>
+                </tr>
+                <!--<tr>
+                    <td> 
+                        <ui:include src="components/draftproject/draftProjectDetails.xhtml"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>  
+                        <p:tabView activeIndex="#{draftProjectHeaderController.itsTabActiveIndex}" 
+                                   id="tabDraftProjectDetails" dynamic="true" cache="false" >
+                            <p:tab  title="#{pppMsg['ppp.progr.Classifier']}" 
+                                    disabled="#{draftProjectHeaderController.itsDisabledTabClassif}">
+                                <ui:include src="components/draftproject/classifier.xhtml"/>
+                            </p:tab>
+                            <p:tab disabled="#{draftProjectHeaderController.itsDisabledTab}"
+                                   title="#{pppMsg['ppp.progr.VinculationPED']}" >
+                                <ui:include src="components/draftproject/tabpedvinculation.xhtml"/>
+                            </p:tab>
+                            <p:tab  disabled="#{draftProjectHeaderController.itsDisabledTabDelivery}" 
+                                   title="#{pppMsg['ppp.progr.Entregables']}" >
+                                <ui:include src="components/draftproject/deliverables.xhtml"/>
+                            </p:tab>
+                            <p:tab disabled="#{draftProjectHeaderController.itsDisabledTab}" title="#{pppMsg['ppp.progr.Ubicacion']}">
+                                <ui:include src="components/InvPreFile/invPreFileUbication.xhtml"/>
+                            </p:tab>
+                            <p:tab disabled="#{draftProjectHeaderController.itsDisabledTab}" title="#{pppMsg['ppp.progr.ResumenPresupuestal']}">
+                                <ui:include src="components/draftproject/budgeting.xhtml" />
+                            </p:tab>
+                            <p:tab disabled="#{draftProjectHeaderController.itsDisabledTab}" title="#{pppMsg['ppp.progr.ValidacionSeplan']}">
+                                <ui:include src="components/valSeplan/valSeplan.xhtml" />
+                            </p:tab>                            
+                            <p:tab disabled="#{draftProjectHeaderController.itsDisabledTab}" title="#{pppMsg['ppp.progr.MarcoLogico']}">                                
+                                <ui:include src="components/draftproject/logicframe.xhtml"/>
+                            </p:tab>
+                            <p:tab title="#{pppMsg['ppp.progr.Binnacle']}">
+                                <ui:include src="components/draftproject/DraftProjectBinnacle.xhtml"/>
+                            </p:tab>
+                        </p:tabView> 
+                    </td>
+                </tr>-->
+            </table>
+        </div> 
+      </h:form>       
+    </ui:define>
+</ui:composition>

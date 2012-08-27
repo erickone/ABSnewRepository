@@ -1,0 +1,330 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+    <ui:define name="body">
+        #{catalogLevelGenericController.init()}
+        <div class="imgHeaderStyle" />
+        <div class="headerTitleStyle">
+            <h:outputLabel value="#{pppMsg['ppp.catalog.levelgeneric.title']}"/>
+        </div>
+        <div class="divContentPage">
+            <h:form id="frmCatLevelGeneric">
+                <p:panel
+                    id="pnlCatLevelGeneric"
+                    header="#{pppMsg['ppp.catalog.levelgeneric.title']}" >
+                    <table >
+                        <tr>
+                            <td colspan="3">
+                                <p:messages id="msgs" showDetail="true" showSummary="false" autoUpdate="true"  />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <h:outputText value="#{pppMsg['ppp.catalog.levelgeneric.description']}" /> 
+                            </td>
+                            <td width="2"/>
+                            <td align="center">
+                                <h:outputText value="#{pppMsg['ppp.catalog.levelgeneric.year']}"  /> 
+                            </td>
+                            <td width="2"/>
+                            <td align="center">
+                                <h:outputText value="#{pppMsg['ppp.catalog.levelgeneric.level']}" /> 
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <p:selectOneMenu id="configCatalog" value="#{catalogLevelGenericController.descriptionId}"
+                                                 disabled="#{catalogLevelGenericController.disabledPanelOptions}" >                                     
+                                    <f:selectItem itemLabel="#{pppMsg['ppp.catalog.levelgeneric.description.selected']}" />  
+                                    <f:selectItems
+                                        var="typeConfig" 
+                                        value="#{catalogLevelGenericController.lstConfigCatalog}"
+                                        itemLabel="#{typeConfig.descripcion}"
+                                        itemValue="#{typeConfig.typeConfigId}"/>
+                                </p:selectOneMenu>
+                            </td>
+                            <td width="2"/>
+                            <td>
+                                <p:selectOneMenu id="years" value="#{catalogLevelGenericController.yearUser}"
+                                                 disabled="#{catalogLevelGenericController.disabledPanelOptions}" > 
+                                    <f:selectItem itemLabel="#{pppMsg['ppp.catalog.levelgeneric.year.selected']}" />  
+                                    <f:selectItems value="#{catalogLevelGenericController.lstYears}" 
+                                                   var="year"
+                                                   itemLabel="#{year.toString()}"
+                                                   itemValue="#{year.intValue()}" />  
+
+                                </p:selectOneMenu>
+                            </td>    
+                            <td width="2"/>
+                            <td>
+                                <p:inputText size="10" id="txtNivel" value="#{catalogLevelGenericController.levelUser}" 
+                                             disabled="#{catalogLevelGenericController.disabledPanelOptions}" />
+                            </td>
+                        </tr>
+                    </table>
+
+                    <br />
+                    <p:separator id="customSeparator" style="height:2px" />  
+                    <br />
+                    <p:panelGrid id="optionsConfiguration" style="margin-top:10px; width: 100%;"
+                                 > 
+                        <f:facet name="header">
+                            <p:row>  
+                                <p:column colspan="7" >
+                                    <h:outputText value="#{pppMsg['ppp.catalog.levelgeneric.configuration']}" /> 
+                                </p:column>  
+                            </p:row> 
+                            <p:row>  
+                                <p:column>
+                                    <h:outputText value="#{pppMsg['ppp.catalog.levelgeneric.configuration.clave']}" /> 
+                                </p:column>  
+                                <p:column>
+                                    <h:outputText value="#{pppMsg['ppp.catalog.levelgeneric.configuration.longitud']}" /> 
+                                </p:column>  
+                                <p:column>
+                                    <h:outputText value="#{pppMsg['ppp.catalog.levelgeneric.configuration.consecutivo']}" /> 
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{pppMsg['ppp.catalog.levelgeneric.configuration.concatena']}" /> 
+                                </p:column>  
+                                <p:column>
+                                    <h:outputText value="#{pppMsg['ppp.catalog.levelgeneric.configuration.alfanumerico']}" /> 
+                                </p:column>  
+                                <p:column>
+                                    <h:outputText value="#{pppMsg['ppp.catalog.levelgeneric.configuration.autocompletar']}" /> 
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{pppMsg['ppp.catalog.levelgeneric.configuration.rellena']}" /> 
+                                </p:column>  
+                            </p:row>
+                        </f:facet>
+                        <p:row>
+                            <p:column>
+                                <p:selectOneRadio id="optionclave" layout="custom" rendered="true"
+                                                  value="#{catalogLevelGenericController.selectForEditConfigLevelGeneric.claveManual}" 
+                                                  disabled="#{catalogLevelGenericController.disabledPanelOptions}">
+
+                                    <f:selectItem itemValue="false"  />  
+                                    <f:selectItem itemValue="true" />  
+                                </p:selectOneRadio>
+                                <h:panelGrid columns="2" style="border-color: WHITE;">  
+                                    <p:radioButton id="opt1" for="optionclave" itemIndex="0" />  
+                                    <h:outputLabel for="opt1" value="#{pppMsg['ppp.catalog.levelgeneric.configuration.clave.automatica']}" />  
+
+                                    <p:radioButton id="opt2" for="optionclave" itemIndex="1"/>  
+                                    <h:outputLabel for="opt2" value="#{pppMsg['ppp.catalog.levelgeneric.configuration.clave.manual']}" />  
+                                </h:panelGrid>
+                            </p:column>
+
+                            <p:column>
+                                <p:selectOneRadio id="optionlongitud" layout="custom" rendered="true"
+                                                  value="#{catalogLevelGenericController.selectForEditConfigLevelGeneric.longitudPorNivel}" 
+                                                  disabled="#{catalogLevelGenericController.disabledPanelOptions}"  >
+                                    <f:selectItem itemLabel="#{pppMsg['ppp.catalog.levelgeneric.configuration.longitud.nivel']}" itemValue="true" >                                          
+                                    </f:selectItem>
+                                    <f:selectItem itemLabel="#{pppMsg['ppp.catalog.levelgeneric.configuration.longitud.unica']}" itemValue="false"> 
+
+                                    </f:selectItem>
+                                    <p:ajax update="txtLongitud" listener="#{catalogLevelGenericController.setDisableTextPage(1)}" />
+                                </p:selectOneRadio>
+                                <h:panelGrid columns="2" style="border-color: WHITE;" >
+                                    <p:radioButton id="opt3" for="optionlongitud" itemIndex="0">                                        
+                                    </p:radioButton>
+                                    <h:outputLabel for="opt3" value="#{pppMsg['ppp.catalog.levelgeneric.configuration.longitud.nivel']}" />  
+
+                                    <p:radioButton id="opt4" for="optionlongitud" itemIndex="1"/>  
+                                    <h:outputLabel for="opt4" value="#{pppMsg['ppp.catalog.levelgeneric.configuration.longitud.unica']}" />  
+
+                                </h:panelGrid>  
+                            </p:column>
+                            <p:column>
+                                <p:selectOneRadio id="optionconsecutivo" layout="custom"
+                                                  value="#{catalogLevelGenericController.selectForEditConfigLevelGeneric.consecutivoPorNivel}"
+                                                  disabled="#{catalogLevelGenericController.disabledPanelOptions}">
+                                    <f:selectItem itemLabel="#{pppMsg['ppp.catalog.levelgeneric.configuration.consecutivo.unico']}" itemValue="false"  />  
+                                    <f:selectItem itemLabel="#{pppMsg['ppp.catalog.levelgeneric.configuration.consecutivo.nivel']}" itemValue="true" />  
+                                    <p:ajax update="txtAcronym" listener="#{catalogLevelGenericController.setDisableTextPage(2)}" />
+                                </p:selectOneRadio>
+                                <h:panelGrid columns="2" style="border-color: WHITE;" >  
+                                    <p:radioButton id="opt5" for="optionconsecutivo" itemIndex="0"  />  
+                                    <h:outputLabel for="opt5" value="#{pppMsg['ppp.catalog.levelgeneric.configuration.consecutivo.unico']}" />  
+
+                                    <p:radioButton id="opt6" for="optionconsecutivo" itemIndex="1"/>  
+                                    <h:outputLabel for="opt6" value="#{pppMsg['ppp.catalog.levelgeneric.configuration.consecutivo.nivel']}" />  
+                                </h:panelGrid>  
+                            </p:column>
+                            <p:column>
+                                <p:selectOneRadio id="optionconcatena" layout="custom" 
+                                                  value="#{catalogLevelGenericController.selectForEditConfigLevelGeneric.concatenaPadre}"
+                                                  disabled="#{catalogLevelGenericController.disabledPanelOptions}">
+                                    <f:selectItem itemLabel="#{pppMsg['ppp.catalog.levelgeneric.configuration.concatena.si']}" itemValue="true"  />  
+                                    <f:selectItem itemLabel="#{pppMsg['ppp.catalog.levelgeneric.configuration.concatena.no']}" itemValue="false" />  
+                                </p:selectOneRadio>
+                                <h:panelGrid columns="2" style="border-color: WHITE;" >  
+                                    <p:radioButton id="opt7" for="optionconcatena" itemIndex="0"  />  
+                                    <h:outputLabel for="opt7" value="#{pppMsg['ppp.catalog.levelgeneric.configuration.concatena.si']}" />  
+
+                                    <p:radioButton id="opt8" for="optionconcatena" itemIndex="1"/>  
+                                    <h:outputLabel for="opt8" value="#{pppMsg['ppp.catalog.levelgeneric.configuration.concatena.no']}" />  
+                                </h:panelGrid>  
+                            </p:column>
+                            <p:column>
+                                <p:selectOneRadio id="optionalfanumerico" layout="custom"
+                                                  value="#{catalogLevelGenericController.selectForEditConfigLevelGeneric.alfanumerico}"
+                                                  disabled="#{catalogLevelGenericController.disabledPanelOptions}">
+                                    <f:selectItem itemLabel="#{pppMsg['ppp.catalog.levelgeneric.configuration.alfanumerico.si']}" itemValue="true"  />  
+                                    <f:selectItem itemLabel="#{pppMsg['ppp.catalog.levelgeneric.configuration.alfanumerico.no']}" itemValue="false" />  
+                                </p:selectOneRadio>
+                                <h:panelGrid columns="2" style="border-color: WHITE;" >  
+                                    <p:radioButton id="opt9" for="optionalfanumerico" itemIndex="0"  />  
+                                    <h:outputLabel for="opt9" value="#{pppMsg['ppp.catalog.levelgeneric.configuration.alfanumerico.si']}" />  
+
+                                    <p:radioButton id="opt10" for="optionalfanumerico" itemIndex="1"/>  
+                                    <h:outputLabel for="opt10" value="#{pppMsg['ppp.catalog.levelgeneric.configuration.alfanumerico.no']}" />  
+
+                                </h:panelGrid> 
+                            </p:column>
+                            <p:column>
+                                <p:selectOneRadio id="optionautocompletar" layout="custom"
+                                                  value="#{catalogLevelGenericController.selectForEditConfigLevelGeneric.autocompletar}"
+                                                  disabled="#{catalogLevelGenericController.disabledPanelOptions}">
+                                    <f:selectItem itemLabel="#{pppMsg['ppp.catalog.levelgeneric.configuration.autocompletar.si']}" itemValue="true"  />  
+                                    <f:selectItem itemLabel="#{pppMsg['ppp.catalog.levelgeneric.configuration.autocompletar.no']}" itemValue="false" />  
+                                    <p:ajax update="txtFillingChar" listener="#{catalogLevelGenericController.setDisableTextPage(3)}" />
+                                </p:selectOneRadio>
+                                <h:panelGrid columns="2" style="border-color: WHITE;" >  
+                                    <p:radioButton id="opt11" for="optionautocompletar" itemIndex="0"  />  
+                                    <h:outputLabel for="opt11" value="#{pppMsg['ppp.catalog.levelgeneric.configuration.autocompletar.si']}" />  
+
+                                    <p:radioButton id="opt12" for="optionautocompletar" itemIndex="1"/>  
+                                    <h:outputLabel for="opt12" value="#{pppMsg['ppp.catalog.levelgeneric.configuration.autocompletar.no']}" />  
+                                </h:panelGrid> 
+                            </p:column>
+                            <p:column>
+                                <p:selectOneRadio id="optionrellenar" layout="custom"
+                                                  value="#{catalogLevelGenericController.selectForEditConfigLevelGeneric.rellenarIzq}"
+                                                  disabled="#{catalogLevelGenericController.disabledPanelOptions}">
+                                    <f:selectItem itemLabel="#{pppMsg['ppp.catalog.levelgeneric.configuration.rellenar.izquierda']}" itemValue="true"  />  
+                                    <f:selectItem itemLabel="#{pppMsg['ppp.catalog.levelgeneric.configuration.rellenar.derecha']}" itemValue="false" />  
+                                </p:selectOneRadio>
+                                <h:panelGrid columns="2" style="border-color: WHITE;" >  
+                                    <p:radioButton id="opt13" for="optionrellenar" itemIndex="0"  />  
+                                    <h:outputLabel for="opt13" value="#{pppMsg['ppp.catalog.levelgeneric.configuration.rellenar.izquierda']}" />  
+
+                                    <p:radioButton id="opt14" for="optionrellenar" itemIndex="1"/>  
+                                    <h:outputLabel for="opt14" value="#{pppMsg['ppp.catalog.levelgeneric.configuration.rellenar.derecha']}" />  
+
+                                </h:panelGrid> 
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column />
+                            <p:column>
+                                <p:inputText size="18" title="#{pppMsg['ppp.catalog.levelgeneric.configuration.longitud.titletxt']}"
+                                             id="txtLongitud"
+                                             value="#{catalogLevelGenericController.selectForEditConfigLevelGeneric.countCharacter}"
+                                             disabled="#{catalogLevelGenericController.disabledTextLongitud}"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText size="18" title="#{pppMsg['ppp.catalog.levelgeneric.configuration.alfanumerico.titletxt']}" 
+                                             id="txtAcronym"
+                                             value="#{catalogLevelGenericController.selectForEditConfigLevelGeneric.prefixAcronym}" 
+                                             disabled="#{catalogLevelGenericController.disabledTextAcronym}"/>
+                            </p:column>
+                            <p:column />
+                            <p:column />
+                            <p:column>
+                                <p:inputText size="18" title="#{pppMsg['ppp.catalog.levelgeneric.configuration.rellenar.titletxt']}" 
+                                             id="txtFillingChar"
+                                             value="#{catalogLevelGenericController.selectForEditConfigLevelGeneric.fillingChar}" 
+                                             disabled="#{catalogLevelGenericController.disabledTextFillingChar}"/>
+                            </p:column>
+                            <p:column />
+                        </p:row>
+                    </p:panelGrid>
+                    <br />
+                    <p:separator id="customSeparator2" style="height:2px" />  
+                    <br />
+                    <p:dataTable id="tblLevelGenerics" var="catLevelGeneric"
+                                 value="#{catalogLevelGenericController.lstConfigLevelGeneric}"
+                                 paginator="true" rows="15" selectionMode="multiple" 
+                                 selection="#{catalogLevelGenericController.selectedConfigLevelGeneric}"
+                                 resizableColumns="true" 
+                                 rowKey="#{catLevelGeneric.configLevelGenericId}">
+                        <p:ajax event="rowSelect" listener="#{catalogLevelGenericController.onRowSelect}" 
+                                update=":frmCatLevelGeneric:configCatalog :frmCatLevelGeneric:years :frmCatLevelGeneric:txtNivel
+                                :frmCatLevelGeneric:btnGuardar :frmCatLevelGeneric:btnBorrar 
+                                :frmCatLevelGeneric:txtFillingChar :frmCatLevelGeneric:txtAcronym :frmCatLevelGeneric:txtLongitud
+                                :frmCatLevelGeneric:optionclave :frmCatLevelGeneric:opt1 :frmCatLevelGeneric:opt2
+                                :frmCatLevelGeneric:optionlongitud :frmCatLevelGeneric:opt3 :frmCatLevelGeneric:opt4
+                                :frmCatLevelGeneric:optionconsecutivo :frmCatLevelGeneric:opt5 :frmCatLevelGeneric:opt6
+                                :frmCatLevelGeneric:optionconcatena :frmCatLevelGeneric:opt7 :frmCatLevelGeneric:opt8
+                                :frmCatLevelGeneric:optionalfanumerico :frmCatLevelGeneric:opt9 :frmCatLevelGeneric:opt10
+                                :frmCatLevelGeneric:optionautocompletar :frmCatLevelGeneric:opt11 :frmCatLevelGeneric:opt12
+                                :frmCatLevelGeneric:optionrellenar :frmCatLevelGeneric:opt13 :frmCatLevelGeneric:opt14" />  
+                        <p:ajax event="rowUnselect" listener="#{catalogLevelGenericController.onRowUnselect}" />
+
+                        <p:column headerText="#{pppMsg['ppp.catalog.levelgeneric.year']}" 
+                                  sortBy="#{catLevelGeneric.year}" 
+                                  >
+                            <h:outputText value="#{catLevelGeneric.year}"/>
+                        </p:column>
+                        <p:column headerText="#{pppMsg['ppp.catalog.levelgeneric.level']}" 
+                                  sortBy="#{catLevelGeneric.level}" >
+                            <h:outputText value="#{catLevelGeneric.level}"/>
+                        </p:column>
+                        <p:column headerText="#{pppMsg['ppp.catalog.levelgeneric.description']}" 
+                                  sortBy="#{catLevelGeneric.typeConfigEntity.descripcion}"
+                                  >
+                            <h:outputText value="#{catLevelGeneric.typeConfigEntity.descripcion}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+                <p:panel>
+                    <p:commandButton id ="btnNuevo" ajax="true" value="#{InfoMsg['ppp.catalog.levelgeneric.btnNuevo']}" 
+                                     style="width:140px" actionListener="#{catalogLevelGenericController.newRowCatLevelGeneric()}" 
+                                     update="btnGuardar btnBorrar tblLevelGenerics configCatalog years txtNivel
+                                     :frmCatLevelGeneric:optionclave :frmCatLevelGeneric:opt1 :frmCatLevelGeneric:opt2
+                                     :frmCatLevelGeneric:optionlongitud :frmCatLevelGeneric:opt3 :frmCatLevelGeneric:opt4
+                                     :frmCatLevelGeneric:optionconsecutivo :frmCatLevelGeneric:opt5 :frmCatLevelGeneric:opt6
+                                     :frmCatLevelGeneric:optionconcatena :frmCatLevelGeneric:opt7 :frmCatLevelGeneric:opt8
+                                     :frmCatLevelGeneric:optionalfanumerico :frmCatLevelGeneric:opt9 :frmCatLevelGeneric:opt10
+                                     :frmCatLevelGeneric:optionautocompletar :frmCatLevelGeneric:opt11 :frmCatLevelGeneric:opt12
+                                     :frmCatLevelGeneric:optionrellenar :frmCatLevelGeneric:opt13 :frmCatLevelGeneric:opt14 
+                                     :frmCatLevelGeneric:tblLevelGenerics txtLongitud txtAcronym txtFillingChar"/>
+                    <p:commandButton id ="btnGuardar" disabled="#{catalogLevelGenericController.disabledButtonSave}"
+                                     actionListener="#{catalogLevelGenericController.addRowConfig()}"
+                                     ajax="true" value="#{InfoMsg['ppp.catalog.levelgeneric.btnGuardar']}" style="width:140px"
+                                     update="btnGuardar btnBorrar configCatalog years txtNivel
+                                     :frmCatLevelGeneric:optionclave :frmCatLevelGeneric:opt1 :frmCatLevelGeneric:opt2
+                                     :frmCatLevelGeneric:optionlongitud :frmCatLevelGeneric:opt3 :frmCatLevelGeneric:opt4
+                                     :frmCatLevelGeneric:optionconsecutivo :frmCatLevelGeneric:opt5 :frmCatLevelGeneric:opt6
+                                     :frmCatLevelGeneric:optionconcatena :frmCatLevelGeneric:opt7 :frmCatLevelGeneric:opt8
+                                     :frmCatLevelGeneric:optionalfanumerico :frmCatLevelGeneric:opt9 :frmCatLevelGeneric:opt10
+                                     :frmCatLevelGeneric:optionautocompletar :frmCatLevelGeneric:opt11 :frmCatLevelGeneric:opt12
+                                     :frmCatLevelGeneric:optionrellenar :frmCatLevelGeneric:opt13 :frmCatLevelGeneric:opt14 txtLongitud 
+                                     txtAcronym txtFillingChar"/>
+                    <p:commandButton id ="btnBorrar" disabled="#{catalogLevelGenericController.disabledButtonDelete}"
+                                     actionListener="#{catalogLevelGenericController.removeRowConfig()}"
+                                     ajax="true" value="#{InfoMsg['ppp.catalog.levelgeneric.btnBorrar']}" style="width:140px" 
+                                     update="btnGuardar btnBorrar configCatalog years txtNivel
+                                     :frmCatLevelGeneric:optionclave :frmCatLevelGeneric:opt1 :frmCatLevelGeneric:opt2
+                                     :frmCatLevelGeneric:optionlongitud :frmCatLevelGeneric:opt3 :frmCatLevelGeneric:opt4
+                                     :frmCatLevelGeneric:optionconsecutivo :frmCatLevelGeneric:opt5 :frmCatLevelGeneric:opt6
+                                     :frmCatLevelGeneric:optionconcatena :frmCatLevelGeneric:opt7 :frmCatLevelGeneric:opt8
+                                     :frmCatLevelGeneric:optionalfanumerico :frmCatLevelGeneric:opt9 :frmCatLevelGeneric:opt10
+                                     :frmCatLevelGeneric:optionautocompletar :frmCatLevelGeneric:opt11 :frmCatLevelGeneric:opt12
+                                     :frmCatLevelGeneric:optionrellenar :frmCatLevelGeneric:opt13 :frmCatLevelGeneric:opt14 txtLongitud
+                                     txtAcronym txtFillingChar"/>
+                    <p:commandButton id ="btnCerrar" action="#{catalogLevelGenericController.navigateToMainMenu()}"
+                                     ajax="true" value="#{InfoMsg['ppp.catalog.levelgeneric.btnCerrar']}" style="width:140px" />
+                </p:panel>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

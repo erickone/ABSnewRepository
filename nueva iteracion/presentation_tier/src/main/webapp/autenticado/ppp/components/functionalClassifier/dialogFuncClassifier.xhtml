@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (C) 2012 Advanced Business Systems S.A. de C.V. 
+ All rights reserved 
+ Filename:  dialogFuncClassifier
+ Purpose:  Dialog to add a new or edit a Functional Classifier.
+       
+ The copyright to the computer program(s) herein is the property
+ of Advanced Business Systems S.A. de C.V. The programs may be 
+ used and/or copied only with written permission from Advanced 
+ Business Systems S.A. de C.V. or in accordance with the terms 
+ and conditions stipulated in the agreement/contract under which
+ the program(s) have been supplied.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+        <p:dialog id="detailsFuncClassifier" header="#{functionalClassifierController.itsDialogHeader}" widgetVar="dlg" modal="true" 
+                  maximizable="false" minimizable="false"  
+                  position="center" closable="false"
+                  height="260" width="420"> 
+
+            <p:messages id="messageName" showDetail="true" showSummary="false" autoUpdate="true"  />
+            <table style="width: 100%" class="tableDetailForm">
+                <tr>
+                    <td>
+                        <label class="titlesInstitutional">
+                            <h:outputText id="txtFatherName" value="#{pppMsg['ppp.planning.father']} #{functionalClassifierController.itsFatherDescription}"></h:outputText>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tableColumnLeft">
+                        <h:outputLabel value="#{pppMsg['ppp.planning.funClassifierKey']}"/>
+                    </td>
+                    <td class="tableColumnLeft">
+                        <p:inputText id="txtClave" maxlength="10" readonly="true"
+                                     value="#{functionalClassifierController.itsFuncClassfierKey}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tableColumnLeft">
+                        <h:outputLabel value="#{pppMsg['ppp.planning.funClassifierName']}"/>
+                    </td>
+                    <td class="tableColumnLeft">
+                        <p:inputText id="txtDesc" maxlength="255"
+                                     value="#{functionalClassifierController.itsFuncClassfierDesc}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td  class="tableColumnLeft" >
+                         <h:outputLabel value="#{pppMsg['ppp.planning.funClassifierDesc']}"/>
+                    </td>
+                    <td  class="tableColumnLeft">
+                        <p:inputTextarea maxlength="3000"  autoResize="false"
+                                         value="#{functionalClassifierController.itsFuncClassfierDefinicion}"  id="txtDefinition"  />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tableColumnLeft">
+                        <div  class="btnLayoutSaveStrategic">
+                            <p:commandButton id="btnSaveFuncClasif" value="#{pppMsg['ppp.save']}"
+                                             disabled="#{functionalClassifierController.isSaveDisabled}"
+                                             actionListener="#{functionalClassifierController.saveFuncClassifier()}" />
+                        </div>
+                        <div  >
+                            <p:commandButton id="btnCancelFuncClasif"  value="#{pppMsg['ppp.close']}" onclick="dlg.close()" />
+                        </div>
+                    </td>               
+                </tr> 
+            </table> 
+        </p:dialog>
+    </ui:composition>
+</html>

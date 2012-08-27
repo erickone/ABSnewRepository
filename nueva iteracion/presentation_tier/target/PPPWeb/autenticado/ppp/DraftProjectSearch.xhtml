@@ -1,0 +1,207 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+
+
+  <ui:define name="body">
+    <div style="padding-top: 27px">
+      <table>
+        <tr>
+          <td>                        
+            <img src="#{request.contextPath}/styles/images/iconHeaderStyle.png" /> 
+          </td>
+          <td style="vertical-align: center">
+            <h:outputText value="#{pppMsg['ppp.progr.DraftProjectSearch.MainTitle']}" styleClass="headerTitleStyle" style="position: absolute; top: 135px"/>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="divContentPage">
+      <h:form id="frmDraftProjectSearch">
+        #{draftProjectSearchController.init()}
+        <label class="titlesInstitutional">
+          <!--a href="../options.abs">#{pppMsg['ppp.planning.goToStart']}</a-->    
+        </label>
+
+        <p:panel id="pnlBusqueda" header="#{pppMsg['ppp.progr.DraftProjectSearch.PanelTitle']}">
+          <table>
+            <tr>
+              <td>
+                <p:messages autoUpdate="true" id="msgs"/>
+              </td>
+            </tr>
+          </table>
+          <table class="tableDetailForm1">
+            <tr>
+              <td>
+                <h:outputText value="#{pppMsg['ppp.progr.DraftProjectSearch.Year']}"/>
+              </td>
+              <td>
+                <p:inputText
+                  id="txtAnio" 
+                  value="#{draftProjectSearchController.year}">
+                  <f:ajax render="cboDependencia" listener="#{draftProjectSearchController.changeAnio}"/>
+                </p:inputText>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h:outputText value="#{pppMsg['ppp.progr.DraftProjectSearch.Dependency']}"/>
+              </td>
+              <td>
+                <p:selectOneMenu
+                  id="cboDependencia"
+                  disabled="#{draftProjectSearchController.isCboDependencesDisabled}"
+                  value="#{draftProjectSearchController.dependenceId}">
+                  <f:selectItem 
+                    itemLabel="#{InfoMsg['ppp.progr.comboSelectedItem']}"
+                    itemValue="" />
+                  <f:selectItems
+                    var="dependences"
+                    value="#{draftProjectSearchController.listOfDependences}"
+                    itemLabel="#{dependences.composedDependenceName}"
+                    itemValue="#{dependences.dependenceId}"/>
+                </p:selectOneMenu>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h:outputText value="#{pppMsg['ppp.progr.DraftProjectSearch.FileNumber']}"/>
+              </td>
+              <td>
+                <p:inputText 
+                  id="txtNumFicha"
+                  disabled="#{draftProjectSearchController.isNumberDisabled}"
+                  maxlength="36"
+                  value="#{draftProjectSearchController.number}"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h:outputText value="#{pppMsg['ppp.progr.DraftProjectSearch.ShortName']}"/>
+              </td>
+              <td>
+                <p:inputText
+                  id="txtNomCorto"
+                  disabled="#{draftProjectSearchController.isShortNameDisabled}"
+                  maxlength="100"
+                  value="#{draftProjectSearchController.shortName}"/>
+              </td>
+            </tr>
+          </table>
+          <table class="tableColumnCenterDraftProjectSearch">
+            <tr>
+              <td>
+                <p:commandButton
+                  id="btnBuscar"
+                  value="#{pppMsg['ppp.progr.DraftProjectSearch.Search']}"
+                  actionListener="#{draftProjectSearchController.loadDraftProjects()}"
+                  ajax="true"
+                  update="dtDraftProject"/>
+              </td>
+              <td/>
+              <td>
+                <p:commandButton
+                  id="btnClose"
+                  value="#{pppMsg['ppp.progr.InvPrefileSearch.Close']}"
+                  action="#{draftProjectSearchController.navigateToMainMenu()}"
+                  ajax="true"
+                  />
+              </td>
+              <td>
+                <p:selectBooleanCheckbox
+                   id="chkDirectSearch"
+                   
+                   value="#{draftProjectSearchController.theirDirectSearchSelected}">
+                   <f:ajax 
+                     event="change" 
+                     listener="#{draftProjectSearchController.changeControlStatus()}"
+                     render="cboDependencia txtNumFicha txtNomCorto chkDirectSearch"/>
+                 </p:selectBooleanCheckbox>
+                 
+              </td>
+              <td>
+                <h:outputText
+                  id="txtDirectSearch"
+                  value="Búsqueda Directa"
+                  />
+              </td>
+            </tr>
+          </table>
+        </p:panel>
+        <p:dataTable id="dtDraftProject" 
+                     var="draftProject" 
+                     value="#{draftProjectSearchController.draftProjectListDTO}"
+                     paginator="true" 
+                     rows="10"
+                     emptyMessage="#{pppMsg['ppp.progr.DraftProjectSearch.NoRecords']}"
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rowsPerPageTemplate="5,10,15" 
+                     rendered="true" >
+          <p:column>           
+            <f:facet name="header">
+              <h:outputText value="#{pppMsg['ppp.progr.DraftProjectSearch.File']}" />
+            </f:facet>
+            <h:outputText value="#{draftProject.clave}"/>
+          </p:column>
+          <p:column>           
+            <f:facet name="header">
+              <h:outputText value="#{pppMsg['ppp.progr.DraftProjectSearch.ShortNameB']}" />
+            </f:facet>
+            <h:outputText value="#{draftProject.nombrecorto}"/>
+          </p:column>
+          <p:column>           
+            <f:facet name="header">
+              <h:outputText value="#{pppMsg['ppp.progr.DraftProjectSearch.Name']}" />
+            </f:facet>
+            <h:outputText value="#{draftProject.nombre}"/>
+          </p:column>
+          <p:column>           
+            <f:facet name="header">
+              <h:outputText value="#{pppMsg['ppp.progr.DraftProjectSearch.Program']}" />
+            </f:facet>
+            <h:outputText value="#{draftProject.nombreobjetivopadre}"/>
+          </p:column>
+          <p:column>           
+            <f:facet name="header">
+              <h:outputText value="#{pppMsg['ppp.progr.DraftProjectSearch.SubProgram']}" />
+            </f:facet>
+            <h:outputText value="#{draftProject.nombreobjetivo}"/>
+          </p:column>
+          <p:column>           
+            <f:facet name="header">
+              <h:outputText value="#{pppMsg['ppp.progr.DraftProjectSearch.UR']}" />
+            </f:facet>
+            <h:outputText value="#{draftProject.descripciondependenciapadre}"/>
+          </p:column>
+          <p:column>           
+            <f:facet name="header">
+              <h:outputText value="#{pppMsg['ppp.progr.DraftProjectSearch.UEG']}" />
+            </f:facet>
+            <h:outputText value="#{draftProject.descripciondependencia}"/>
+          </p:column>
+          <p:column>           
+            <f:facet name="header">
+              <h:outputText value="#{pppMsg['ppp.progr.DraftProjectSearch.Status']}" />
+            </f:facet>
+            <h:outputText value="#{draftProject.estatus}"/>
+          </p:column>
+          <p:column>
+            <p:commandButton
+              id="btnEditDraftProject"
+              icon="ui-common-icon-edit"
+              action="#{draftProjectSearchController.navigateToDraftProject()}">
+              <f:setPropertyActionListener 
+                value="#{draftProject}"
+                target="#{draftProjectSearchController.selectedDraftProject}" /> 
+            </p:commandButton>
+          </p:column>
+        </p:dataTable>           
+      </h:form>
+    </div> 
+  </ui:define>
+</ui:composition>

@@ -1,0 +1,259 @@
+    
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+
+
+    <ui:define name="body">
+                                      
+        <div style="padding-top: 27px">
+            <table>
+                <tr>
+                    <td>                        
+                        <img src="#{request.contextPath}/styles/images/iconHeaderStyle.png" /> 
+                    </td>
+                    <td style="vertical-align: center">
+                        <h:outputText value="#{pppMsg['ppp.planning.AdministrativeClassifier.HeaderTitle']}"  
+                                      styleClass="headerTitleStyle" 
+                                      style="position: absolute; top: 135px"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="divContentPage">
+            <h:form id="formDependenceLevels" enctype="multipart/form-data">
+                #{dependenceLevelController.init()}
+                    
+                <p:messages id="msgAdministrativeClassifier" showDetail="true" 
+                            showSummary="false" autoUpdate="true"  />
+                
+                <ui:include src="components/administrativeClassifier/lstlevelsadminstrativeclassifier.xhtml"/>
+                
+                <p:panel id="panModifyingAdministrativeClassifier">
+                    <div class="divTablePED">
+                        <div class="divLabelLevelsOfClassifierAdministrative">
+                            <h:outputText style="width: 90%; text-align: center" 
+                                          value="#{pppMsg['ppp.LevelsOfAdministrativeClassifier.Labels.Year']}"/>
+                        </div>
+                        <div class="divLabelLevelsOfClassifierAdministrative">
+                            <h:outputText style="width: 95%; text-align: center" 
+                                          value="#{pppMsg['ppp.LevelsOfAdministrativeClassifier.Labels.Level']}"/>
+                        </div>
+                        <div class="divLabelLevelsOfClassifierAdministrative">
+                            <h:outputText style="width: 90%; text-align: center" 
+                                          value="#{pppMsg['ppp.LevelsOfAdministrativeClassifier.Labels.Key']}"/>
+                        </div>
+                         <div class="divLastLabelLevelsOfClassifierAdministrative">
+                            <h:outputText style="width: 90%; text-align: center" 
+                                          value="#{pppMsg['ppp.LevelsOfAdministrativeClassifier.Labels.Description']}"/>
+                        </div>
+                        
+                        
+                        <div class="divLabelLevelsOfClassifierAdministrative">
+                            <p:selectOneMenu style="min-width: 100px; max-width: 100px; text-align: center" 
+                                             id="LevelYearAdministration" >
+                                <f:selectItem itemLabel="2013" itemValue="2013" />
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="divLabelLevelsOfClassifierAdministrative">
+                            <p:inputText readonly="true" style="width: 95%; text-align: center" 
+                                         id="LevelAdministrationClassifierLevel"
+                                         value="#{dependenceLevelController.itsLevel}"/>
+                        </div>
+                        
+                        <div class="divLabelLevelsOfClassifierAdministrative">
+                            <p:inputText style="width: 95%; text-align: center" id="LevelKeyAdministration" 
+                                         value="#{dependenceLevelController.itsLevelKey}"/>
+                        </div>
+                         <div class="divLastLabelLevelsOfClassifierAdministrative">
+                           <p:inputText style="width: 95%" id="LevelDescriptionAdministration" 
+                                        value="#{dependenceLevelController.itsLevelDescription}"/>
+                        </div>
+                        <div class="divLabelLevelsAllTheRow">
+                            <h:outputText style="width: 90%; text-align: center" 
+                                          value="#{pppMsg['ppp.LevelsOfAdministrativeClassifier.Labels.ColectiveType']}"/>
+                        </div>
+                        <div class="divLabelLevelsAllTheRow">
+                            <p:selectOneMenu style="min-width: 700px; max-width: 700px" id="LevelColectiveType" 
+                                             value="#{dependenceLevelController.itsSelectedColectiveType}"  >
+                                <f:selectItems value="#{dependenceLevelController.itsListOfColectiveType}" 
+                                               var="Colectyp"
+                                               itemLabel="#{Colectyp.colectiveTypeDescription}"
+                                               itemValue="#{Colectyp.colectiveTypeId}"/>
+                            </p:selectOneMenu>
+                        </div>
+                        
+                    </div>
+                </p:panel>
+                <p:panel id="panCheckBoxes">
+                      <p:messages id="newMessage" showDetail="true" showSummary="false" autoUpdate="true"  />
+                    <div class="divTablePED">
+                        <div class="divLabelCheckBox">
+                          
+                            <p:selectBooleanCheckbox id="institutionalPlanAdministrativeClassifier" 
+                                                     value="#{dependenceLevelController.itsLevelHasInstitutionalPlan}">
+                                <p:ajax listener="#{dependenceLevelController.searchInList('dependencyLevelHasInstitutionalPlan','itsLevelHasInstitutionalPlan')}"
+                                        update="institutionalPlanAdministrativeClassifier"/>
+                            </p:selectBooleanCheckbox>
+                            <h:outputText 
+                                value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.CheckBoxes.InstitutionalPlan']}"/>
+                        </div>
+                        <div class="divLabelCheckBox">
+                            <p:selectBooleanCheckbox id="branchAdministrativeClassifier"
+                                                     value="#{dependenceLevelController.itsLevelHasBranch}">
+                                <p:ajax listener="#{dependenceLevelController.searchInList('dependencyLevelIsBranch','itsLevelHasBranch')}"
+                                        update="branchAdministrativeClassifier"/>
+                            </p:selectBooleanCheckbox>
+                            <h:outputText 
+                                value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.CheckBoxes.branch']}"/>
+                        </div>
+                        <div class="divLabelCheckBox">
+                            <p:selectBooleanCheckbox id="sectorAdministrativeClassifier"
+                                                     value="#{dependenceLevelController.itsLevelHasSector}">
+                                <p:ajax listener="#{dependenceLevelController.searchInList('dependencyLevelIsSector','itsLevelHasSector')}"
+                                        update="sectorAdministrativeClassifier"/>
+                            </p:selectBooleanCheckbox>
+                            <h:outputText 
+                                value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.CheckBoxes.Sector']}"/>
+                        </div>
+                        <div class="divLabelCheckBox">
+                            <p:selectBooleanCheckbox id="responsibleUnitAdministrativeClassifier"
+                                                     value="#{dependenceLevelController.itsLevelHasResponsibleUnit}">
+                                <p:ajax listener="#{dependenceLevelController.searchInList('dependencyLevelIsResponsibleUnit','itsLevelHasResponsibleUnit')}"
+                                        update="responsibleUnitAdministrativeClassifier"/>
+                            </p:selectBooleanCheckbox>
+                            <h:outputText 
+                                value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.CheckBoxes.ResponsibleUnit']}"/>
+                        </div>
+                        <div class="divLabelCheckBox">
+                            <p:selectBooleanCheckbox id="requestPaymentAdministrativeClassifier"
+                                                     value="#{dependenceLevelController.itsLevelHasPaymentRequest}">
+                                <p:ajax listener="#{dependenceLevelController.searchInList('dependencyLevelHasPaymetRequest','itsLevelHasPaymentRequest')}"
+                                        update="requestPaymentAdministrativeClassifier"/>
+                            </p:selectBooleanCheckbox>
+                            <h:outputText 
+                                value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.CheckBoxes.RequestForPayment']}"/>
+                        </div>
+                        <div class="divLabelCheckBox">
+                            <p:selectBooleanCheckbox id="budgetCeilingAdministrativeClassifier"
+                                                     value="#{dependenceLevelController.itsLevelHasCeilingBudget}">
+                                <p:ajax listener="#{dependenceLevelController.searchInList('dependencyLevelHasBudgetCeiling','itsLevelHasCeilingBudget')}"
+                                        update="budgetCeilingAdministrativeClassifier"/>
+                            </p:selectBooleanCheckbox>
+                            <h:outputText 
+                                value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.CheckBoxes.BudgetCeiling']}"/>
+                        </div>
+                        <div class="divLabelCheckBox">
+                            <p:selectBooleanCheckbox id="projectsByDependenceAdministrativeClassifier"
+                                                     value="#{dependenceLevelController.itsLevelHasProyDependence}">
+                                <p:ajax listener="#{dependenceLevelController.searchInList('dependencyLevelHasProyDependence','itsLevelHasProyDependence')}"
+                                        update="projectsByDependenceAdministrativeClassifier"/>
+                            </p:selectBooleanCheckbox>
+                            <h:outputText 
+                                value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.CheckBoxes.ProjectByDependence']}"/>
+                        </div>
+                        <div class="divLabelCheckBox">
+                            <p:selectBooleanCheckbox id="UEGAdministrativeClassifier"
+                                                     value="#{dependenceLevelController.itsLevelHasUEG}">
+                                <p:ajax listener="#{dependenceLevelController.searchInList('dependencyLevelIsExecutionUnit','itsLevelHasUEG')}"
+                                        update="UEGAdministrativeClassifier"/>
+                            </p:selectBooleanCheckbox>
+                            <h:outputText 
+                                value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.CheckBoxes.UEG']}"/>
+                        </div>                       
+                        <div class="divLabelCheckBox">
+                            <p:selectBooleanCheckbox id="requestForProcurementAdministrativeClassifier" 
+                                                     value="#{dependenceLevelController.itsLevelHasRequisition}">
+                                <p:ajax listener="#{dependenceLevelController.searchInList('dependencyLevelHasRequisition','itsLevelHasRequisition')}"
+                                        update="requestForProcurementAdministrativeClassifier"/>
+                            </p:selectBooleanCheckbox>
+                            <h:outputText 
+                                value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.CheckBoxes.RequestforProcurement']}"/>
+                        </div>
+                        <div class="divLabelCheckBox">
+                            <p:selectBooleanCheckbox id="historicalsAdministrativeClassifier"
+                                                     value="#{dependenceLevelController.itsLevelHasHistorical}">
+                                <p:ajax listener="#{dependenceLevelController.searchInList('dependencyLevelIsHistorical','itsLevelHasHistorical')}"
+                                        update="historicalsAdministrativeClassifier"/>
+                            </p:selectBooleanCheckbox>
+                            <h:outputText 
+                                value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.CheckBoxes.Historicals']}"/>
+                        </div>
+                        <div class="divLabelCheckBox">
+                            <p:selectBooleanCheckbox id="inventoryAdministrativeClassifier" 
+                                                     value="#{dependenceLevelController.itsLevelHasInventory}">
+                                <p:ajax listener="#{dependenceLevelController.searchInList('dependencyLevelHasInventory','itsLevelHasInventory')}"
+                                        update="inventoryAdministrativeClassifier"/>
+                            </p:selectBooleanCheckbox>
+                            <h:outputText 
+                                value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.CheckBoxes.Inventory']}"/>
+                        </div>
+                        <div class="divLabelCheckBox">
+                            <p:selectBooleanCheckbox id="classifierUnitAdministrativeClassifier"
+                                                     value="#{dependenceLevelController.itsLevelHasClassifierUnit}">
+                                <p:ajax listener="#{dependenceLevelController.searchInList('dependencyLevelHasClassifierUnit','itsLevelHasClassifierUnit')}"
+                                        update="classifierUnitAdministrativeClassifier"/>
+                            </p:selectBooleanCheckbox>
+                            <h:outputText 
+                                value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.CheckBoxes.ClassifierUnit']}"/>
+                        </div>
+
+                        <div class="divLabelCheckBox">
+                            <p:selectBooleanCheckbox id="employeeAdministrativeClassifier" 
+                                                     value="#{dependenceLevelController.itsLevelHasEmployee}">
+                                <p:ajax listener="#{dependenceLevelController.searchInList('dependencyLevelHasEmployee','itsLevelHasEmployee')}"
+                                        update="employeeAdministrativeClassifier"/>
+                            </p:selectBooleanCheckbox>
+                            <h:outputText 
+                                value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.CheckBoxes.Employee']}"/>
+                        </div>
+                        <div class="divlabelLastCheckBox">
+                            <p:selectBooleanCheckbox id="AdministrativeClassifierFramingCONACAdministrativeClassifier" 
+                                                     value="#{dependenceLevelController.itsLevelHasFramingAdminClassif}">
+                                <p:ajax listener="#{dependenceLevelController.searchInList('dependencyLevelHasClassifFraming','itsLevelHasFramingAdminClassif')}"
+                                        update="AdministrativeClassifierFramingCONACAdministrativeClassifier"/>
+                            </p:selectBooleanCheckbox>
+                            <h:outputText 
+                                value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.CheckBoxes.AdministrativeClassifierFramingCONAC']}"/>
+                        </div>
+                    </div>
+                </p:panel>
+                <p:panel id="panButtonsAdministrativeClassifier">
+                    <div class="divTablePED">  
+                        <div class="divLabelCheckBox">
+                            <p:commandButton style="width: 95%" id="newLevelAdministrativeClassifier" 
+                                             value="#{InfoMsg['common.new']}" 
+                                             actionListener="#{dependenceLevelController.prepareNewLevelOfDependence()}"
+                                             update=":formDependenceLevels:panModifyingAdministrativeClassifier 
+                                             :formDependenceLevels:panCheckBoxes"/>
+                        </div>
+                        <div class="divLabelCheckBox">
+                            <p:commandButton style="width: 95%" id="saveLevelAdministrativeClassifier" 
+                                             value="#{InfoMsg['common.save']}" 
+                                             actionListener="#{dependenceLevelController.saveLevelOfDependence()}"
+                                             update=":formDependenceLevels:panModifyingAdministrativeClassifier 
+                                             :formDependenceLevels:panCheckBoxes :formDependenceLevels:panLevelsListAdminClass"/>
+                        </div>
+                        <div class="divLabelCheckBox">
+                            <p:commandButton style="width: 95%" id="deleteLevelAdministrativeClassifier" 
+                                             value="#{InfoMsg['common.delete']}" 
+                                             actionListener="#{dependenceLevelController.deleteLevelOfDependence()}"
+                                             update=":formDependenceLevels:panModifyingAdministrativeClassifier 
+                                             :formDependenceLevels:panCheckBoxes :formDependenceLevels:panLevelsListAdminClass"/>
+                        </div>
+                        <div class="divLabelCheckBox">
+                            <p:commandButton style="width: 95%" id="closeLevelAdministrativeClassifier" 
+                                             value="#{InfoMsg['common.close']}" />
+                        </div>
+                    </div>
+                </p:panel>
+            </h:form>
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

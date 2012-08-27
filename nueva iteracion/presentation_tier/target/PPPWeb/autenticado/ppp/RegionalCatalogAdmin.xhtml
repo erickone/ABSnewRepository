@@ -1,0 +1,96 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+
+
+  <ui:define name="body">
+    #{regionalCatalogController.initRegionalCatalog()}
+    <div class="imgHeaderStyle" />
+    <div class="headerTitleStyle">
+      <h:outputLabel value="#{pppMsg['ppp.programming.RegionalCatalogAdminMainTitle']}"/>
+    </div>
+    <div class="divContentPage">
+      <div class="divContentPage">
+        <h:form id="frmRegionalCatalogAdmin">
+
+          <p:tree
+            id="tvRegions"
+            value="#{regionalCatalogController.theirTreeNode}"
+            var="regionNode"
+            dynamic="true"
+            cache="true"
+            style="width: 95%"
+            selectionMode="single"
+            selection="#{regionalCatalogController.theirSelectedNode}">
+            <p:ajax
+              event="expand"
+              update="tvRegions"
+              listener="#{regionalCatalogController.onNodeExpand}"/>
+            <p:treeNode>
+              <h:outputText
+                value="#{regionNode.itsNodeText}"/>
+            </p:treeNode>
+          </p:tree>
+          <p:contextMenu for="tvRegions" id="ctxMnuTvRegions"  >  
+            <p:menuitem value="#{pppMsg['ppp.new']}" icon="ui-common-icon-new"
+                        actionListener="#{regionalCatalogController.prepareNewItem()}"
+                        update = "txtClave
+                        txtDescripcion
+                        txtCodPostal
+                        chkFronterizo
+                        txtClaveInegi
+                        txtNumHombres
+                        txtNumMujeres
+                        txtAnioInegi
+                        lblHeader
+                        btnGuardarCatReg"
+                        onclick="dlg.show()"
+                        /> 
+            <p:menuitem value="#{pppMsg['ppp.edit']}" icon="ui-common-icon-edit"
+                        actionListener="#{regionalCatalogController.prepareToEdit()}"
+                        update = "txtClave
+                        txtDescripcion
+                        txtCodPostal
+                        chkFronterizo
+                        txtClaveInegi
+                        txtNumHombres
+                        txtNumMujeres
+                        txtAnioInegi
+                        lblHeader 
+                        btnGuardarCatReg"
+                        onclick="dlg.show()"
+                        /> 
+            <p:menuitem value="#{pppMsg['ppp.delete']}" icon="ui-common-icon-delete" 
+
+                      onclick="confirmation.show()"
+                      />
+          </p:contextMenu>
+          
+          <ui:include src="components/RegionalCatalog/RegionalCatalogDialog.xhtml"/> 
+          <p:confirmDialog
+            id="confirmDialog"
+            message="¿Desea confirmar la eliminación de esta Región?"
+            header="Confirmar eliminación "
+            severity="alert"
+            widgetVar="confirmation">	
+            <p:commandButton
+              id="confirm"
+              value="#{pppMsg['ppp.progr.InvPrefileSearch.Yes']}"
+              oncomplete="confirmation.hide()"
+              actionListener="#{regionalCatalogController.deleteRegionalClassifier()}"
+              update=":frmRegionalCatalogAdmin:tvRegions"/>
+            <p:commandButton
+              id="decline"
+              value="#{pppMsg['ppp.progr.InvPrefileSearch.No']}"
+              onclick="confirmation.hide()"
+              type="button" /> 	
+          </p:confirmDialog>
+        </h:form>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>

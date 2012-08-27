@@ -1,0 +1,37 @@
+/*
+ *  Copyright (C) 2012 Advanced Business Systems S.A. de C.V.
+ *  All rights reserved
+ *  Filename:  LogbookImpl
+ *  Purpose:  [ short Description  ]
+ *       
+ *  The copyright to the computer program(s) herein is the property
+ *  of Advanced Business Systems S.A. de C.V. The programs may be
+ *  used and/or copied only with written permission from Advanced
+ *  Business Systems S.A. de C.V. or in accordance with the terms
+ *  and conditions stipulated in the agreement/contract under which
+ *  the program(s) have been supplied.
+ */
+package com.abs.siif.support.managment;
+
+import com.abs.siif.support.dao.LogbookDao;
+import com.abs.siif.support.entities.LogbookEntity;
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+
+/**
+ *
+ * @author luis.carreon
+ */
+@Service("logbookManagment")
+public class LogbookManagementImpl implements LogbookManagement{
+
+    @Resource(name = "logbookDao")
+    private transient LogbookDao itsLogbookDao;
+    
+    @Override
+    public void saveLogbook(LogbookEntity myLogbook) {
+        itsLogbookDao.save(myLogbook);
+    }
+    
+    
+}

@@ -1,0 +1,67 @@
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+ <script type="text/javascript" src="#{request.contextPath}/resources/js/validateInput.js"></script>
+       
+        <p:dialog id="detailsObjective" header="#{pppMsg['ppp.progr.DialogObjective.Header']}" widgetVar="dlg" modal="true" 
+                  maximizable="false" minimizable="false"  
+                  position="center" closable="false"
+                  height="500" width="920"> 
+
+            <p:messages id="messageName" showDetail="true" showSummary="false" autoUpdate="true"  />
+
+            <table style="width: 100%" class="tableDetailForm">
+                <tr>
+                    <td>
+                        <label class="titlesInstitutional">
+                            <h:outputText id="txtFatherName" value="#{pppMsg['ppp.planning.father']} #{objectiveController.itsDescriptionFather}"></h:outputText>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left">
+                        <p:tabView id="tbDetails"  activeIndex="0" cache="false"    >
+                            <p:tab  title="#{pppMsg['ppp.progr.DialogObjective.Tab.Overview']}" disabled="#{objectiveController.itsTabViewDisabled}" > 
+                                <ui:include src="tabDetailsObjective.xhtml" />
+                            </p:tab>
+                            <p:tab title="#{pppMsg['ppp.progr.DialogObjective.Tab.Objectives']}"  id="tbObjectives" disabled="#{objectiveController.itsTabViewDisabled}"> 
+                                <ui:include src="tabSpecificObjectives.xhtml" />
+                            </p:tab>
+                            <p:tab title="#{pppMsg['ppp.progr.DialogObjective.Tab.Strategies']}" disabled="#{objectiveController.itsTabViewDisabled}" > 
+                                <ui:include src="tabStrategies.xhtml" /> 
+                            </p:tab>
+                            <p:tab title="#{pppMsg['ppp.progr.DialogObjective.Tab.Problems']}" disabled="#{objectiveController.itsTabViewDisabled}" > 
+                                <ui:include src="tabProblems.xhtml" />
+                            </p:tab>
+                        </p:tabView> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div  class="btnLayoutEncuadrar">
+                            <p:commandButton 
+                              id="btnEncuadreObjective" 
+                              value="#{pppMsg['ppp.encuadrar']}"
+                              disabled="#{objectiveController.isEncuadreButtonDisabled}"
+                              action="#{objectiveController.navigateDepToObjLink()}"/>
+                        </div>
+                        <div  class="btnLayoutSaveStrategic">
+                            <p:commandButton id="btnSaveObjective" value="#{pppMsg['ppp.save']}"
+                                             disabled="#{objectiveController.itsTabViewDisabled}"
+                                             actionListener="#{objectiveController.saveObjective()}" />
+                        </div>
+                        <div  class="btnLayoutCancel">
+                            <p:commandButton id="btnCancelObjective"  value="#{pppMsg['ppp.close']}" onclick="dlg.close()" />
+                        </div>
+                    </td>               
+                </tr> 
+            </table> 
+        </p:dialog>
+
+    </ui:composition>
+</html>

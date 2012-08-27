@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <p:outputPanel id="tagobjectives">
+        #{institutionalPlanController.initObjectiveTagElements()}
+        <table style="width: 100%">
+            <tr>
+                <td class="tableDetailsObjectiveStrategyPlanColumnLeft">
+                    <label class="commonFontDetailForm">
+                        #{pppMsg['ppp.planning.objective.label.objetive']}
+                    </label>
+                </td> 
+            </tr>
+            <tr>
+                <td class="tableDetailsObjectiveStrategyPlanColumnLeft">
+
+                    <p:inputTextarea id="txtSpecificObjectiveDescription" value="#{institutionalPlanController.objInstPlanUIHelper.specificObjectiveDescription}" 
+                                     autoResize="false" maxlength="600"   disabled="#{institutionalPlanController.objInstPlanUIHelper.gridEditObjective}"
+                                     style="width: 100%;"  
+                                     >
+                    </p:inputTextarea>
+
+                </td>
+            </tr>
+            <tr> 
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <p:commandButton id="btnSaveSpecificObjective"  value="#{pppMsg['ppp.planning.objective.btn.guardar']}"
+                                                 actionListener="#{institutionalPlanController.addObjetive()}"
+                                                 update="txtSpecificObjectiveDescription,
+                                                         btnCancelSpecificObjective, 
+                                                         btnNewSpecificObjective,
+                                                         btnSaveSpecificObjective,
+                                                         grdSpecificObjective"                                                  
+                                                 disabled="#{institutionalPlanController.objInstPlanUIHelper.btnAgregarVisibility}"/>
+
+                            </td>
+                            <td>
+                                <p:commandButton id="btnCancelSpecificObjective" value="#{pppMsg['ppp.planning.objective.btn.cancelar']}"
+                                                 actionListener="#{institutionalPlanController.cancelObjetive()}"
+                                                 update="txtSpecificObjectiveDescription, 
+                                                         btnSaveSpecificObjective, 
+                                                         btnNewSpecificObjective,
+                                                         btnCancelSpecificObjective,
+                                                         grdSpecificObjective"                                                 
+                                                 disabled="#{institutionalPlanController.objInstPlanUIHelper.btnCancelarVisibility}"/>
+                            </td>
+                            <td>
+                                <p:commandButton id="btnNewSpecificObjective" value="#{pppMsg['ppp.planning.objective.btn.new']}"
+                                                 actionListener="#{institutionalPlanController.newObjetive()}"
+                                                 update="txtSpecificObjectiveDescription, 
+                                                         btnSaveSpecificObjective, 
+                                                         btnCancelSpecificObjective,
+                                                         btnNewSpecificObjective,
+                                                         grdSpecificObjective"                                                  
+                                                 disabled="#{institutionalPlanController.objInstPlanUIHelper.btnNuevoVisibility}"/>
+
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td >
+                    <p:panel id="objPanel" >
+                    <p:dataTable id="grdSpecificObjective" var="specificObjective" emptyMessage="#{pppMsg['ppp.planning.objective.table.emptymsj']}" 
+                                 value="#{institutionalPlanController.objInstPlanUIHelper.specificObjectives}"  
+                                 paginator="true" rows="5">  
+                        <p:column style="width: 100%"  filterBy="#{specificObjective.itsDescription}"  
+                                  filterMatchMode="contains" 
+                                  >  
+
+                            <h:outputText  style="width: 100%" value="#{specificObjective.itsDescription}"  />  
+                        </p:column> 
+                        <p:column>                           
+                            <p:commandButton id="btnSelectedSpecificObjective"                                             
+                                             icon="ui-common-icon-edit"
+                                             update=":form:tbCreationDecree:txtSpecificObjectiveDescription
+                                                     :form:tbCreationDecree:btnSaveSpecificObjective, 
+                                                     :form:tbCreationDecree:btnCancelSpecificObjective,
+                                                     :form:tbCreationDecree:btnNewSpecificObjective">
+                                <f:setPropertyActionListener value="#{specificObjective}" 
+                                                             target="#{institutionalPlanController.selectedSpecificObjective}"
+                                                             />                                
+                            </p:commandButton>                          
+                        </p:column> 
+                        <p:column>
+                            <p:commandButton id="btnDeleteSpecificObjective" 
+                                             icon="ui-common-icon-delete"
+                                             update=":form:tbCreationDecree:objPanel">
+                                <f:setPropertyActionListener value="#{specificObjective}" 
+                                                             target="#{institutionalPlanController.selectedDeleteSpecificObjective}"
+                                                             />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                        </p:panel>
+                </td>
+            </tr>
+        </table> 
+            </p:outputPanel>
+    </ui:composition>
+</html>

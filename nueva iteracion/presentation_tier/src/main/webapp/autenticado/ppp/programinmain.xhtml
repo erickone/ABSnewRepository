@@ -1,0 +1,148 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+
+    <ui:define name="body">
+        #{programminMainController.init()}
+        #{backPreFichaController.setFromConsult(false)}
+        <div style="padding-top: 27px">
+            <table>
+                <tr>
+                    <td>                        
+                        <img src="#{request.contextPath}/styles/images/iconHeaderStyle.png" /> 
+                    </td>
+                    <td style="vertical-align: center">
+                        <h:outputText value="#{InfoMsg['ppp.progr.programacionHeader']}"  styleClass="headerTitleStyle" style="position: absolute; top: 135px"/>
+                    </td>
+                </tr>
+            </table>
+        </div> 
+        <h:form id="Programingform">
+            <div class="divContentPage">
+                <label class="titlesInstitutional">
+                                <!--a href="../options.abs">#{pppMsg['ppp.planning.goToStart']}</a-->
+                            </label>
+                <p:panel  id="comboProgrammingPanel" header="#{InfoMsg['ppp.progr.programacionPanelHeader']}">
+                    <div class="divTableProgramming">
+                        <div class="divProgrammingLabel">
+                            <h:outputText value="#{InfoMsg['ppp.progr.depFather']}" />
+                        </div>
+                        <div class="divInputTextProgramming">
+                            <p:inputText  size="60" id="fatherDepend" readonly="true" value="#{programminMainController.fatherDescription}"/> 
+                        </div>    
+                        
+                        <div class="divProgrammingLabel">
+                            <h:outputText value="#{InfoMsg['ppp.progr.combodependenciaLabel']}" />
+                        </div>
+                        <div class="divInputTextProgramming">
+                            <p:selectOneMenu  styleClass=".divTextsizeProgramming" id="cboDependenceOfProgramming" value="#{programminMainController.ADependenceId}" >
+                                <f:selectItem itemLabel="#{InfoMsg['ppp.progr.comboSelectedItem']}" itemValue="" />
+                                <f:selectItems value="#{programminMainController.itsListOfDependences}" var="dep"
+                                               itemLabel="#{programminMainController.formatDependenceKey(dep.dependenceKey)} #{dep.dependenceDescription}"
+                                               itemValue="#{dep.dependenceId}" />
+                                <p:ajax  update=":Programingform:tree 
+                                                 :Programingform:tokensTree
+                                                 :Programingform:fatherDepend
+                                                 :Programingform:btnNew
+                                                 :Programingform:btnEdit
+                                                 :Programingform:btnDelete" 
+                                             listener= "#{programminMainController.ListOfInstitutionalPlansAndObjectiveEntity}"/>
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+
+                </p:panel>
+
+                <p:panel  id="treePograminFramingPanel" >
+
+                    <div class="divTableProgramming">
+                        <h:outputText value="#{InfoMsg['ppp.progr.treeObjetivoLabel']}" />
+                        <p:tree   value="#{programminMainController.root}" var="node" style="width:95%" dynamic="true" cache="false"
+                                  selectionMode="single" selection="#{programminMainController.itsSelectedNode}"  id="tree">
+                            <p:ajax  event="select" update=":Programingform:treeTokenPanel :Programingform:tokensTree" listener="#{programminMainController.onNodeSelect}" />
+
+                            <p:treeNode icon="ui-icon-newwin" >
+                                <h:outputText value="#{node.itsNodeText}"/>
+                            </p:treeNode>
+                      </p:tree>
+                    </div>
+                </p:panel>
+
+                <p:panel  id="treeTokenPanel">
+                    <p:tree  value="#{programminMainController.itsTokenRoot}" var="tokenNode" style="width:95% " dynamic="true" cache="false"
+                             rendered="true"
+                             selectionMode="single" selection="#{programminMainController.itsSelectedNodeToken}"  id="tokensTree">
+                        <p:ajax  event="select" listener="#{programminMainController.onNodeSelectTree}" update=":Programingform:btnNew, :Programingform:btnEdit, :Programingform:btnDelete, :Programingform:modalDeleteDialog" />
+                        <p:ajax  event="unselect" listener="#{programminMainController.onNodeUnselect}" update=":Programingform:btnNew, :Programingform:btnEdit, :Programingform:btnDelete, :Programingform:modalDeleteDialog"/>
+
+                        <p:treeNode icon="ui-icon-contact" >
+                            <h:outputText value="#{tokenNode.itsNodeText}"/>
+                        </p:treeNode>
+
+                    </p:tree>
+                    <p:contextMenu for=":Programingform:tokensTree" id="treeviewOptions"  >
+                        <p:menuitem value="#{InfoMsg['ppp.progr.New']}"  icon="ui-common-icon-new" ajax="false" action="#{programminMainController.navigateDraftProject()}"
+                                    actionListener="#{draftProjectHeaderController.addDraftProject()}" />
+                        <p:menuitem value="#{InfoMsg['ppp.progr.Edit']}" icon="ui-common-icon-edit" ajax="false" action="#{programminMainController.navigateDraftProject()}"
+                                    actionListener="#{programminMainController.preparateEditProgramming}" />
+                        
+
+
+                    </p:contextMenu>
+                    <p>  </p>
+                    <p:commandButton value="#{InfoMsg['ppp.progr.Update']}"   update=":Programingform:tokensTree, :Programingform:btnNew, :Programingform:btnEdit"
+                                     actionListener="#{programminMainController.restartTreeview()}" />
+                    
+                    <p:commandButton id ="btnNew" value="#{InfoMsg['ppp.progr.New']}" action="#{programminMainController.navigateDraftProject()}"
+                                     ajax="false" actionListener="#{draftProjectHeaderController.addDraftProject()}" style="width:86px"
+                                     disabled="#{programminMainController.disableTreeOptionsNew}"/>
+                    
+                    <p:commandButton id="btnEdit" value="#{InfoMsg['ppp.progr.Edit']}" action="#{programminMainController.navigateDraftProject()}"
+                                     ajax="false" actionListener="#{programminMainController.preparateEditProgramming}" style="width:87px" 
+                                      disabled="#{programminMainController.disableTreeOptionsEdit}"/>
+                    
+                    <p:commandButton id="btnDelete" value="#{InfoMsg['ppp.delete']}" 
+                                      style="width:87px" onclick="dlg.show();"
+                                      disabled="#{programminMainController.btnSrvDelete}" /> <!-- btnDelete asociado a seguridad -->
+
+                </p:panel>
+                
+                 <p:dialog id="modalDeleteDialog" header="#{InfoMsg['options.Menu.EliminarHeader']}" widgetVar="dlg"
+                            maximizable="false" minimizable="false" closable="false"
+                            modal="true" position="center" resizable="false"
+                            height="120" width="250">
+                     <table  class="tableDetailForm">
+                         <tr>
+                             <td class="tableColumnCenter">
+                                <label class="titlesInstitutional">
+                                    <h:outputText value="#{InfoMsg['options.Menu.EliminarSeguro']}" />  
+                                </label>
+                            </td>
+                        </tr>
+                         <tr>
+                             <td class="tableColumnCenter">
+                                 <h:outputText value="#{programminMainController.itsShortName}" />  
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tableColumnCenter">
+                                <p:commandButton id="btnDeleteOK" value="#{InfoMsg['ppp.delete']}" 
+                                            action="#{programminMainController.restartTreeview}"
+                                            ajax="false" 
+                                            actionListener="#{programminMainController.deleteDraftProject}" 
+                                            style="width:87px"  />
+
+                                <p:commandButton id="btnDeleteCancel"  value="#{pppMsg['ppp.cancel']}" onclick="dlg.close()" />
+                            </td>               
+                        </tr>
+                     </table>
+                </p:dialog>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

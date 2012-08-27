@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (C) 2012 Advanced Business Systems S.A. de C.V. 
+ All rights reserved 
+ Filename:  funcClassifierLevelDetails
+ Purpose:  [ short Description  ]
+       
+ The copyright to the computer program(s) herein is the property
+ of Advanced Business Systems S.A. de C.V. The programs may be 
+ used and/or copied only with written permission from Advanced 
+ Business Systems S.A. de C.V. or in accordance with the terms 
+ and conditions stipulated in the agreement/contract under which
+ the program(s) have been supplied.
+-->
+
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+        <p:outputPanel id="pnlFuncClassifLevelDetails"> 
+            <table style="width: 100%" class="tableDetailForm">
+                <tr>
+                    <td  style="width: 10%;text-align: right">
+                        #{pppMsg['ppp.planning.year']}
+                    </td>
+                    <td style="text-align: left">
+                       <p:inputText value="#{functionalClassifierLevelController.itsCurrentFCLevel.functionalLevelClassifierYear}"   
+                                     disabled="#{functionalClassifierLevelController.itsEditInputsDisabled}" 
+                                     maxlength="4"> 
+                           </p:inputText>
+                    </td>
+                    <td class="commonFontDetailForm" style="width: 10%;text-align: right">
+                        #{pppMsg['ppp.planning.level']}
+                    </td>
+                    <td style="text-align: left">
+                        <p:inputMask id="txtNivel" value="#{functionalClassifierLevelController.itsCurrentFCLevel.functionalLevelClassifier}"
+                                     mask="?99"    disabled="#{functionalClassifierLevelController.itsEditInputsDisabled}" readonly="true"
+                                     >
+                             
+                        </p:inputMask> 
+                        
+                    </td>
+                    <td class="commonFontDetailForm" style="width: 15%;text-align: right">
+                        #{pppMsg['ppp.planning.keyLevel']}
+                    </td>
+                    <td style="text-align: left">
+                        <p:inputText value="#{functionalClassifierLevelController.itsCurrentFCLevel.functionalLevelClassifierKey}"   
+                                     disabled="#{functionalClassifierLevelController.itsEditInputsDisabled}" 
+                                     maxlength="15"> 
+                        </p:inputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" class="commonFontDetailForm" style="width: 5%;text-align: right"> 
+                        #{pppMsg['ppp.planning.description']}
+                    </td>
+                    <td colspan="5" style="text-align: left">
+                        <p:inputTextarea id="txtDescription" 
+                                         maxlength="50"
+                                         style="width: 100%" disabled="#{functionalClassifierLevelController.itsInputsDisabled}" 
+                                         value="#{functionalClassifierLevelController.itsCurrentFCLevel.functionalLevelClassifierDescription}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="commonFontDetailForm" style="width: 15%;text-align: right">
+                        <p:selectBooleanCheckbox  disabled="#{functionalClassifierLevelController.itsInputsDisabled}"  
+                                                  value="#{functionalClassifierLevelController.itsCurrentFCLevel.functionalLevelClassifierIsEncPlaneacion}" />
+                    </td>
+                    <td style="width: 15%;text-align: left" >
+                        Encuadre Planeación
+                    </td>
+                    <td colspan="2" style="text-align: right">
+                        <p:commandButton value="#{pppMsg['ppp.save']}" disabled="#{functionalClassifierLevelController.itsInputsDisabled}"
+                                         update=":formDetails:grdFuncClassifiers :formDetails:pnlFuncClassifLevelDetails"
+                                         actionListener="#{functionalClassifierLevelController.persistFuncClassifLevel}"/>
+                    </td>
+                    <td colspan="2" >
+                        <p:commandButton value="#{pppMsg['ppp.cancel']}" update=":formDetails:pnlFuncClassifLevelDetails"    
+                               disabled="#{functionalClassifierLevelController.itsInputsDisabled}" 
+                               actionListener="#{functionalClassifierLevelController.cancelPersistFuncClassifLevel}"    />
+                    </td>
+                </tr>
+            </table>
+        </p:outputPanel>
+    </ui:composition>
+</html>

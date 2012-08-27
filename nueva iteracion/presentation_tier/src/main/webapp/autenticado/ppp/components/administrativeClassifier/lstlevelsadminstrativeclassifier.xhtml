@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+        <p:panel id="panLevelsListAdminClass">           
+                    <p:dataTable id="grdLevelsListAdminClass"
+                                 var="levelsAdminC"  
+                                 value="#{dependenceLevelController.itsMyDependenceLevelDataModel}"
+                                 selectionMode="single"
+                                 selection="#{dependenceLevelController.itsSelectedRow}"
+                                 emptyMessage="#{InfoMsg['ppp.common.DataTable.NotFound']}">
+                        
+                        <p:ajax event="rowSelect" listener="#{dependenceLevelController.onRowSelect}"   
+                                update=":formDependenceLevels:panModifyingAdministrativeClassifier 
+                                :formDependenceLevels:panCheckBoxes"  />  
+                       
+                        <p:column style="max-width: 20%">
+                            <f:facet name="header" >
+                                <h:outputText  value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.Grid.Year']}" />
+                            </f:facet>
+                            <h:outputText value="#{levelsAdminC.budgetKeyDefinitionLevels.presupuestalKeyDefinitionYear}"  id="LevelYearAdministrativeClass"/>
+                        </p:column>
+                        
+                        <p:column style="max-width: 20%">
+                            <f:facet name="header">
+                                <h:outputText value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.Grid.Level']}" />
+                            </f:facet>
+                            <h:outputText  value="#{levelsAdminC.dependenceLevel}" id="LevelOfTheAdministrativeClass" />
+                        </p:column>   
+                        
+                        <p:column style="max-width: 20%">
+                            <f:facet name="header">
+                                <h:outputText value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.Grid.Key']}" />
+                            </f:facet>
+                            <h:outputText value="#{levelsAdminC.dependenceLevelkey}" id="LevelKeyAdministrativeClass" />
+                        </p:column>   
+                        
+                        <p:column style="max-width: 20%">
+                            <f:facet name="header">
+                                <h:outputText value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.Grid.Description']}" />
+                            </f:facet>
+                            <h:outputText value="#{levelsAdminC.dependenceLevelDescription}" id="LevelDescriptionAdministrativeClass" />
+                        </p:column>  
+                        
+                        <p:column style="max-width: 20%">
+                            <f:facet name="header">
+                                <h:outputText value="#{InfoMsg['ppp.LevelsOfAdministrativeClassifier.Grid.CONAC']}" />
+                            </f:facet>
+                            <h:outputText value="#{levelsAdminC.dependencyLevelHasClassifFraming}"  id="LevelCONACAdministrativeClass" />
+                        </p:column>   
+                    </p:dataTable>
+        </p:panel>
+        
+    </ui:composition>
+</html>

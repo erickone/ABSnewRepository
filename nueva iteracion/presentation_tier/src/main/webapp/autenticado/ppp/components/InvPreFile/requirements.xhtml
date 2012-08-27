@@ -1,0 +1,335 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"  >
+    <ui:composition>
+      #{PreInvRequestController.init()}
+            <h:form  id="frmRequerimientos" enctype="multipart/form-data">
+                    <table class="tableDetailForm" >
+                        <tr>
+                            <td colspan="3">
+                                <p:messages  id="msgReqMensajes"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <p:panel  id="pnlRequerimientos" header="#{InfoMsg['ppp.progr.RequirementsHeader']}">
+                            <table border="">
+                                <tr>
+                                    <td colspan="1" class="tableColumnRight">
+                                        <h:outputLabel value=""/>
+                                    </td>
+                                    <td  class="tableColumnRight">
+                                        <h:outputLabel value="#{InfoMsg['ppp.progr.Requirements.SI.NO']}"/>
+                                    </td>
+                                </tr>
+                              <tr>
+                                <td class="tableColumnRight">
+                                        <h:outputLabel value="#{InfoMsg['ppp.progr.RequirementsOption1']}"/>
+                                </td>
+                                <td>
+                                  <p:selectOneRadio
+                                    id="rdOpciones_001"
+                                    value="#{PreInvRequestController.isIntegrationAct}"
+                                    disabled="#{PreInvRequestController.isRdButtonActive}">
+                                    <f:selectItem itemLabel="" itemValue="1"/>
+                                    <f:selectItem itemLabel="" itemValue="0"/>
+                                  </p:selectOneRadio>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="tableColumnRight">
+                                        <h:outputLabel value="#{InfoMsg['ppp.progr.RequirementsOption2']}"/>
+                                </td>
+                                <td>
+                                  <p:selectOneRadio
+                                    id="rdOpciones_002"
+                                    value="#{PreInvRequestController.isAcceptanceAct}"
+                                    disabled="#{PreInvRequestController.isRdButtonActive}">
+                                    <f:selectItem itemLabel="" itemValue="1"/>
+                                    <f:selectItem itemLabel="" itemValue="0"/>
+                                  </p:selectOneRadio>
+                                </td>
+                              </tr>
+                                <tr>
+                                    <td class="tableColumnRight">
+                                        <h:outputLabel value="#{InfoMsg['ppp.progr.RequirementsOption3']}"/>
+                                    </td>
+                                    <td>
+                                      <p:selectOneRadio
+                                        id="rdOpciones_003"
+                                        value="#{PreInvRequestController.isFeasibilityDictum}"
+                                        disabled="#{PreInvRequestController.isRdButtonActive}">
+                                        <f:selectItem itemLabel="" itemValue="1"/>
+                                        <f:selectItem itemLabel="" itemValue="0"/>
+                                      </p:selectOneRadio>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tableColumnRight">
+                                        <h:outputLabel value="#{InfoMsg['ppp.progr.RequirementsOption4']}"/>
+                                    </td>
+                                    <td>
+                                       <p:selectOneRadio
+                                         id="rdOpciones_004"
+                                         value="#{PreInvRequestController.isEnvImpactDictum}"
+                                         disabled="#{PreInvRequestController.isRdButtonActive}">
+                                        <f:selectItem itemLabel="" itemValue="1"/>
+                                        <f:selectItem itemLabel="" itemValue="0"/>
+                                      </p:selectOneRadio>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tableColumnRight">
+                                        <h:outputLabel value="#{InfoMsg['ppp.progr.RequirementsOption5']}"/>
+                                    </td>
+                                    <td>
+                                       <p:selectOneRadio
+                                         id="rdOpciones_005"
+                                         value="#{PreInvRequestController.isAccreditationOfProperty}"
+                                         disabled="#{PreInvRequestController.isRdButtonActive}">
+                                        <f:selectItem itemLabel="" itemValue="1"/>
+                                        <f:selectItem itemLabel="" itemValue="0"/>
+                                      </p:selectOneRadio>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tableColumnRight">
+                                        <h:outputLabel value="#{InfoMsg['ppp.progr.RequirementsOption6']}"/>
+                                    </td>
+                                    <td>
+                                       <p:selectOneRadio
+                                         id="rdOpciones_006"
+                                         value="#{PreInvRequestController.isAuthOfUse}"
+                                         disabled="#{PreInvRequestController.isRdButtonActive}">
+                                        <f:selectItem itemLabel="" itemValue="1"/>
+                                        <f:selectItem itemLabel="" itemValue="0"/>
+                                      </p:selectOneRadio>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tableColumnRight">
+                                        <h:outputLabel value="#{InfoMsg['ppp.progr.RequirementsOption7']}"/>
+                                    </td>
+                                    <td>
+                                       <p:selectOneRadio
+                                         id="rdOpciones_007"
+                                         value="#{PreInvRequestController.isSoilMechanicsStudy}"
+                                         disabled="#{PreInvRequestController.isRdButtonActive}">
+                                        <f:selectItem itemLabel="" itemValue="1"/>
+                                        <f:selectItem itemLabel="" itemValue="0"/>
+                                      </p:selectOneRadio>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tableColumnRight">
+                                        <h:outputLabel value="#{InfoMsg['ppp.progr.RequirementsOption8']}"/>
+                                    </td>
+                                    <td>
+                                       <p:selectOneRadio
+                                         id="rdOpciones_008"
+                                         value="#{PreInvRequestController.isExecutiveProject}"
+                                         disabled="#{PreInvRequestController.isRdButtonActive}">
+                                        <f:selectItem itemLabel="" itemValue="1"/>
+                                        <f:selectItem itemLabel="" itemValue="0"/>
+                                      </p:selectOneRadio>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tableColumnRight">
+                                        <h:outputLabel value="#{InfoMsg['ppp.progr.RequirementsOption9']}"/>
+                                    </td>
+                                    <td>
+                                       <p:selectOneRadio
+                                         id="rdOpciones_009"
+                                         value="#{PreInvRequestController.isCostBenefitStudy}"
+                                         disabled="#{PreInvRequestController.isRdButtonActive}">
+                                        <f:selectItem itemLabel="" itemValue="1"/>
+                                        <f:selectItem itemLabel="" itemValue="0"/>
+                                      </p:selectOneRadio>
+                                    </td>
+                                </tr>
+                            </table>
+                            </p:panel>
+                            </td>
+                            <td class="tableColumnRight">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <h:outputLabel value="#{InfoMsg['ppp.progr.RequirementsNivelAvance']}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableColumnRight">
+                                            <p:selectOneRadio id="rdOtro"
+                                                              value="#{PreInvRequestController.isAdvanceLevel}">
+                                              <p:ajax listener="#{PreInvRequestController.activateRadioButtons()}"
+                                                      update=":tabInversionPublicaDetails:frmRequerimientos:rdOpciones_009 
+                                                      :tabInversionPublicaDetails:frmRequerimientos:rdOpciones_008 
+                                                      :tabInversionPublicaDetails:frmRequerimientos:rdOpciones_007 
+                                                      :tabInversionPublicaDetails:frmRequerimientos:rdOpciones_006 
+                                                      :tabInversionPublicaDetails:frmRequerimientos:rdOpciones_005 
+                                                      :tabInversionPublicaDetails:frmRequerimientos:rdOpciones_004 
+                                                      :tabInversionPublicaDetails:frmRequerimientos:rdOpciones_003 
+                                                      :tabInversionPublicaDetails:frmRequerimientos:rdOpciones_002 
+                                                      :tabInversionPublicaDetails:frmRequerimientos:rdOpciones_001 
+                                                      :tabInversionPublicaDetails:frmRequerimientos:txtOtro "/>
+                                              
+                                                <f:selectItem 
+                                                  itemLabel="#{InfoMsg['ppp.progr.RequirementsIdea']}"
+                                                  itemValue="0"/>
+                                                <f:selectItem
+                                                  itemLabel="#{InfoMsg['ppp.progr.RequirementsOtro']}"
+                                                  itemValue="1"/>
+                                            </p:selectOneRadio>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                         <td>
+                                            <p:inputText id="txtOtro"  maxlength="255"
+                                                         disabled="#{PreInvRequestController.isRdButtonActive}"
+                                                         value="#{PreInvRequestController.otherStudiesDescription}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:outputLabel value="#{InfoMsg['ppp.progr.RequirementsDependencia']}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableColumnLeft">
+                                            
+                                            <p:inputText id="txtDependencia"
+                                                         size="50" readonly="true"
+                                                         value="#{PreInvRequestController.theirFederalDependenceSelected}"/>
+                                            
+                                        <!--<p:selectOneMenu id="cboDependencia"
+                                                         effect="fade"
+                                                         value="#{PreInvRequestController.federalDependenceSelectedId}">
+                                                <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}"/>
+                                                <f:selectItems
+                                                  value="#{PreInvRequestController.federalDependence}"
+                                                  var = "specificDependencia"
+                                                  itemLabel="#{specificDependencia.federalDependenceDescription}"
+                                                  itemValue="#{specificDependencia.federalDependenceId}"/>
+                                            </p:selectOneMenu>-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:outputLabel value="#{InfoMsg['ppp.progr.RequirementsNumber']}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <p:inputText id="txtNumber"  maxlength="255"
+                                                     value="#{PreInvRequestController.auhtNumber}"/>
+                                      </td>
+                                    </tr>
+                                  <tr>
+                                    <td>
+                                         <h:outputLabel value="#{InfoMsg['ppp.progr.Requirements.AddFile']}"/>
+                                    </td>
+                                  </tr>
+                                    <tr>
+                                       <td>
+                                        <p:fileUpload
+                                          id="fupldPreInvReq"
+                                          fileUploadListener="#{PreInvRequestController.loadFile}"
+                                          uploadLabel="#{InfoMsg['ppp.progr.Requirements.Upload.UploadLabel']}"
+                                          cancelLabel="#{InfoMsg['ppp.progr.Requirements.Upload.CancelLabel']}"
+                                          label="#{InfoMsg['ppp.progr.Requirements.Upload.Label']}"
+                                          mode="advanced"
+                                          multiple="true"
+                                          sizeLimit="1000000000"
+                                          update="grdFiles" 
+                                          />
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableColumnCenter">
+                                            <p:commandButton id="btnAddFile"  ajax="true"
+                                                             actionListener="#{PreInvRequestController.savePreInvRequest()}"
+                                                             value="#{InfoMsg['ppp.progr.Requirements.Upload.UploadLabel']}"
+                                                             update="fupldPreInvReq,grdFiles">
+                                            </p:commandButton>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <p:dataTable id="grdFiles"  var="reqFiles" 
+                                        value="#{PreInvRequestController.itsRUFDataModel}"
+                                        paginator="true" rows="5"  
+                                        emptyMessage="#{pppMsg['ppp.progr.InvPrefileSearch.NoRecords']}"
+                                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                        rowsPerPageTemplate="5,10,15"
+                                        >
+                                     <f:facet name="header">
+                                      Archivos guardados.
+                                    </f:facet>
+                                    
+                              <!--      <p:column sortBy="#{reqFiles.requestUpLoadFileId}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{pppMsg['ppp.progr.Id']}" />
+                                        </f:facet>
+                                        <h:outputText value="#{reqFiles.requestUpLoadFileId}" />
+                                    </p:column> -->
+                                    
+                                    <p:column sortBy="#{reqFiles.name}">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{pppMsg['ppp.progr.Requirements.FileName']}" />
+                                        </f:facet>
+                                        <h:outputText value="#{reqFiles.name}" />
+                                    </p:column>
+
+                                   <!-- <p:column sortBy="#{reqFiles.requestUpLoadFileDesc}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{pppMsg['ppp.progr.Requirements.Type']}" />
+                                        </f:facet>
+                                        <h:outputText value="#{reqFiles.requestUpLoadFileDesc}" />
+                                    </p:column> -->
+                                    
+                                    <p:column>
+                                        <p:commandButton
+                                            id="btnDeleteDocument" 
+                                            title="#{pppMsg['ppp.delete']}"
+                                            icon="ui-icon-trash"
+                                            onclick="confirmation.show()">
+                                            <f:setPropertyActionListener 
+                                                value="#{reqFiles}"
+                                                target="#{PreInvRequestController.itsSelectedRUFile}" /> 
+                                        </p:commandButton>
+                                    </p:column>
+                                    
+                                    <p:column>
+                                        <p:commandButton 
+                                                style="width: 95%"
+                                                id="downloadDocument"
+                                                value="#{InfoMsg['ppp.progr.Requirements.Download']}"
+                                                title="#{InfoMsg['ppp.progr.Requirements.Download']}"
+                                                image="ui-icon-arrowthick-1-s"
+                                                ajax="false">
+                                            <f:setPropertyActionListener target="#{PreInvRequestController.itsSelectedRUFile}" value="#{reqFiles}" />
+                                            <p:fileDownload value="#{PreInvRequestController.fileStreamedContent}" />
+                                            </p:commandButton>
+                                    </p:column> 
+                                </p:dataTable>
+                                <p:confirmDialog id="confirmDialog" message="#{pppMsg['ppp.progr.Requirements.ConfirmationMessage']}"
+                                                header="#{pppMsg['options.Menu.EliminarHeader']}" severity="alert" widgetVar="confirmation"
+                                                closable="false">	
+                                    <p:commandButton id="confirm" value="#{pppMsg['ppp.progr.Requirements.Yes']}" oncomplete="confirmation.hide()"
+                                                     actionListener="#{PreInvRequestController.deleteDocument()}" style="width:50px" update="grdFiles"/>
+                                    <p:commandButton id="cancel" value="#{pppMsg['ppp.progr.Requirements.No']}" onclick="confirmation.hide()"
+                                                    style="width:50px" type="button" /> 	
+                                </p:confirmDialog>
+                            </td>
+                        </tr>
+                    </table>
+            </h:form>
+</ui:composition>
+</html>

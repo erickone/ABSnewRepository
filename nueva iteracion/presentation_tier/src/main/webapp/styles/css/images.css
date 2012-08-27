@@ -1,0 +1,25 @@
+
+.imgHeaderStyle
+{
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: transparent;
+    background-image: url("../images/iconHeaderStyle.png");
+    background-origin: padding-box;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: auto auto;
+    display: block;
+    height: 43px;
+    text-indent: -9999px;
+    width: 50px;
+    left: 10px;
+    position: absolute;
+    top: 130px
+}
+ 
+.iconEdit
+{
+    background-image: url("../images/logoSiif.png");
+}
+ 

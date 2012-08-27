@@ -1,0 +1,567 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"  >
+    <ui:composition>
+        #{financialStructureController.initFinancialStructureController()}
+        
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/validateInput.js"></script>
+        <h:form id="financialStructureForm">
+        <f:view contentType="text/html">
+            <f:loadBundle basename="com.abs.siif.ppp.resources.msgUI" var="pppMsg"/>
+            <f:loadBundle basename="com.abs.siif.ppp.resources.msgExcepUI" var="pppExcMsg"/>
+                        
+            <div>
+                <table cellpanding="1">
+                    <tr>
+                        <td>
+                            <p:messages  id="msgMensajes"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p:panel id="pContributions" style="width: 100%"  header="#{pppMsg['ppp.progr.FinancialStructure.Header.Panel.Contributions']}">
+                                <table cellpanding="1"
+                                        width="99.5%">
+                                    <tr>
+                                        <td></td>
+                                        <th class="cellColorgray">
+                                            <h:outputText value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.Contributions.Federal']}" />
+                                        </th>
+                                        <th class="cellColorgray">
+                                            <h:outputText value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.Contributions.State']}"/>
+                                        </th>
+                                        <th class="cellColorgray">
+                                            <h:outputText value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.Contributions.Municipal']}" />
+                                        </th>
+                                        <th class="cellColorgray">
+                                            <h:outputText value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.Contributions.Particulars']}"/>
+                                        </th>
+                                        <!--<th class="cellColorgray">
+                                            <h:outputText value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.Contributions.Kind']}" />
+                                        </th>-->
+                                        <th class="cellColorgray">
+                                            <h:outputText value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.Contributions.Total']}"/>
+                                        </th>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                          <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                                    </td>
+                                                    <td>
+                                                        <h:outputText value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.Contributions.Asignation']}" />
+                                                    </td>
+                                                </tr>
+                                            </table>  
+                                        </td>
+                                        <td>
+                                            <p:inputText id="asigFederal" 
+                                                         value="#{financialStructureController.asigFed}"  
+                                                         style="width: 150px; text-align: right"
+                                                         required="TRUE"
+                                                         label="#{pppMsg['ppp.progr.FinancialStructure.AssignedFederal']}"
+                                                         onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"> 
+                                                <p:ajax id="onblur" event="blur"  update="asigTotal totalFederal totalTotal" listener="#{financialStructureController.calculateTotals()}"/>
+                                            </p:inputText>
+                                        </td>
+                                        <td>
+                                            <p:inputText id="asigEstatal" 
+                                                         value="#{financialStructureController.asigEst}"  
+                                                         style="width: 150px; text-align: right" 
+                                                         required="TRUE"
+                                                         label="#{pppMsg['ppp.progr.FinancialStructure.AssignedEst']}"
+                                                         onkeypress="return soloNumeros(event, this.value)" onkeyup="format(this)">
+                                                <p:ajax id="onblur2" event="blur" update="asigTotal totalEstatal totalTotal" listener="#{financialStructureController.calculateTotals()}"/>
+                                            </p:inputText>
+                                        </td>
+                                        <td>
+                                            <p:inputText id="asigMunicipal" 
+                                                         value="#{financialStructureController.asigMun}"  
+                                                         style="width: 150px; text-align: right" 
+                                                         required="TRUE"
+                                                         label="#{pppMsg['ppp.progr.FinancialStructure.AssignedMun']}"
+                                                         onkeypress="return soloNumeros(event, this.value)" onkeyup="format(this)">
+                                                <p:ajax id="onblur3" event="blur" update="asigTotal totalMunicipal totalTotal" listener="#{financialStructureController.calculateTotals()}"/>
+                                            </p:inputText>
+                                        </td>
+                                        <td>
+                                            <p:inputText id="asigParticular" 
+                                                         value="#{financialStructureController.asigPart}"  
+                                                         style="width: 173px; text-align: right"
+                                                         required="TRUE"
+                                                         label="#{pppMsg['ppp.progr.FinancialStructure.AssignedPart']}"
+                                                         onkeypress="return soloNumeros(event, this.value)" onkeyup="format(this)">
+                                                <p:ajax id="onblur4" event="blur" update="asigTotal totalParticular totalTotal" listener="#{financialStructureController.calculateTotals()}"/>
+                                            </p:inputText>
+                                        </td>
+                                        <td>
+                                            <p:inputText id="asigTotal" 
+                                                         readonly="true" 
+                                                         value="#{financialStructureController.asigTotal}"  
+                                                         style="width: 150px; background-color: #BDBDBD; text-align: right" ></p:inputText>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                          <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                                    </td>
+                                                    <td>
+                                                         <h:outputText value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.Contributions.Aditional']}" />
+                                                    </td>
+                                                </tr>
+                                            </table>   
+                                        </td>
+                                        <td>
+                                            <p:inputText id="adicionalFederal" 
+                                                         value="#{financialStructureController.adicionalFed}" 
+                                                         style="width: 150px; text-align: right" 
+                                                         required="TRUE"
+                                                         label="#{pppMsg['ppp.progr.FinancialStructure.AddFederal']}"
+                                                         onkeypress="return soloNumeros(event, this.value)" onkeyup="format(this)">
+                                                <p:ajax id="onblur6" event="blur" update="adicionalTotal totalFederal totalTotal" listener="#{financialStructureController.calculateTotals()}"/>
+                                            </p:inputText>
+                                        </td>
+                                        <td>
+                                            <p:inputText id="adicionalEstatal" 
+                                                         value="#{financialStructureController.adicionalEst}" 
+                                                         style="width: 150px; text-align: right" 
+                                                         required="TRUE"
+                                                         label="#{pppMsg['ppp.progr.FinancialStructure.AddEst']}"
+                                                         onkeypress="return soloNumeros(event, this.value)" onkeyup="format(this)">
+                                                <p:ajax id="onblur7" event="blur" update="adicionalTotal totalEstatal totalTotal" listener="#{financialStructureController.calculateTotals()}"/>
+                                            </p:inputText>
+                                        </td>
+                                        <td>
+                                            <p:inputText id="adicionalMunicipal" 
+                                                         value="#{financialStructureController.adicionalMun}" 
+                                                         style="width: 150px; text-align: right" 
+                                                         required="TRUE"
+                                                         label="#{pppMsg['ppp.progr.FinancialStructure.AddMun']}"
+                                                         onkeypress="return soloNumeros(event, this.value)" onkeyup="format(this)">
+                                                <p:ajax id="onblur8" event="blur" update="adicionalTotal totalMunicipal totalTotal" listener="#{financialStructureController.calculateTotals()}"/>
+                                            </p:inputText>
+                                        </td>
+                                        <td>
+                                            <p:inputText id="adicionalParticular" 
+                                                         value="#{financialStructureController.adicionalPart}" 
+                                                         style="width: 173px; text-align: right" 
+                                                         required="TRUE"
+                                                         label="#{pppMsg['ppp.progr.FinancialStructure.AddPart']}"
+                                                         onkeypress="return soloNumeros(event, this.value)" onkeyup="format(this)">
+                                                <p:ajax id="onblur9" event="blur" update="adicionalTotal totalParticular totalTotal" listener="#{financialStructureController.calculateTotals()}"/>
+                                            </p:inputText>
+                                        </td>
+                                        <td>
+                                            <p:inputText id="adicionalTotal" 
+                                                         readonly="true" 
+                                                         value="#{financialStructureController.adicionalTotal}" 
+                                                         style="width: 150px; background-color: #BDBDBD; text-align: right" ></p:inputText>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <h:outputText value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.Contributions.Total']}" />
+                                        </td>
+                                        <td>
+                                            <p:inputText id="totalFederal" 
+                                                         readonly="true" 
+                                                         value="#{financialStructureController.totalFederal}" 
+                                                         style="width: 150px; background-color: #BDBDBD; text-align: right" ></p:inputText>
+                                        </td>
+                                        <td>
+                                            <p:inputText id="totalEstatal" 
+                                                         readonly="true" 
+                                                         value="#{financialStructureController.totalEstatal}" 
+                                                         style="width: 150px; background-color: #BDBDBD; text-align: right" ></p:inputText>
+                                        </td>
+                                        <td>
+                                            <p:inputText id="totalMunicipal" 
+                                                         readonly="true" 
+                                                         value="#{financialStructureController.totalMunicipal}" 
+                                                         style="width: 150px; background-color: #BDBDBD; text-align: right" ></p:inputText>
+                                        </td>
+                                        <td>
+                                            <p:inputText id="totalParticular" 
+                                                         readonly="true" 
+                                                         value="#{financialStructureController.totalParticular}" 
+                                                         style="width: 173px; background-color: #BDBDBD; text-align: right" ></p:inputText>
+                                        </td>
+                                        <td>
+                                            <p:inputText id="totalTotal" 
+                                                         readonly="true" 
+                                                         value="#{financialStructureController.totalTotal}" 
+                                                         style="width: 150px; background-color: #BDBDBD; text-align: right" ></p:inputText>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" align="right" style="padding-right: 74px">
+                                            <p:commandButton id="btnSave"
+                                            value="#{pppMsg['common.save']}" 
+                                            actionListener="#{financialStructureController.saveFinancialStrcuture()}"
+                                            update="@form pRelation" onmouseover="this.focus();"/>  
+                                        </td>
+                                    </tr>
+
+                                </table>  
+                            </p:panel>  
+                        </td>
+                    </tr>
+                    <tr><td></td></tr> 
+                    <tr>
+                        <td>
+                            <p:panel id="pApplicationsBudget" binding="#{panel1}" style="width: 100%" header="#{pppMsg['ppp.progr.FinancialStructure.Header.Panel.ApplicationBudget']}">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <p:panel id="panel" style="width: 100%">
+
+                                                                                               
+                                               <p:dataTable id="gridApplicationBudget"
+                                                                emptyMessage=""
+                                                                value="#{financialStructureController.applicationBudgetList}"
+                                                                selection="#{financialStructureController.selectesAppBudgetDto}"
+                                                                var="appBudgetList"
+                                                                >      
+
+                                                        <p:column >
+                                                            <f:facet name="header">
+                                                                <h:outputText
+                                                                    value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.ApplicationBudget.UEG']}" />
+                                                            </f:facet>                                                                    
+                                                           <p:selectOneMenu id="cboUEG"
+                                                                            value="#{appBudgetList.itsSelectedUEG}"  
+                                                                            style="width:140px" 
+                                                                            disabled="#{appBudgetList.disableAllCbo}">
+                                                                <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}" />
+                                                                <f:selectItems value="#{financialStructureController.itsItemsUEGCbo}"
+                                                                                var="objUEG" 
+                                                                                itemLabel="#{objUEG.dependenceKey}"
+                                                                                itemValue="#{objUEG.dependenceId}"/>
+                                                                <f:ajax render=":#{panel1.clientId}" event="change"
+                                                                            listener="#{financialStructureController.changeListenerCboUEG()}" />
+                                                            </p:selectOneMenu>
+                                                        </p:column>
+
+                                                        <p:column >
+                                                            <f:facet name="header">
+                                                                <h:outputText
+                                                                    value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.ApplicationBudget.Partida']}" />
+                                                            </f:facet>                                                                    
+                                                           <p:selectOneMenu id="cboPartida"
+                                                                            value="#{appBudgetList.itsSelectedPartida}"                                                                            
+                                                                            disabled="#{appBudgetList.disableAllCbo}"
+                                                                            style="width:140px">
+                                                                <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}" />
+                                                                <f:selectItems value="#{financialStructureController.itsItemsPartidaCbo}"
+                                                                                var="objExp"
+                                                                                itemLabel="#{financialStructureController.convertToString(objExp.objectExpenseKey)}"
+                                                                                itemValue="#{objExp.objectExpenseId}"/>
+                                                                    <f:ajax render=":#{panel1.clientId}"
+                                                                            listener="#{financialStructureController.changeListenerCboPartida()}" />
+                                                            </p:selectOneMenu>
+                                                        </p:column>
+
+
+                                                        <p:column >
+                                                            <f:facet name="header">
+                                                                <h:outputText
+                                                                    value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.ApplicationBudget.D']}" />
+                                                            </f:facet>
+                                                            <p:selectOneMenu id="cboD"
+                                                                             value="#{appBudgetList.itsSelectedD}"                                                                           
+                                                                            disabled="#{appBudgetList.disableAllCbo}"
+                                                                            style="width:140px">
+                                                                <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}" />
+                                                                <f:selectItems value="#{appBudgetList.itsItemsDCbo}"
+                                                                            var="itemsD"
+                                                                            itemLabel="#{itemsD.destinyObjectEpenseRUBUDestiny}-#{itemsD.destinyObjectEpenseRUBUDestinyDesc}"
+                                                                            itemValue="#{itemsD.destinyObjectEpenseRUBUDestiny}"/>
+                                                                <f:ajax render=":#{panel1.clientId}"
+                                                                        listener="#{financialStructureController.changeListenerCboD()}" />
+                                                            </p:selectOneMenu> 
+                                                        </p:column>
+
+
+                                                        <p:column >
+                                                            <f:facet name="header">
+                                                                <h:outputText
+                                                                    value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.ApplicationBudget.Concept']}" />
+                                                            </f:facet> 
+                                                            <p:inputText readonly="true" id="txtInputConcept" style="width: 176px" value="#{appBudgetList.concept}"/>  
+                                                               
+                                                        </p:column>
+
+
+                                                        <p:column >
+                                                            <f:facet name="header">
+                                                                <h:outputText
+                                                                    value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.ApplicationBudget.Techo']}" />
+                                                            </f:facet>
+                                                            <p:inputText  readonly="true"  id="txtTecho" style="width: 140px; text-align: right" value="#{appBudgetList.techo}"/>                                                   
+                                                        </p:column>
+
+
+                                                        <p:column >
+                                                            <f:facet name="header">
+                                                                <h:outputText
+                                                                    value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.ApplicationBudget.Assigned']}" />
+                                                            </f:facet>
+                                                            <p:inputText  readonly="true" 
+                                                                          id="txtAssigned" 
+                                                                          style="width: 140px; text-align: right"
+                                                                          value="#{appBudgetList.asigned}"/>                                                   
+                                                        </p:column>
+
+
+                                                        <p:column >
+                                                            <f:facet name="header">
+                                                                <h:outputText
+                                                                    value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.ApplicationBudget.ForAssigned']}" />
+                                                            </f:facet>
+                                                            <p:inputText  readonly="true"  
+                                                                          id="txtForAssigned" 
+                                                                          style="width: 140px; text-align: right" 
+                                                                          value="#{appBudgetList.forAsigned}"/>                                                   
+                                                        </p:column>  
+                                                   
+                                                       <!--<p:column>
+                                                            <f:facet name="header">
+                                                                <h:outputText
+                                                                    value="" />
+                                                            </f:facet>
+                                                           <table style="border-color: white">
+                                                               <tr>
+                                                                   <td>
+                                                                       <p:selectBooleanCheckbox disabled="#{appBudgetList.disableAllCbo}" value="#{appBudgetList.aditionalCheck}" />                                                               
+                                                                   </td>
+                                                                   <td>
+                                                                       <h:outputText value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.ApplicationBudget.Aditional']}" />                                                    
+                                                                   </td>
+                                                               </tr>
+                                                           </table>
+                                                        </p:column>-->
+                                                   
+                                                </p:dataTable> 
+
+                                            </p:panel>
+
+                                        </td>
+                                        <td style="vertical-align: top"> 
+
+                                            <p:commandButton id="btnAddRow" 
+                                                            binding="#{button}"
+                                                            actionListener="#{financialStructureController.addApplicationBudgetRow()}"
+                                                            update="panel btnAddRow btnAddRElationRow pRelation"
+                                                            value="#{InfoMsg['ppp.progr.FinancialStructure.AddRow']}"
+                                                            disabled="#{financialStructureController.enableAddRow}">
+                                            </p:commandButton>
+                                            <p:tooltip id="toolTipAdd" value="#{pppMsg['ppp.add']}" for="btnAddRow" showEffect="fade" hideEffect="fade"/>
+
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </p:panel>
+                        </td>
+                    </tr>
+                    <tr><td></td></tr>                   
+                    <tr>
+                        <td>
+                            
+                            <p:panel id="pRelation" style="width: 100%" binding="#{panel2}" header="#{pppMsg['ppp.progr.FinancialStructure.Header.Panel.Relation']}">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <p:panel id="panelRelationTable" style="width: 100%">
+
+                                                <p:dataTable id="relationTable"
+                                                                var="relationList"
+                                                                rowIndexVar="index"
+                                                                emptyMessage=""
+                                                                value="#{financialStructureController.relationList}">
+                                                        
+                                                        <p:column style="width: 216px">
+                                                            <f:facet name="header">
+                                                                <h:outputText
+                                                                    value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.Relation.KeyBudget']}" />
+                                                            </f:facet>
+                                                            <p:inputText readonly="true" disabled="#{relationList.disableAll}" id="txtKeyBudget" style="width: 216px" value="#{relationList.clavePresupuestal}"/>                                                   
+                                                        </p:column>
+
+
+                                                        <p:column style="width: 205px">
+                                                            <f:facet name="header">
+                                                                <h:outputText
+                                                                    value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.Relation.FundingSource']}" />
+                                                            </f:facet>                                                                          
+                                                                <p:selectOneMenu  id="cboFinancialSource"
+                                                                                  value="#{relationList.itsSelectedFuente}"
+                                                                                  style="width: 198px" panelStyle="width: 400px"
+                                                                                   disabled="#{relationList.disableAll}">
+                                                                    <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}" />
+                                                                    <f:selectItems value="#{relationList.itsItemsFuenteCbo}"
+                                                                                    var="appBudget"
+                                                                                    itemLabel="#{appBudget.financingSourceKey} #{appBudget.financingSourceDescription}"
+                                                                                    itemValue="#{appBudget.financingSourceId}"/>
+                                                                    <f:ajax render="txtExpiration txtTechoCve txtstateAssigned txtAditionalAssigned"
+                                                                        listener="#{financialStructureController.changeListenerCboFinancialSource()}" />
+                                                                </p:selectOneMenu> 
+                                                        </p:column>
+
+
+                                                        <p:column style="width: 150px">
+                                                            <f:facet name="header">
+                                                                <h:outputText
+                                                                    value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.Relation.Eexpiration']}" />
+                                                            </f:facet>
+                                                            <p:inputText  disabled="#{relationList.disableAll}" readonly="true" id="txtExpiration" style="width: 150px" value="#{relationList.vencimiento}"/>                                                   
+                                                        </p:column>
+
+
+                                                        <p:column style="width: 160px">
+                                                            <f:facet name="header">
+                                                                <h:outputText
+                                                                    value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.Relation.TechoCve']}" />
+                                                            </f:facet>
+                                                            <p:inputText  disabled="#{relationList.disableAll}" readonly="true" id="txtTechoCve" style="width: 160px; text-align: right" value="#{relationList.techoCve}"/>                                                   
+                                                        </p:column>
+
+
+                                                        <p:column style="width: 180px">
+                                                            <f:facet name="header">
+                                                                <h:outputText
+                                                                    value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.Relation.StateAssigned']}" />
+                                                            </f:facet>
+                                                            <p:inputText  disabled="#{relationList.disableEstatal}" 
+                                                                          id="txtstateAssigned" 
+                                                                          onkeypress="return soloNumeros(event, this.value)" 
+                                                                          onkeyup="format(this)"
+                                                                          style="width: 180px; text-align: right" 
+                                                                          value="#{relationList.asignadoEstatal}"/>                                                   
+                                                        </p:column>
+
+
+                                                        <p:column style="width: 180px">
+                                                            <f:facet name="header">
+                                                                <h:outputText
+                                                                    value="#{pppMsg['ppp.progr.FinancialStructure.Header.Table.Relation.SditionalAssigned']}" />
+                                                            </f:facet>
+                                                            <p:inputText disabled="#{relationList.disableAditional}" 
+                                                                         onkeypress="return soloNumeros(event, this.value)" 
+                                                                         onkeyup="format(this)"
+                                                                         id="txtAditionalAssigned" 
+                                                                         style="width: 180px; text-align: right" 
+                                                                         value="#{relationList.asignadoAdicional}"/>                                                   
+                                                        </p:column>   
+                                                   
+                                                        <p:column>
+                                                            <p:commandButton id="btnEditRelation"                                             
+                                                                        icon="ui-common-icon-edit"
+                                                                        onclick="confirmationEdit.show()"
+                                                                        disabled="#{financialStructureController.btnDisabledEdit(index)}" >
+                                                            <f:setPropertyActionListener value="#{relationList}" 
+                                                                                         target="#{financialStructureController.theirEditRelation}"
+                                                                                        />                                
+                                                            </p:commandButton> 
+                                                            <p:tooltip id="toolTipEdit" value="#{pppMsg['ppp.edit']}" for="btnEditRelation" showEffect="fade" hideEffect="fade"/>
+                                                        </p:column> 
+                                                   
+                                                        <p:column>
+                                                            <p:commandButton id="btnDeleteRelation"                                             
+                                                                        icon="ui-common-icon-delete" 
+                                                                        onclick="confirmation.show()"
+                                                                        disabled="#{financialStructureController.btnDisabledDelete(index)}">
+                                                            <f:setPropertyActionListener value="#{relationList}" 
+                                                                                         target="#{financialStructureController.theirDeleteRelation}"
+                                                                                        />                                
+                                                            </p:commandButton> 
+                                                            <p:tooltip id="toolTipDelete" value="#{pppMsg['common.delete']}" for="btnDeleteRelation" showEffect="fade" hideEffect="fade"/>
+                                                        </p:column>
+                                                </p:dataTable>
+                                                
+                                                <!--CONFIRM DE ELIMINAR-->
+                                                    
+                                                <p:confirmDialog id="confirmDialog" message="#{pppMsg['ppp.progr.FinancialStructure.ConfirmationMessageDelete']}"
+                                                                header="#{pppMsg['ppp.progr.FinancialStructure.ConfirmationTitle']}" severity="alert" widgetVar="confirmation"
+                                                                closable="false" style="width: 470px"> 	
+                                                    <p:commandButton id="confirm" value="#{pppMsg['ppp.progr.InvPrefileSearch.Yes']}" oncomplete="confirmation.hide()"
+                                                                    actionListener="#{financialStructureController.deleteRelation()}" style="width:50px" update=":#{panel2.clientId}"/>
+                                                    <p:commandButton id="cancel" value="#{pppMsg['ppp.progr.InvPrefileSearch.No']}" onclick="confirmation.hide()"
+                                                                    style="width:50px" type="button" /> 	
+                                                </p:confirmDialog>
+                                                
+                                                <!--CONFIRM DE EDICION-->
+                                                    
+                                                <p:confirmDialog id="confirmDialogEdit" message="#{pppMsg['ppp.progr.FinancialStructure.ConfirmationMessageEdit']}"
+                                                                header="#{pppMsg['ppp.progr.FinancialStructure.ConfirmationTitle']}" severity="alert" widgetVar="confirmationEdit"
+                                                                closable="false" style="width: 470px"> 	
+                                                    <p:commandButton id="confirmEdit" value="#{pppMsg['ppp.OK']}" oncomplete="confirmation.hide()"
+                                                                    actionListener="#{financialStructureController.editRelation()}" style="width:100px" update=":#{panel2.clientId}"/>
+                                                    <!--<p:commandButton id="cancel" value="#{pppMsg['ppp.progr.InvPrefileSearch.No']}" onclick="confirmation.hide()"
+                                                                    style="width:50px" type="button" /> -->	
+                                                </p:confirmDialog>
+
+                                            </p:panel>
+
+                                        </td>
+                                        <td style="vertical-align: top"> 
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <p:commandButton id="btnAddRElationRow" 
+                                                                    actionListener="#{financialStructureController.saveRelation()}"
+                                                                    update="msgMensajes panelRelationTable panel btnAddRow btnAddRElationRow pRelation"
+                                                                    value="#{InfoMsg['ppp.save']}"                                                        
+                                                                    disabled="#{financialStructureController.enableAddRelation}">
+                                                        </p:commandButton>
+                                                        <!--<p:tooltip id="toolTipSave" value="#{pppMsg['common.save']}" for="btnAddRElationRow" showEffect="fade" hideEffect="fade"/>-->
+                                                     </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>                                                        
+                                                        <p:commandButton id="btnCancel" 
+                                                                    actionListener="#{financialStructureController.cancelRelation()}"
+                                                                    update="msgMensajes panelRelationTable panel btnAddRow btnAddRElationRow pRelation"
+                                                                    value="#{InfoMsg['ppp.cancel']}"                                                        
+                                                                    disabled="#{financialStructureController.enableAddRelation}">
+                                                        </p:commandButton>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </p:panel>
+                        </td>
+                    </tr>
+                    <tr><td></td></tr>
+                    <tr>
+                        <td align="right">
+                           <!-- <p:commandButton id="btnSave"
+                                            value="#{pppMsg['common.save']}" 
+                                            actionListener="#{financialStructureController.saveFinancialStrcuture()}"
+                                            update="@form pRelation" onmouseover="this.focus();"/>  -->
+                            
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+
+            
+        </f:view>
+        </h:form>
+</ui:composition>
+</html>

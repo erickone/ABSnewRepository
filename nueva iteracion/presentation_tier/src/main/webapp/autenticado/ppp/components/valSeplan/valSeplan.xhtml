@@ -1,0 +1,176 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" xmlns:cr="http://java.sun.com/jsp/jstl/core">
+    <ui:composition>
+        #{seplanValidationController.init()}
+        <h:form id="frmValSeplan" enctype="multipart/form-data">
+            <table>
+                <tr>
+                    <td>
+                        <p:messages autoUpdate="true" id="msgs"/>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="width:650;overflow-x:auto" >
+                <div class="tabular">
+                    <div class="tabular-row">
+                        <p:panel id="panproposito" header="#{pppMsg['ppp.progr.ValSeplan.Header']}">
+                            <div class="tabular-row">
+                                <div class="tabular-cell" style="width:450" />
+                                <ui:repeat var="comp" value="#{seplanValidationController.componentList}" varStatus="row">
+                                </ui:repeat>
+                            </div>
+                            <ui:repeat var="question" value="#{seplanValidationController.theirPreguntasProposito}"  varStatus="rowquestion">
+                                <div class="tabular-row">
+                                    <div class="tabular-cell" style="width:450"> 
+                                        <h:outputText value="#{question.question}"/>
+                                    </div>                           
+                                    
+                                    <cr:forEach begin="1" end="#{seplanValidationController.componentList.size()}">
+                                        <div class="tabular-cell" style="width:100"/> 
+                                    </cr:forEach>
+                                    <ui:repeat var="comp" value="#{seplanValidationController.componentList[0]}" varStatus="row">
+                                        <div class="tabular-cell"> 
+                                            <p:selectOneRadio
+                                                value="#{seplanValidationController.evaluationMap[comp][question.indexQuestion].validationAnswer}">
+                                                <f:selectItem itemLabel="#{question.answer[0]}" itemValue="true"/>
+                                                <f:selectItem itemLabel="#{question.answer[1]}" itemValue="false"/>
+                                            </p:selectOneRadio>
+                                        </div>
+                                    </ui:repeat>
+                                </div>
+                            </ui:repeat>
+                        </p:panel>
+                    </div>
+                    <div class="tabular-row">
+                        <p:panel id="pancomponente" header="#{pppMsg['ppp.progr.ValSeplan.Components']}">
+                            <div class="tabular-row">
+                                <div class="tabular-cell" style="width:450" />
+                                <ui:repeat var="comp" value="#{seplanValidationController.componentList}" varStatus="row">
+                                    <div class="tabular-cell"> 
+                                        <h:outputText value="#{comp.compDesc}"/>
+                                    </div>
+                                </ui:repeat>
+                            </div>
+                            <ui:repeat var="question" value="#{seplanValidationController.theirPreguntasComponente}"  varStatus="rowquestion">
+                                <div class="tabular-row">
+                                    <div class="tabular-cell" style="width:450"> 
+                                        <h:outputText value="#{question.question}"/>
+                                    </div>                            
+
+                                    <ui:repeat var="comp" value="#{seplanValidationController.componentList}" varStatus="row">
+                                        <div class="tabular-cell"> 
+                                            <p:selectOneRadio
+                                                value="#{seplanValidationController.evaluationMap[comp][question.indexQuestion].validationAnswer}">
+                                                <f:selectItem itemLabel="#{question.answer[0]}" itemValue="true"/>
+                                                <f:selectItem itemLabel="#{question.answer[1]}" itemValue="false"/>
+                                            </p:selectOneRadio>
+                                        </div>
+                                    </ui:repeat>
+                                </div>
+                            </ui:repeat>
+                        </p:panel>
+                    </div>
+                    <div class="tabular-row">
+                        <p:panel id="panindicador" header="#{pppMsg['ppp.progr.ValSeplan.Indicators']}">
+                            <div class="tabular-row">
+                                <div class="tabular-cell" style="width:450" />
+                                <ui:repeat var="comp" value="#{seplanValidationController.componentList}" varStatus="row">
+                                    <div class="tabular-cell"> 
+                                        <h:outputText value="#{comp.compDesc}"/>
+                                    </div>
+                                </ui:repeat>
+                            </div>
+                            <ui:repeat var="question" value="#{seplanValidationController.theirPreguntasIndicadores}"  varStatus="rowquestion">
+                                <div class="tabular-row" style="width:450">
+                                    <div class="tabular-cell"> 
+                                        <h:outputText value="#{question.question}"/>
+                                    </div>                            
+
+                                    <ui:repeat var="comp" value="#{seplanValidationController.componentList}" varStatus="row">
+                                        <div class="tabular-cell"> 
+                                                <p:selectOneRadio
+                                                    value="#{seplanValidationController.evaluationMap[comp][question.indexQuestion].validationAnswer}">
+                                                    <f:selectItem itemLabel="#{question.answer[0]}" itemValue="true" />
+                                                    <f:selectItem itemLabel="#{question.answer[1]}" itemValue="false" />                                                
+                                                </p:selectOneRadio>
+                                          </div>
+                                    </ui:repeat>
+                                </div>
+                            </ui:repeat>
+                        </p:panel>
+                    </div>
+                    <div class="tabular-row">
+                        <p:panel id="panmeta" header="#{pppMsg['ppp.progr.ValSeplan.Goals']}">
+                            <div class="tabular-row">
+                                <div class="tabular-cell" style="width:450" />
+                                <ui:repeat var="comp" value="#{seplanValidationController.componentList}" varStatus="row">
+                                    <div class="tabular-cell"> 
+                                        <h:outputText value="#{comp.compDesc}"/>
+                                    </div>
+                                </ui:repeat>
+                            </div>
+                            <ui:repeat var="question" value="#{seplanValidationController.theirPreguntasMetas}"  varStatus="rowquestion">
+                                <div class="tabular-row">
+                                    <div class="tabular-cell" style="width:450"> 
+                                        <h:outputText value="#{question.question}"/>
+                                    </div>
+                                    <ui:repeat var="comp" value="#{seplanValidationController.componentList}" varStatus="row">
+                                        <div class="tabular-cell"> 
+                                            <p:selectOneRadio
+                                                value="#{seplanValidationController.evaluationMap[comp][question.indexQuestion].validationAnswer}">
+                                                <f:selectItem itemLabel="#{question.answer[0]}" itemValue="true"/>
+                                                <f:selectItem itemLabel="#{question.answer[1]}" itemValue="false"/>
+                                            </p:selectOneRadio>
+                                        </div>
+                                    </ui:repeat>
+                                </div>
+                            </ui:repeat>
+                        </p:panel>
+                    </div>                    
+                </div>
+            </div>
+            <div style="width:650;overflow-x:auto">
+                <div class="tabular-row">
+                    <div class="tabular-cell" style="width:450">
+                        <h:outputText value="#{pppMsg['ppp.progr.ValSeplan.Observations']}"/>
+                    </div>
+                    <div class="tabular-cell">
+                        <p:inputTextarea 
+                            id="id001"
+                            maxlength="3000"
+                            cols="70"
+                            rows="15"
+                            value="#{seplanValidationController.observation}"/>
+                    </div>              
+                </div>
+            </div>
+            <table>
+                <tr>
+                    <td class="btnLayoutSave">
+                        <p:commandButton
+                            id="btnCambiaEstatus"
+                            value="#{pppMsg['ppp.progr.ValSeplan.StatusChange']}"
+                            actionListener="#{seplanValidationController.actualizarEstatusEnBitacora()}"
+                            ajax="true"
+                            disabled="#{seplanValidationController.btnSrvChangeStatus}"
+                            update=":tabDraftProjectDetails:frmValSeplan:btnCambiaEstatus 
+                            :frmDraftProject:lblStatusDesc
+                            :tabDraftProjectDetails:frmValSeplan:msgs"/>
+                    </td>
+                    <td>
+                        <p:commandButton
+                            id="btnGuardar"
+                            value="#{pppMsg['common.save']}"
+                            disabled="#{seplanValidationController.btnSrvSave}"
+                            actionListener="#{seplanValidationController.saveSeplanValidation()}"/>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </ui:composition>
+</html>

@@ -1,0 +1,100 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form id="frmSignatures" prependId="false" >
+            #{SignaturesController.initSignature()}
+            <p:hotkey bind="return" handler="confirmation.show()"/>
+            <p:messages id="msgSignatures" showDetail="true" showSummary="false"/>
+
+            <p:confirmDialog style="position: absolute; left: 300px; top: 0%;" id="dlgConfirm" message="#{InfoMsg['ppp.progr.InvPrefile.Signatures.messageSave']}" 
+                             header="Guardar" widgetVar="confirmation" width="600" appendToBody="true">
+                <p:messages id="msgDlg"/>
+                <table style="width: 100%">
+                    <tr>
+                        <td style="width: 50%;text-align: right ">
+                            <p:commandButton id="btnConfirmSave" value="Aceptar" onsuccess="confirmation.hide()"
+                                             update="msgSignatures"
+                                             actionListener = "#{SignaturesController.saveEditSignatures()}" />  
+                        </td>
+                        <td style="width: 50%">
+                            <p:commandButton id="btnCancel" value="Cancelar" onclick="confirmation.hide()" type="button" />
+                        </td>
+                    </tr>
+                </table>
+            </p:confirmDialog>
+
+            <table >
+                <tr >  
+                    <td>
+                        <h:outputText value="#{InfoMsg['ppp.progr.InvPrefile.Signatures.Formulated']}"/>
+                    </td>
+                    <td>
+                        <p:inputText
+                            readonly="true"
+                            id="txtFormulatedBy"
+                            value="#{SignaturesController.formulatedBy}"
+                            size="100"
+                            />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:outputText value="#{InfoMsg['ppp.progr.InvPrefile.Signatures.Revised']}"/>
+                    </td>
+                    <td>
+                        <p:inputText 
+                            id="txtRevisedBy"
+                            maxlength="155"
+                            value="#{SignaturesController.revisedBy}"
+                            size="100"
+                            />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:outputText value="#{InfoMsg['ppp.progr.InvPrefile.Signatures.RevisedFormulatedBudget']}"/>
+                    </td>
+                    <td>
+                        <p:inputText 
+                            id="txtVerifiedAndValidatedBy"
+                            maxlength="155"
+                            value="#{SignaturesController.verifiedAndValidatedBy}"
+                            size="100"
+                            />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:outputText value="#{InfoMsg['ppp.progr.InvPrefile.Signatures.Authorized']}"/>
+                    </td>
+                    <td>
+                        <p:inputText 
+                            id="txtAuthorizedBy"
+                            maxlength="100"
+                            value="#{SignaturesController.authorizedBy}"
+                            size="100"
+                            readonly="true" 
+                            />
+                    </td>
+                    <td>
+                        <p:commandButton
+                            id="btnSave"
+                            onclick="confirmation.show()"
+                            update="msgDlg"
+                            value="#{InfoMsg['ppp.progr.InvPrefile.Signatures.Save']}"
+                            actionListener = "#{SignaturesController.validateEmptyFields()}"
+                            />            
+                    </td>
+                    <td>
+                        <h:outputLink value="#{SignaturesController.imprimirReporte}" target="blank" >#{InfoMsg['ppp.progr.InvPrefile.Signatures.printReport']}</h:outputLink>
+                    </td>                    
+                </tr>
+            </table>
+        </h:form>
+    </ui:composition>
+</html>

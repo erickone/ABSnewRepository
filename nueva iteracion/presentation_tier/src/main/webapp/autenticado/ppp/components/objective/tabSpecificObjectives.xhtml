@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+
+        <table style="width: 100%">
+            <tr>
+                <td class="tableDetailsObjectiveStrategyPlanColumnLeft">
+                    <label class="commonFontDetailForm">
+                        #{pppMsg['ppp.planning.objective']}
+                    </label>
+                </td> 
+            </tr>
+            <tr>
+                <td class="tableDetailsObjectiveStrategyPlanColumnLeft">
+
+                    <p:inputTextarea id="txtSpecificObjectiveDescription" value="#{objectiveController.itsSpecificObjectiveDescription}" 
+                                     autoResize="false" maxlength="500"   disabled="#{objectiveController.itsButtonSaveIsDisabled}"       style="width: 100%;"  
+                                     >
+                    </p:inputTextarea>
+
+                </td>
+            </tr>
+            <tr> 
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <p:commandButton id="btnSaveSpecificObjective"  value="#{pppMsg['ppp.save']}" 
+                                                 update=":formTreeview:tbDetails:txtSpecificObjectiveDescription
+                                                 :formTreeview:tbDetails:btnSaveSpecificObjective
+                                                 :formTreeview:tbDetails:btnCancelSpecificObjective                                                 
+                                                 :formTreeview:tbDetails:btnNewSpecificObjective
+                                                 :formTreeview:tbDetails:grdSpecificObjective
+                                                 :formTreeview:tbDetails:cboSpecificObjectives 
+                                                 :formTreeview:tbDetails:grdStrategies"  
+                                                 actionListener="#{objectiveController.saveSpecificObjective()}"
+                                                 disabled="#{objectiveController.itsButtonSaveIsDisabled}"/>
+
+                            </td>
+                            <td>
+                                <p:commandButton id="btnCancelSpecificObjective" value="#{pppMsg['ppp.cancel']}" 
+                                                 disabled="#{objectiveController.itsButtonSaveIsDisabled}"
+                                                 update=":formTreeview:tbDetails:txtSpecificObjectiveDescription
+                                                 :formTreeview:tbDetails:btnSaveSpecificObjective
+                                                 :formTreeview:tbDetails:btnCancelSpecificObjective                                                 
+                                                 :formTreeview:tbDetails:btnNewSpecificObjective"
+                                                 actionListener="#{objectiveController.cancelSpecificObjective()}" />
+                            </td>
+                            <td>
+                                <p:commandButton id="btnNewSpecificObjective" 
+                                                 value="#{pppMsg['ppp.new']}" disabled="#{objectiveController.itsButtonNewSpecificObjectiveIsDisabled}"
+                                                 update=":formTreeview:tbDetails:txtSpecificObjectiveDescription
+                                                 :formTreeview:tbDetails:btnSaveSpecificObjective
+                                                 :formTreeview:tbDetails:btnCancelSpecificObjective                                                 
+                                                 :formTreeview:tbDetails:btnNewSpecificObjective" 
+                                                 actionListener="#{objectiveController.prepareNewSpecificObjectiveData()}"       
+                                                 />
+
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td >
+                    <p:dataTable id="grdSpecificObjective" var="specificObjective" emptyMessage="#{pppMsg['ppp.planning.emptyMessage']}" 
+                                 value="#{objectiveController.itsSpecificObjectives}"  sortBy="#{specificObjective.itsDescription}" sortOrder="ascending"
+                                 paginator="true" rows="5">  
+                        <p:column style="width: 100%"  filterBy="#{specificObjective.itsDescription}"  
+                                  filterMatchMode="contains" sortBy="#{specificObjective.itsDescription}"  
+                                  >  
+
+                            <h:outputText  style="width: 100%" value="#{specificObjective.itsDescription}"  />  
+                        </p:column> 
+                        <p:column>
+                            <p:commandButton id="btnSelectedSpecificObjective"   
+                                             update=":formTreeview:tbDetails:txtSpecificObjectiveDescription
+                                             :formTreeview:tbDetails:btnNewSpecificObjective 
+                                             :formTreeview:tbDetails:btnCancelSpecificObjective 
+                                             :formTreeview:tbDetails:btnSaveSpecificObjective" 
+                                             icon="ui-common-icon-edit" >
+
+                                <f:setPropertyActionListener value="#{specificObjective}" 
+                                                             target="#{objectiveController.itsSelectedSpecificObjective}"
+                                                             />
+
+                            </p:commandButton>
+                        </p:column> 
+                        <p:column>
+                            <p:commandButton id="btnDeleteSpecificObjective"    
+                                             update=":formTreeview:tbDetails
+                                             :formTreeview:tbDetails:grdStrategies" 
+                                             icon="ui-common-icon-delete" >
+
+                                <f:setPropertyActionListener value="#{specificObjective}" 
+                                                             target="#{objectiveController.itsSelectedDeleteSpecificObjective}"
+                                                             />
+
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+                </td>
+            </tr>
+
+        </table>
+        <p:blockUI block=":formTreeview:tbDetails" trigger="btnNewSpecificObjective 
+                   btnCancelSpecificObjective 
+                   btnSaveSpecificObjective
+                   :formTreeview:tbDetails:grdSpecificObjective:btnSelectedSpecificObjective" />
+    </ui:composition>
+</html>

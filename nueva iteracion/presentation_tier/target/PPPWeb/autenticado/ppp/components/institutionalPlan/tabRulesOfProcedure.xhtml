@@ -1,0 +1,115 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"  >
+    
+    <ui:composition>
+        <p:outputPanel id="panProcedure">
+            <table style="width: 100%; " class="tableDetailForm">
+                <tr>
+                    <td style="width: 35%">
+                        <label class="commonFontDetailForm">    
+                            #{pppMsg['ppp.planning.numberOfficialNP']} 
+                        </label>
+                    </td>
+                    <td style="text-align: left">
+                        <p:inputText   id="txtOfficialNewsNumberInnerReg" value="${institutionalPlanController.itsInstitutionalInternalReg}" 
+                                       style="width: 90%"    maxlength="500" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 35%">
+                        <label class="commonFontDetailForm">    
+                            #{pppMsg['ppp.planning.dateText']}
+                        </label>
+                    </td>
+                    <td style="text-align: left">
+                        <p:calendar id="txtDateOfOfficialNewsReg" lang="es" locale="es" 
+                                    navigator="true" readOnlyInputText="true"
+                                    pattern="dd/MM/yyyy"
+                                    maxlength="11" size="11"
+                                    value="${institutionalPlanController.itsInstitutionalInternalRegDate}" showOn="button" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 35%">
+                        <label class="commonFontDetailForm">   
+                            #{pppMsg['ppp.planning.lastUpdate']} 
+                        </label>
+                    </td>
+                    <td style="text-align: left">
+                        <p:calendar id="txtDateofLastActualization" lang="es" locale="es" 
+                                    navigator="true" readOnlyInputText="true"
+                                    pattern="dd/MM/yyyy"
+                                    maxlength="11" size="11"
+                                    value="${institutionalPlanController.itsInstitutionalActualDate}" showOn="button" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 35%">
+                        <label class="commonFontDetailForm"> 
+                            #{pppMsg['ppp.planning.organigrama']}
+                        </label>
+                    </td>
+                    <td style="text-align: left">
+                        <p:fileUpload  fileUploadListener="#{institutionalPlanController.processFileUpload}"  
+                                       update="fileNameLabel"  auto="true"  sizeLimit="1000000"  mode="advanced"
+                                       allowTypes="/(\.|\/)(gif|jpe?g|png|docx|doc|xlsx|xls|pdf|vsd|ppt|pptx)$/"
+                                       label="#{pppMsg['ppp.planning.selectFile']}"/>                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:outputLabel value="#{pppMsg['ppp.progr.TabRulesOfProcedure.FileSaving']}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h:outputText id="fileNameLabel" 
+                                     value="#{institutionalPlanController.itsInstitutionalOrganizational}"/> 
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: left">
+                        <p:commandButton 
+                            style="width: 35%"
+                            id="downloadDocument"
+                            value="#{pppMsg['ppp.progr.TabRulesOfProcedure.Download']}"
+                            title="#{pppMsg['ppp.progr.TabRulesOfProcedure.Download']}"
+                            image="ui-icon-arrowthick-1-s"
+                            ajax="false">
+                            <p:fileDownload value="#{institutionalPlanController.fileStreamedContent}" />
+                        </p:commandButton>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <p:separator id="separator"/>  
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%">
+                        <p:selectBooleanCheckbox  value="${institutionalPlanController.itsInstitutionalInvesEjec}" />
+                        <h:outputText value="#{pppMsg['ppp.planning.investEject']}" /> 
+                    </td>
+                    <td>
+                        <p:selectBooleanCheckbox value="${institutionalPlanController.itsInstitutionalInvesNorm}" />
+                        <h:outputText value="#{pppMsg['ppp.planning.investNorm']}" /> 
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%">
+                        <p:selectBooleanCheckbox value="${institutionalPlanController.itsInstitutionaBlock}" />
+                        <h:outputText value="#{pppMsg['ppp.planning.blocked']}" /> 
+                    </td>
+                    <td>
+                        <p:selectBooleanCheckbox value="${institutionalPlanController.itsInstitutionalOrganism}" />
+                        <h:outputText value="#{pppMsg['ppp.planning.organism']}" /> 
+                    </td>
+                </tr>
+            </table>
+        </p:outputPanel>
+    </ui:composition>
+</html>

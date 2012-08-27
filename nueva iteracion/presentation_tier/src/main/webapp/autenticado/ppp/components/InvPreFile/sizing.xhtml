@@ -1,0 +1,191 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+            #{sizingController.initSizing()}
+            <script type="text/javascript" src="#{request.contextPath}/resources/js/validateInput.js"  />
+        
+            <h:form id="sizingForm" prependId="false" >
+                <p:messages id="msgBudgeting" showDetail="true" showSummary="false" autoUpdate="true"  />
+                <p:panel id="panSizingDetail" >
+                     <div class="divTablePED">
+                    <div class="divSizingColumnLabel">
+                        <h:outputText style="width: 90%; text-align: center" value="#{pppMsg['ppp.progr.SizingNumber']}"/>
+                    </div>
+                    <div class="divSizingDescLabel">
+                        <h:outputText style="width: 95%; text-align: center" value="#{pppMsg['ppp.progr.SizingDesc']}"/>
+                        <h:outputText value="*" style="color: red; font-weight: bold"/>
+                    </div>
+                    <div class="divSizingColumnLabel">
+                        <h:outputText style="width: 90%; text-align: center" value="#{pppMsg['ppp.progr.SizingAmount']}"/>
+                        <h:outputText value="*" style="color: red; font-weight: bold"/>
+                    </div>    
+                    <div class="divSizingColumnLabel">
+                        <h:outputText style="width: 90%; text-align: center" value="#{pppMsg['ppp.progr.SizingIniAsig']}"/>
+                        <h:outputText value="*" style="color: red; font-weight: bold"/>
+                    </div>
+                    <div class="divSizingColumnLabel">
+                        <h:outputText style="width: 90%; text-align: center" value="#{pppMsg['ppp.progr.SizingIniPet']}"/>
+                        <h:outputText value="*" style="color: red; font-weight: bold"/>
+                    </div>
+                    <div class="divSizingColumn">
+                        <p:inputText style="width: 90%" 
+                                     disabled="true"
+                                     id="sizingNumberText" 
+                                     value="#{sizingController.count}"
+                                     converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" >
+                        </p:inputText> 
+                    </div>
+                    <div class="divSizingDesc">
+                        <p:inputText style="width: 98%" value="#{sizingController.itsSizingDesc}" id="sizingDescText" maxlength="255"/>
+                    </div>
+                    <div class="divSizingColumn">
+                        <p:inputText style="width: 90%; text-align: right" 
+                                     id="sizingCantityText" 
+                                     value="#{sizingController.itsSizingAmount}"
+                                     maxlength="25"
+                                     onkeypress=" return soloNumeros(event, this)" 
+                                     onkeyup="format(this)"
+                                     converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" >
+                                </p:inputText> 
+                    </div>
+                    <div class="divSizingColumn">
+                        <p:inputText style="width: 90%; text-align: right" 
+                                     id="sizingInitiAsigText" 
+                                     value="#{sizingController.itsSizingIniAsig}"
+                                     onkeypress=" return soloNumeros(event, this)" 
+                                     onkeyup="format(this)"
+                                     converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" >
+                                </p:inputText> 
+                    </div>
+                    <div class="divSizingColumn">
+                        <p:inputText style="width: 90%; text-align: right" 
+                                     id="sizingAdditionalRequestText" 
+                                     value="#{sizingController.itsSizingIniPetition}"
+                                     onkeypress=" return soloNumeros(event, this)" 
+                                     onkeyup="format(this)"
+                                     converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" >
+                                </p:inputText> 
+                    </div>
+                         <div style="float: left; width: 60%; height: 20px;"/>
+                         <div class ="divSizingColumn">
+                             <p:commandButton style="width: 95%" id="saveSizing" value="#{pppMsg['ppp.progr.SizingAdd']}" 
+                                              update=":tabInversionPublicaDetails:sizingForm:panSizingDetail :tabInversionPublicaDetails:sizingForm:panSizing 
+                                                     grdSizing, sizingNumberText"
+                                              actionListener="#{sizingController.saveSizingEntity()}"/>
+                         </div>
+                          <div class ="divSizingColumn">
+                             <p:commandButton style="width: 95%" id="deleteSizing" value="#{pppMsg['ppp.progr.SizingDelete']}"
+                                              update=":tabInversionPublicaDetails:sizingForm:panSizingDetail :tabInversionPublicaDetails:sizingForm:panSizing
+                                              grdSizing, sizingNumberText"
+                                              actionListener="#{sizingController.deleteSizing()}"/>
+                         </div>
+                         <div class ="divSizingColumn">
+                             <p:commandButton style="width: 95%" id="CalculateSizing" value="#{pppMsg['ppp.progr.Recalculate']}"
+                                              update=":tabInversionPublicaDetails:sizingForm:panSizingDetail :tabInversionPublicaDetails:sizingForm:panSizing"
+                                              actionListener="#{sizingController.calculatePercent()}"/>
+                         </div>
+                         <div class ="divSizingColumn">
+                             <p:commandButton style="width: 95%" id="CancelSizing" value="#{pppMsg['ppp.cancel']}"
+                                              update=":tabInversionPublicaDetails:sizingForm:panSizingDetail :tabInversionPublicaDetails:sizingForm:panSizing"
+                                              actionListener="#{sizingController.cancelSelection()}"/>
+                         </div>
+                     </div>
+                </p:panel>
+                <p:panel id="panSizing">
+                    <p:dataTable id="grdSizing"  
+                                 var="sizingEnt"
+                                 value="#{sizingController.itsListSizingmodel}"
+                                 selectionMode="single"
+                                 selection="#{sizingController.itsSelectedRow}"                                 
+                                 rowIndexVar="rowIndex"                                
+                                 emptyMessage="#{pppMsg['ppp.common.DataTable.NotFound']}">
+                        <p:ajax event="rowSelect" update=":tabInversionPublicaDetails:sizingForm:panSizingDetail" listener="#{sizingController.selectedRow()}" />
+                        <f:facet name="header">
+                            <h:outputText value="#{pppMsg['ppp.prog.Sizing']}" />
+                        </f:facet>
+                        <p:column style="width: 10%">
+                            <f:facet name="header" >                                 
+                                <h:outputText  value="#{pppMsg['ppp.progr.SizingNumber']}" />
+                            </f:facet>
+                            #{rowIndex+1}                           
+                            <!--<h:outputText value="#{sizingEnt.itsSizingconsecutive}" id="sizingNumberColumn" />-->
+                        </p:column>
+                        <p:column style="width: 40%">
+                            <f:facet name="header">
+                                <h:outputText value="#{pppMsg['ppp.progr.SizingDesc']}" />
+                            </f:facet>
+                            <h:outputText value="#{sizingEnt.itsSizingDescription}" id="sizingDescriptionColumn" />
+                        </p:column>   
+                        <p:column style="width: 10%">
+                            <f:facet name="header">
+                                <h:outputText value="#{pppMsg['ppp.progr.SizingAmount']}" />
+                            </f:facet>
+                            <div align="right">
+                            <h:outputText value="#{sizingEnt.itsSizingCantity}" id="sizingAmount"/>
+                            </div>
+                        </p:column>   
+                        <p:column style="width: 10%">
+                            <f:facet name="header">
+                                <h:outputText value="#{pppMsg['ppp.progr.SizingIniAsig']}" />
+                            </f:facet>
+                            <div align="right">
+                            <h:outputText value="#{sizingEnt.itsSizingInitial}" id="sizingInitAsgination" />
+                            </div>
+                        </p:column>   
+                        <p:column style="width: 10%">
+                            <f:facet name="header">
+                                <h:outputText value="#{pppMsg['ppp.progr.SizingIniPet']}" />
+                            </f:facet>
+                            <div align="right">
+                            <h:outputText value="#{sizingEnt.itsSizingAditional}" id="sizingAdditionalrequest" />
+                            </div>
+                        </p:column> 
+                        <p:column style="width: 10%">
+                            <f:facet name="header">
+                                <h:outputText value="#{pppMsg['ppp.progr.SizingSum']}" />
+                            </f:facet>
+                            <div align="right">
+                            <h:outputText id="sizingSummatory" value="#{sizingEnt.itsSizingSummatory}"/>
+                            </div>
+                        </p:column>
+                        <p:column style="width: 10%">
+                            <f:facet name="header">
+                                <h:outputText value="#{pppMsg['ppp.progr.SizingPercentage']}" />
+                            </f:facet>
+                            <div align="right">
+                            <h:outputText id="sizingPercent" value="#{sizingEnt.itsSizingPercent}" />
+                            </div>
+                        </p:column>
+                        <f:facet name="footer"> 
+                        <p:summaryRow>  
+                            <p:column colspan="2" style="text-align:right">  
+                                #{pppMsg['ppp.Sizing.lblTotal']}  
+                            </p:column>  
+
+                            <p:column style="text-align: right">  
+                                <h:outputText id="tot1" value="#{sizingController.itsSizingTotalAmount}"/>
+                            </p:column>  
+                            <p:column style="text-align: right">  
+                                <h:outputText id="tot2" value="#{sizingController.itsSizingTotalIniAsig}"/>
+                            </p:column>  
+                            <p:column style="text-align: right">  
+                                <h:outputText id="tot3" value="#{sizingController.itsSizingTotalIniPetition}"/>
+                            </p:column>  
+                            <p:column style="text-align: right">  
+                                <h:outputText id="tot4" value="#{sizingController.itsSizingTotalSum}"/>
+                            </p:column> 
+                            <p:column>  
+                             
+                            </p:column> 
+                        </p:summaryRow>  
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+</ui:composition>
+</html>

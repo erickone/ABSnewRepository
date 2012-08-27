@@ -1,0 +1,146 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+    <ui:define name="body">
+     <!--   <script type="text/javascript" src="#{request.contextPath}/resources/js/validateInput.js"></script> -->
+        #{ceilingBudgetKeyController.init()}
+        <div class="imgHeaderStyle" />
+        <div class="headerTitleStyle">
+            <h:outputLabel value="#{pppMsg['ppp.techo.techopresupuestalTitle']}"/>
+        </div>
+        <div class="divContentPage">
+            <h:form id="frmCatTechoPresupuestal">
+                <p:panel
+                    id="pnlTechoPresupuestal"
+                    header="#{pppMsg['ppp.techo.techopresupuestalTitle']}">
+                    
+                    
+                    <table id="ceilingDetails" style="width: 100%">
+                        <td colspan="3">
+                                <p:messages  id="msgMensajes"/>
+                        </td>
+                        <tr>
+                            <td width="250">
+                                 <h:outputText value="#{pppMsg['ppp.techo.clavetecho']}"/> 
+                            </td>
+                            <td>
+                                <p:inputText size="10"  id="txtAnio" 
+                                             value="#{ceilingBudgetKeyController.itsCeilingConfigYear}"
+                                             readonly="true" />
+                            </td>
+                            <td>
+                                <p:inputText size="50"  id="txtClave" 
+                                             value="#{ceilingBudgetKeyController.itsCeilingConfigName}"
+                                             readonly="#{ceilingBudgetKeyController.isKeydisabled}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputText value="#{pppMsg['ppp.techo.descripcion']}"/>
+                            </td>
+                            <td colspan="2">
+                                <p:inputText size="88" id="txtDescripcion" readonly="true"
+                                             value="#{ceilingBudgetKeyController.itsCeilingConfigDesc}" />
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <p:pickList id="pickList" value="#{ceilingBudgetKeyController.itsChildsDualList}"  
+                                var="child" onTransfer="ajaxSubmit()"
+                                itemLabel="#{child}"  
+                                itemValue="#{child}" >
+                        <f:facet name="sourceCaption">#{pppMsg['ppp.budget.CeilingBudgetSource']}</f:facet>  
+                        <f:facet name="targetCaption">#{pppMsg['ppp.budget.CeilingBudgetTarget']}</f:facet> 
+                        <p:column style="width:10%">  
+                            #{child.budgetKeyName}  
+                        </p:column>  
+
+                        <p:column style="width:90%">  
+                            #{child.budgetKeyDescription} 
+                        </p:column> 
+                     </p:pickList>
+                    <p:remoteCommand name="ajaxSubmit" update=":frmCatTechoPresupuestal:txtDescripcion"
+                                     actionListener="#{ceilingBudgetKeyController.updateDesc}"/>
+                    
+                    <p:dataTable id="fatherTable" var="father" value="#{ceilingBudgetKeyController.itsFatherDataModel}"   
+                                    selection="#{ceilingBudgetKeyController.selectedFather}" selectionMode="single" 
+                                    rowKey="#{father.ceilingConfigId}" paginator="true" rows="10">  
+
+                        <p:ajax event="rowSelect" listener="#{ceilingBudgetKeyController.onRowSelect}" update=":frmCatTechoPresupuestal"  />  
+                        <p:ajax event="rowUnselect" listener="#{ceilingBudgetKeyController.onRowUnselect}" update=":frmCatTechoPresupuestal"/>  
+
+                        <f:facet name="header">  
+                            Claves de Techos Presupuestales
+                        </f:facet>  
+
+                        <p:column headerText="#{pppMsg['ppp.budget.CeilingBudgetYear']}">  
+                            #{father.budgetKeyDefinition.presupuestalKeyDefinitionYear}  
+                        </p:column>
+                        
+                        <p:column headerText="#{pppMsg['ppp.budget.CeilingBudgetKey']}">  
+                            #{father.ceilingConfigName}  
+                        </p:column>  
+
+                        <p:column headerText="#{pppMsg['ppp.budget.CeilingBudgetDesc']}">  
+                            #{father.ceilingConfigDesc}  
+                        </p:column>  
+                    </p:dataTable>
+                    
+                </p:panel>
+                <hr/>                
+                <p:panel>
+                    <p:commandButton id ="btnNuevo" value="#{InfoMsg['ppp.new']}"
+                                     update=":frmCatTechoPresupuestal:msgMensajes, 
+                                     txtAnio, txtClave, txtDescripcion, pickList"
+                                     actionListener="#{ceilingBudgetKeyController.newCeilingBudgetKey()}" 
+                                     style="width:86px"/>
+                    
+                    <p:commandButton id ="btnGuardar" value="#{InfoMsg['ppp.techo.guardar']}"
+                                     update=":frmCatTechoPresupuestal:msgMensajes,
+                                     txtClave, fatherTable"
+                                     actionListener="#{ceilingBudgetKeyController.saveCeilingBudgetKey()}" 
+                                     style="width:86px"/>
+                    
+                    <p:commandButton id ="btnEliminar" value="#{InfoMsg['ppp.techo.eliminar']}" 
+                                      onclick="dlg.show();"
+                                      style="width:86px"/>
+                </p:panel>
+                
+                <p:dialog id="modalDeleteDialog" header="#{InfoMsg['options.Menu.EliminarHeader']}" widgetVar="dlg"
+                            maximizable="false" minimizable="false" closable="false"
+                            modal="true" position="center" resizable="false"
+                            height="120" width="250">
+                     <table  class="tableDetailForm">
+                         <tr>
+                             <td class="tableColumnCenter">
+                                <label class="titlesInstitutional">
+                                    <h:outputText value="#{InfoMsg['options.Menu.EliminarSeguro']}" />  
+                                </label>
+                            </td>
+                        </tr>
+                         <tr>
+                             <td class="tableColumnCenter">
+                                 <h:outputText value="#{ceilingBudgetKeyController.selectedFather.ceilingConfigName}" />  
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tableColumnCenter">
+                                <p:commandButton id="btnDeleteOK" value="#{InfoMsg['ppp.techo.eliminar']}" 
+                                                ajax="false"    
+                                                actionListener="#{ceilingBudgetKeyController.deleteCeilings()}"
+                                                style="width:86px"/>
+
+                                <p:commandButton id="btnDeleteCancel"  value="#{pppMsg['ppp.cancel']}" onclick="dlg.close()" />
+                            </td>               
+                        </tr>
+                     </table>
+                </p:dialog>
+                
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,1467 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+        <f:loadBundle basename="com.abs.siif.ppp.resources.msgUI" var="pppMsg"/>
+        <f:loadBundle basename="com.abs.siif.ppp.resources.msgExcepUI" var="pppExcMsg"/>
+        #{propositController.initProposit()}
+
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/validateInput.js"></script>
+       
+        <h:form  id="proposit" >
+
+            <p:panel id="hProposit" style="width: 1000px" header="#{pppMsg['ppp.progr.proposito']}">
+                <p:messages  id="msgs"/>
+                <p:panel id="aGP" header="#{pppMsg['ppp.progr.aGP']}"
+                         toggleable="true" closable="false" toggleSpeed="500"
+                         widgetVar="avGPR">
+                    <table class="tableDetailForm1">
+                        <!--Avance General Programado-->
+                        <tr>
+                            <td colspan="6">
+                                <h:outputText value="#{pppMsg['ppp.progr.propositoAGPr']}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Ene']}" /></th>
+                            <td>
+                                <p:inputText id="itsMapAvgralPr_ENE" readonly="true"  style="background-color:#BDBDBD;"
+                                             value="#{propositController.advanProg['ENE']}"
+                                             title="${propositController.advanProg['ENE']}"
+                                             maxlength="11" 
+                                             size="12"/>
+                                <p:tooltip for="itsMapAvgralPr_ENE" showEvent=""  hideEvent="" />
+                            </td>
+                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Feb']}" /></th>
+                            <td >
+                                <p:inputText id="itsMapAvgralPr_FEB" readonly="true" style="background-color:#BDBDBD;"
+                                             value="#{propositController.advanProg['FEB']}"
+                                             title="${propositController.advanProg['FEB']}"
+                                             maxlength="11" 
+                                             size="12" />
+                                <p:tooltip for="itsMapAvgralPr_FEB" showEvent="" hideEvent="" />
+                            </td>
+                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Mar']}" /></th>
+                            <td >
+                                <p:inputText id="itsMapAvgralPr_MAR"  readonly="true" style="background-color:#BDBDBD;"
+                                             value="#{propositController.advanProg['MAR']}"
+                                             title="${propositController.advanProg['MAR']}"
+                                             maxlength="11" 
+                                             size="12"/>
+                                <p:tooltip for="itsMapAvgralPr_MAR" showEvent="" hideEvent="" />
+                            </td>
+                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Abr']}" /></th>
+                            <td >
+                                <p:inputText id="itsMapAvgralPr_ABR"  readonly="true" style="background-color:#BDBDBD;"
+                                             value="#{propositController.advanProg['ABR']}"
+                                             title="${propositController.advanProg['ABR']}"
+                                             maxlength="11" 
+                                             size="12"/>
+                                <p:tooltip for="itsMapAvgralPr_ABR" showEvent="" hideEvent="" />
+                            </td>
+                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.May']}" /></th>
+                            <td >
+                                <p:inputText id="itsMapAvgralPr_MAY" readonly="true" style="background-color:#BDBDBD;"
+                                             value="#{propositController.advanProg['MAY']}"
+                                             title="${propositController.advanProg['MAY']}"
+                                             maxlength="11" 
+                                             size="12"/>
+                                <p:tooltip for="itsMapAvgralPr_MAY" showEvent="" hideEvent="" />
+                            </td>
+                            
+                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Jun']}" /></th>
+                            <td >
+                                <p:inputText id="itsMapAvgralPr_JUN" readonly="true" style="background-color:#BDBDBD;"
+                                             value="#{propositController.advanProg['JUN']}"
+                                             title="${propositControlleradvanProg['JUN']}"
+                                             maxlength="11" 
+                                             size="12"/>
+                                <p:tooltip for="itsMapAvgralPr_JUN" showEvent="" hideEvent="" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Jul']}" /></th>
+                            <td >
+                                <p:inputText id="itsMapAvgralPr_JUL" readonly="true" style="background-color:#BDBDBD;"
+                                             value="#{propositController.advanProg['JUL']}"
+                                             title="${propositController.advanProg['JUL']}"
+                                             maxlength="11" 
+                                             size="12"/>
+                                <p:tooltip for="itsMapAvgralPr_JUL" showEvent="" hideEvent="" />
+                            </td>
+                            
+                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Ago']}" /></th>
+                            <td >
+                                <p:inputText id="itsMapAvgralPr_AGO" readonly="true" style="background-color:#BDBDBD;"
+                                             value="#{propositController.advanProg['AGO']}"
+                                             title="${propositController.advanProg['AGO']}"
+                                             maxlength="11" 
+                                             size="12"/>
+                                <p:tooltip for="itsMapAvgralPr_AGO" showEvent="" hideEvent="" />
+                            </td>
+                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Sep']}" /></th>
+                            <td >
+                                <p:inputText id="itsMapAvgralPr_SEP" readonly="true" style="background-color:#BDBDBD;"
+                                             value="#{propositController.advanProg['SEP']}"
+                                             title="${propositController.advanProg['SEP']}"
+                                             maxlength="11" 
+                                             size="12"/>
+                                <p:tooltip for="itsMapAvgralPr_SEP" showEvent="" hideEvent="" />
+                            </td>
+                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Oct']}" /></th>
+                            <td >
+                                <p:inputText id="itsMapAvgralPr_OCT" readonly="true" style="background-color:#BDBDBD;"
+                                             value="#{propositController.advanProg['OCT']}"
+                                             title="${propositController.advanProg['OCT']}"
+                                             maxlength="11" 
+                                             size="12"/>
+                                <p:tooltip for="itsMapAvgralPr_OCT" showEvent="" hideEvent="" />
+                            </td>
+                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Nov']}" /></th>
+                            <td >
+                                <p:inputText id="itsMapAvgralPr_NOV" readonly="true" style="background-color:#BDBDBD;"
+                                             value="#{propositController.advanProg['NOV']}"
+                                             title="${propositController.advanProg['NOV']}"
+                                             maxlength="11" 
+                                             size="12"/>
+                                <p:tooltip for="itsMapAvgralPr_NOV" showEvent="" hideEvent="" />
+                            </td>
+                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Dic']}" /></th>
+                            <td >
+                                <p:inputText id="itsMapAvgralPr_DIC" readonly="true" style="background-color:#BDBDBD;"
+                                             value="#{propositController.advanProg['DIC']}"
+                                             title="${propositController.advanProg['DIC']}"
+                                             maxlength="11" 
+                                             size="12" />
+                                <p:tooltip for="itsMapAvgralPr_DIC" showEvent="" hideEvent="" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="12">
+                                <table  align="right" style="padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px">
+                                    <tr>
+                                        <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Total']}" style="font-size: small"/></th>
+                                        <td>
+                                            <p:inputText id="itsMapAvgralPr_TOTAL" readonly="true" style="background-color:#BDBDBD; width: 98px"
+                                                        value="#{propositController.advanProg['TOTAL']}"
+                                                        size="12"
+                                                        maxlength="11" 
+                                                        title="#{propositController.advanProg['TOTAL']}"/>
+                                            <p:tooltip for="itsMapAvgralPr_TOTAL" showEvent="" hideEvent="" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>                            
+                        </tr>
+                        <!--FIN Avance General Programado-->
+                    </table>
+                </p:panel>
+                <p:panel id="CompPanel" >
+                    <table border="0" class="tableDetailForm1">
+                        <tr>
+                            <td>
+                                <h:outputText value="#{pppMsg['ppp.progr.compNumber']}" />
+                            </td> 
+                            <td>
+                                <p:inputText id="number"
+                                             value="#{propositController.compNumb}"
+                                             size="3" readonly="true">
+
+
+                                </p:inputText>
+                            </td>
+                            <td colspan="3">
+                            </td>    
+                        </tr>    
+                        <tr>
+                            <td width="10%">
+                                <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                <h:outputText value="#{pppMsg['ppp.progr.propositoComp']}" />
+                            </td>
+                            <td >
+                                <p:inputText id="componenteProposit"
+                                             value="#{propositController.component.compDesc}"
+                                             maxlength="255" size="40"
+                                             >
+
+
+                                </p:inputText>
+                            </td>
+                            <td align="right">
+                                <h:outputText value="*"  style="color: red; font-weight: bold"/>
+                                <h:outputText value="#{pppMsg['ppp.progr.propositoResponsable']}" />
+                            </td>
+                            <td >
+                                <p:inputText id="respons" maxlength="155" size="40"
+                                             value="#{propositController.component.reponsable}"  /> 
+                            </td>
+                            <td>
+                                <p:commandButton id="modalActPropAddBtn"
+                                                 value="#{pppMsg['ppp.progr.propositoBtnActiv']}"
+                                                 onclick="dlg3.show();"
+                                                 update=":tabDraftProjectDetails:proposit:addActividad"
+                                                 disabled="#{propositController.disableActiv}"
+                                                 />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                <h:outputText value="#{pppMsg['ppp.progr.propositoInd']}" />
+                            </td>
+                            <td>
+                                <p:inputText id="indicatorProposit"
+                                             value="#{propositController.component.indicatorname}"
+                                             maxlength="255" size="40"
+                                             />
+                            </td>
+                            <td align="right">
+                                <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                <h:outputText value="#{pppMsg['ppp.progr.propositoUM']}" />
+                            </td>
+                            <td>
+                                <p:selectOneMenu id="cboUM"
+                                                 value="#{propositController.itsSelectUMId}" style="width:100%"
+                                                 >
+                                    <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}" />
+                                    <f:selectItems value="#{propositController.itsSelectedUMs}"
+                                                   var="specificUM"
+                                                   itemLabel="#{specificUM.unitMeasureDescription}"
+                                                   itemValue="#{specificUM.unitMeasureId}"
+                                                   />
+                                </p:selectOneMenu>
+                            </td>
+                            <td rowspan="2">
+                                <p:commandButton id="fileIndicator"
+                                                 value="#{pppMsg['ppp.progr.propositoFI']}"
+                                                 type="button" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                <h:outputText value="#{pppMsg['ppp.progr.propositoDesInd']}" />
+                            </td>
+                            <td colspan="4">
+                                <p:inputText id="desIndicatorProp"
+                                             value="#{propositController.component.indicatordescription}"
+                                             maxlength="500"
+                                             size="70"
+                                             label="#{pppMsg['ppp.progr.propositoDesInd']}"
+                                             />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <p:panel id="programmingData">
+                                    <table class="tableDetailForm1">
+                                        <tr>
+                                            <td colspan="4">
+                                                <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                                <h:outputText value="#{pppMsg['ppp.progr.propositoMPP']}" />
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Ini']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropMpp_INI"
+                                                             value="#{propositController.goalProComp['INI']}"
+                                                              size="12" 
+                                                              maxlength="11" 
+                                                             title="${propositController.goalProComp['INI']}"
+                                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                                             style="text-align: right"
+                                                             >
+                                                    <p:ajax event="blur"   listener="#{propositController.blurPropMpp()}"
+                                                            update="msgs" />
+
+                                                </p:inputText>
+                                                <p:tooltip for="compPropMpp_INI" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Fin']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropMpp_FIN"
+                                                             value="#{propositController.goalProComp['FIN']}"
+                                                              size="12"
+                                                              maxlength="11" 
+                                                             title="${propositController.goalProComp['FIN']}"
+                                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                                             style="text-align: right"
+                                                             >
+                                                    <p:ajax event="blur"   listener="#{propositController.blurPropMpp()}"
+                                                            update="msgs" />
+                                                </p:inputText>
+                                                <p:tooltip for="compPropMpp_FIN" showEvent="" hideEvent="" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Ene']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropMpp_ENE"
+                                                             value="#{propositController.goalProComp['ENE']}"
+                                                             size="12"
+                                                             maxlength="11" 
+                                                             title="${propositController.goalProComp['ENE']}"
+                                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                                             style="text-align: right"
+                                                             >
+
+                                                    <p:ajax event="blur" listener="#{propositController.blurPropMpp()}"
+                                                            update="msgs
+                                                            compPropMpp_ENE compPropAcc_ENE compPropAcc_FEB
+                                                            compPropAcc_MAR compPropAcc_ABR
+                                                            compPropAcc_MAY compPropAcc_JUN
+                                                            compPropAcc_JUL compPropAcc_AGO
+                                                            compPropAcc_SEP compPropAcc_OCT
+                                                            compPropAcc_NOV compPropAcc_DIC
+                                                            compPropAcc_TOTAL compPropMpp_TOTAL" />
+
+                                                    <p:tooltip for="compPropMpp_ENE" showEvent="" hideEvent="" />
+                                                </p:inputText>
+
+                                            </td>
+                                            
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Feb']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropMpp_FEB"
+                                                             value="#{propositController.goalProComp['FEB']}"
+                                                             maxlength="11" 
+                                                             size="12"
+                                                             title="${propositController.goalProComp['FEB']}"
+                                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                                             style="text-align: right"
+                                                             >
+
+
+                                                    <p:ajax event="blur" listener="#{propositController.blurPropMpp()}"
+                                                            update="msgs compPropMpp_FEB  compPropAcc_FEB
+                                                            compPropAcc_MAR compPropAcc_ABR
+                                                            compPropAcc_MAY compPropAcc_JUN
+                                                            compPropAcc_JUL compPropAcc_AGO
+                                                            compPropAcc_SEP compPropAcc_OCT
+                                                            compPropAcc_NOV compPropAcc_DIC
+                                                            compPropAcc_TOTAL compPropMpp_TOTAL"/>
+                                                </p:inputText>
+                                                <p:tooltip for="compPropMpp_FEB" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Mar']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropMpp_MAR"
+                                                             value="#{propositController.goalProComp['MAR']}"
+                                                             maxlength="11" size="12"
+                                                             title="${propositController.goalProComp['MAR']}"
+                                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                                             style="text-align: right"
+                                                             >
+
+                                                    <p:ajax event="blur"   listener="#{propositController.blurPropMpp()}"
+                                                            update="msgs compPropMpp_MAR compPropAcc_MAR compPropAcc_ABR
+                                                            compPropAcc_MAY compPropAcc_JUN
+                                                            compPropAcc_JUL compPropAcc_AGO
+                                                            compPropAcc_SEP compPropAcc_OCT
+                                                            compPropAcc_NOV compPropAcc_DIC
+                                                            compPropAcc_TOTAL compPropMpp_TOTAL" />
+                                                </p:inputText>
+                                                <p:tooltip for="compPropMpp_MAR" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Abr']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropMpp_ABR"
+                                                             value="#{propositController.goalProComp['ABR']}"
+                                                             maxlength="11" size="12"
+                                                             title="${propositController.goalProComp['ABR']}"
+                                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                                             style="text-align: right"
+                                                             >
+
+
+                                                    <p:ajax event="blur"   listener="#{propositController.blurPropMpp()}"
+                                                            update="msgs compPropMpp_ABR compPropAcc_ABR
+                                                            compPropAcc_MAY compPropAcc_JUN
+                                                            compPropAcc_JUL compPropAcc_AGO
+                                                            compPropAcc_SEP compPropAcc_OCT
+                                                            compPropAcc_NOV compPropAcc_DIC
+                                                            compPropAcc_TOTAL compPropMpp_TOTAL"/>
+                                                </p:inputText>
+                                                <p:tooltip for="compPropMpp_ABR" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.May']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropMpp_MAY"
+                                                             value="#{propositController.goalProComp['MAY']}"
+                                                             maxlength="11" size="12"
+                                                             title="${propositController.goalProComp['MAY']}"
+                                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                                             style="text-align: right"
+                                                             >
+
+
+                                                    <p:ajax event="blur"   listener="#{propositController.blurPropMpp()}"
+                                                            update="msgs compPropMpp_MAY compPropAcc_MAY compPropAcc_JUN
+                                                            compPropAcc_JUL compPropAcc_AGO
+                                                            compPropAcc_SEP compPropAcc_OCT
+                                                            compPropAcc_NOV compPropAcc_DIC
+                                                            compPropAcc_TOTAL compPropMpp_TOTAL" />
+                                                </p:inputText>
+                                                <p:tooltip for="compPropMpp_MAY" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Jun']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropMpp_JUN"
+                                                             value="#{propositController.goalProComp['JUN']}"
+                                                             maxlength="11" size="12"
+                                                             title="${propositController.goalProComp['JUN']}"
+                                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                                             style="text-align: right"
+                                                             >
+
+
+                                                    <p:ajax event="blur"   listener="#{propositController.blurPropMpp()}"
+                                                            update="msgs compPropMpp_JUN compPropAcc_JUN
+                                                            compPropAcc_JUL compPropAcc_AGO
+                                                            compPropAcc_SEP compPropAcc_OCT
+                                                            compPropAcc_NOV compPropAcc_DIC
+                                                            compPropAcc_TOTAL compPropMpp_TOTAL" />
+                                                </p:inputText>
+                                                <p:tooltip for="compPropMpp_JUN" showEvent="" hideEvent="" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Jul']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropMpp_JUL"
+                                                             value="#{propositController.goalProComp['JUL']}"
+                                                             maxlength="11" size="12"
+                                                             title="${propositController.goalProComp['JUL']}"
+                                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                                             style="text-align: right"
+                                                             >
+
+
+                                                    <p:ajax event="blur"   listener="#{propositController.blurPropMpp()}"
+                                                            update="msgs compPropMpp_JUL  compPropAcc_JUL compPropAcc_AGO
+                                                            compPropAcc_SEP compPropAcc_OCT
+                                                            compPropAcc_NOV compPropAcc_DIC
+                                                            compPropAcc_TOTAL compPropMpp_TOTAL"/>
+                                                </p:inputText>
+                                                <p:tooltip for="compPropMpp_JUL" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Ago']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropMpp_AGO"
+                                                             value="#{propositController.goalProComp['AGO']}"
+                                                             maxlength="11" size="12"
+                                                             title="${propositController.goalProComp['AGO']}}"
+                                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                                             style="text-align: right"
+                                                             >
+
+                                                    <p:ajax event="blur"   listener="#{propositController.blurPropMpp()}"
+                                                            update="msgs compPropMpp_AGO compPropAcc_AGO
+                                                            compPropAcc_SEP compPropAcc_OCT
+                                                            compPropAcc_NOV compPropAcc_DIC
+                                                            compPropAcc_TOTAL compPropMpp_TOTAL"/>
+                                                </p:inputText>
+                                                <p:tooltip for="compPropMpp_AGO" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Sep']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropMpp_SEP"
+                                                             value="#{propositController.goalProComp['SEP']}"
+                                                             maxlength="11" size="12"
+                                                             title="${propositController.goalProComp['SEP']}"
+                                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                                             style="text-align: right"
+                                                             >
+
+                                                    <p:ajax event="blur"   listener="#{propositController.blurPropMpp()}"
+                                                            update="msgs compPropMpp_SEP compPropAcc_SEP compPropAcc_OCT
+                                                            compPropAcc_NOV compPropAcc_DIC
+                                                            compPropAcc_TOTAL compPropMpp_TOTAL"/>
+                                                </p:inputText>
+                                                <p:tooltip for="compPropMpp_SEP" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Oct']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropMpp_OCT"
+                                                             value="#{propositController.goalProComp['OCT']}"
+                                                             size="12"
+                                                             maxlength="11" 
+                                                             title="${propositController.goalProComp['OCT']}"
+                                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                                             style="text-align: right"
+                                                             >
+
+                                                    <p:ajax event="blur"   listener="#{propositController.blurPropMpp()}"
+                                                            update="msgs compPropMpp_OCT compPropAcc_OCT
+                                                            compPropAcc_NOV compPropAcc_DIC
+                                                            compPropAcc_TOTAL compPropMpp_TOTAL"/>
+                                                </p:inputText>
+                                                <p:tooltip for="compPropMpp_OCT" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Nov']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropMpp_NOV"
+                                                             value="#{propositController.goalProComp['NOV']}"
+                                                             size="12"
+                                                             maxlength="11" 
+                                                             title="${propositController.goalProComp['NOV']}"
+                                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                                             style="text-align: right"
+                                                             >
+
+                                                    <p:ajax event="blur"   listener="#{propositController.blurPropMpp()}"
+                                                            update="msgs compPropMpp_NOV compPropAcc_NOV compPropAcc_DIC
+                                                            compPropAcc_TOTAL compPropMpp_TOTAL"/>
+                                                </p:inputText>
+                                                <p:tooltip for="compPropMpp_NOV" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Dic']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropMpp_DIC"
+                                                             value="#{propositController.goalProComp['DIC']}"
+                                                             size="12"
+                                                             maxlength="11" 
+                                                             title="${propositController.goalProComp['DIC']}"
+                                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                                             style="text-align: right"
+                                                             >
+
+                                                    <p:ajax event="blur"   listener="#{propositController.blurPropMpp()}"
+                                                            update="msgs compPropMpp_DIC compPropAcc_DIC
+                                                            compPropAcc_TOTAL compPropMpp_TOTAL"/>
+                                                </p:inputText>
+                                                <p:tooltip for="compPropMpp_DIC" showEvent="" hideEvent="" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="12">
+                                                <table align="right">
+                                                    <tr>
+                                                        <th class="cellColorgray" style="width: 190px; text-align: right"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Total']}" style="font-size: small"/></th>
+                                                        <td colspan="2">
+                                                            <p:inputText id="compPropMpp_TOTAL" readonly="true" 
+                                                                         style="background-color:#BDBDBD; width: 98px; text-align: right"
+                                                                        value="#{propositController.goalProComp['TOTAL']}"
+                                                                        size="12"
+                                                                        maxlength="11" 
+                                                                        title="${propositController.goalProComp['TOTAL']}"/>
+                                                            <p:tooltip for="compPropMpp_TOTAL" showEvent="" hideEvent="" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!--Programado Acumaldo-->
+                                        <tr>
+                                            <td colspan="4">
+                                                <h:outputText value="#{pppMsg['ppp.progr.propositoPAcc']}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Ini']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropAcc_INI" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                             value="#{propositController.accProg['INI']}"
+                                                             title="${propositController.accProg['INI']}"
+                                                             maxlength="11" 
+                                                             size="12" />
+                                                <p:tooltip for="compPropAcc_INI" showEvent=""  hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Fin']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropAcc_FIN"  readonly="true"    style="background-color:#BDBDBD; text-align: right"
+                                                             value="#{propositController.accProg['FIN']}"
+                                                             title="${propositController.accProg['FIN']}"
+                                                             maxlength="11" 
+                                                             size="12"/>
+                                                <p:tooltip for="compPropAcc_FIN" showEvent=""  hideEvent="" />
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Ene']}" /></th>
+                                            <td>
+                                                <p:inputText id="compPropAcc_ENE" readonly="true"  style="background-color:#BDBDBD; text-align: right"
+                                                             value="#{propositController.accProg['ENE']}"
+                                                             title="${propositController.accProg['ENE']}"
+                                                             maxlength="11" 
+                                                             size="12"/>
+                                                <p:tooltip for="compPropAcc_ENE" showEvent=""  hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Feb']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropAcc_FEB" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                             value="#{propositController.accProg['FEB']}"
+                                                             title="${propositController.accProg['FEB']}"
+                                                             maxlength="11" 
+                                                             size="12" />
+                                                <p:tooltip for="compPropAcc_FEB" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Mar']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropAcc_MAR"  readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                             value="#{propositController.accProg['MAR']}"
+                                                             title="${propositController.accProg['MAR']}"
+                                                             maxlength="11" 
+                                                             size="12"/>
+                                                <p:tooltip for="compPropAcc_MAR" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Abr']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropAcc_ABR"  readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                             value="#{propositController.accProg['ABR']}"
+                                                             title="${propositController.accProg['ABR']}"
+                                                             maxlength="11" 
+                                                             size="12"/>
+                                                <p:tooltip for="compPropAcc_ABR" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.May']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropAcc_MAY" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                             value="#{propositController.accProg['MAY']}"
+                                                             title="${propositController.accProg['MAY']}"
+                                                             maxlength="11" 
+                                                             size="12"/>
+                                                <p:tooltip for="compPropAcc_MAY" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Jun']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropAcc_JUN" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                             value="#{propositController.accProg['JUN']}"
+                                                             title="${propositController.accProg['JUN']}"
+                                                             maxlength="11" 
+                                                             size="12"/>
+                                                <p:tooltip for="compPropAcc_JUN" showEvent="" hideEvent="" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Jul']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropAcc_JUL" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                             value="#{propositController.accProg['JUL']}"
+                                                             title="${propositController.accProg['JUL']}"
+                                                             maxlength="11" 
+                                                             size="12"/>
+                                                <p:tooltip for="compPropAcc_JUL" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Ago']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropAcc_AGO" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                             value="#{propositController.accProg['AGO']}"
+                                                             title="${propositController.accProg['AGO']}"
+                                                             maxlength="11" 
+                                                             size="12"/>
+                                                <p:tooltip for="compPropAcc_AGO" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Sep']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropAcc_SEP" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                             value="#{propositController.accProg['SEP']}"
+                                                             title="${propositController.accProg['SEP']}"
+                                                             maxlength="11" 
+                                                             size="12"/>
+                                                <p:tooltip for="compPropAcc_SEP" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Oct']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropAcc_OCT" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                             value="#{propositController.accProg['OCT']}"
+                                                             title="${propositController.accProg['OCT']}"
+                                                             maxlength="11" 
+                                                             size="12"/>
+                                                <p:tooltip for="compPropAcc_OCT" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Nov']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropAcc_NOV" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                             value="#{propositController.accProg['NOV']}"
+                                                             title="${propositController.accProg['NOV']}"
+                                                             maxlength="11" 
+                                                             size="12"/>
+                                                <p:tooltip for="compPropAcc_NOV" showEvent="" hideEvent="" />
+                                            </td>
+                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Dic']}" /></th>
+                                            <td >
+                                                <p:inputText id="compPropAcc_DIC" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                             value="#{propositController.accProg['DIC']}"
+                                                             title="${propositController.accProg['DIC']}"
+                                                             maxlength="11" 
+                                                             size="12" />
+                                                <p:tooltip for="compPropAcc_DIC" showEvent="" hideEvent="" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="12">
+                                                <table align="right">
+                                                    <tr>
+                                                        <th class="cellColorgray" style="text-align: right"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Total']}" style="font-size: small"/></th>
+                                                        <td colspan="2">
+                                                            <p:inputText id="compPropAcc_TOTAL" readonly="true" style="background-color:#BDBDBD; width: 98px; text-align: right"
+                                                                        value="#{propositController.accProg['TOTAL']}"
+                                                                        size="12"
+                                                                        maxlength="11" 
+                                                                        title="#{propositController.accProg['TOTAL']}"/>
+                                                            <p:tooltip for="compPropMpp_TOTAL" showEvent="" hideEvent="" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </p:panel>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                <h:outputText value="#{pppMsg['ppp.progr.pondRecurso']}" />
+                            </td>
+                            <td >
+                                <p:inputText id="pondRecurs" maxlength="3" size="3"
+                                             value="#{propositController.component.weighingResource}"  >
+                                </p:inputText> 
+                            </td>
+                            <td>
+                                <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                <h:outputText value="#{pppMsg['ppp.progr.pondImport']}" />
+                            </td>
+                            <td >
+                                <p:inputText id="pondImport" maxlength="3" size="3"
+                                             value="#{propositController.component.weighingImport}"  >
+                                </p:inputText>
+                            </td>
+                            <td/>
+                        </tr>    
+                    </table>
+                </p:panel>          
+                <table width="100%" border="0" class="tableDetailForm1">
+                    <tr>
+                        <td align="rigth" valign="bottom">
+                            <h:outputText  value="#{pppMsg['ppp.progr.propositoNota']}" />
+                        </td>
+
+                        <td align="right" >
+                            <p:commandButton id="btnSaveDelivery" ajax="true" 
+                                             actionListener="#{propositController.saveComponent()}"  
+                                             value="#{pppMsg['ppp.progr.propositoSalvar']}"
+                                             update=":tabDraftProjectDetails:proposit:pnlComponent, 
+                                             :tabDraftProjectDetails:proposit:aGP,
+                                             :tabDraftProjectDetails:proposit:CompPanel, 
+                                             :tabDraftProjectDetails:proposit:msgs,
+                                             :tabDraftProjectDetails:proposit:number,
+                                             :tabDraftProjectDetails:proposit:msgs1,
+                                             :tabDraftProjectDetails:proposit
+                                             :tabDraftProjectDetails"
+                                             onmouseover="this.focus();"
+                                             disabled="#{propositController.btnSrvSave}"
+                                             />
+ 
+
+                        </td>
+                        <td  width="10%" aling="center">
+                            <p:commandButton id="btnCerrar"  ajax="true"
+                                             action="#{propositController.clearComponent()}"
+                                             value="#{pppMsg['ppp.progr.propositoCancel']}"
+                                             update=":tabDraftProjectDetails:proposit:hProposit,
+                                             :tabDraftProjectDetails:proposit:pnlComponent" />
+                        </td>
+                    </tr>
+
+                </table>
+                        <p:messages  id="msgs1"/>
+            </p:panel>
+            <!-- Componentes que se tiene registrados-->
+            <p:panel id="pnlComponent" style="width: 1000px" header="Componentes" toggleable="true" closable="false" toggleSpeed="500"  widgetVar="panelComp">
+                <div  style="height:300;overflow-y:auto" >
+
+                    <ui:repeat var="proposit" value="#{propositController.deliveryFile.proposits}" varStatus="row1">
+                        <ui:repeat var="comp" varStatus="row" value="#{propositController.deliveryFile.propositComp[proposit]}">
+                            <div  style="border-style :groove" >
+                                <table border="0" width="100%" cellspacing="2" class="tableDetailForm1">
+                                    <tr>
+                                        <td>
+                                            <h:outputText value="#{pppMsg['ppp.progr.RegionalPlan.No']}"/>
+                                        </td>
+                                        <td> 
+                                            <h:outputText value="#{propositController.count}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:outputText value="#{pppMsg['ppp.progr.propositoComp']}"/>
+                                        </td>
+                                        <td style="width: 300px">
+                                            <h:outputText value="#{comp.compDesc}" style="word-wrap: break-word; word-break:break-all"/>
+                                        </td>
+                                        <td align="right" style="width: 100px">
+                                            <h:outputText value="#{pppMsg['ppp.progr.propositoResponsable']}" />
+                                        </td>
+                                        <td style="width: 200px">
+                                            <h:outputText value="#{comp.reponsable}" style="word-wrap: break-word; word-break:break-all"  /> 
+                                        </td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:outputText value="#{pppMsg['ppp.progr.propositoInd']}"/>
+                                        </td>
+                                        <td>
+                                            <h:outputText value="#{comp.indicatorname}" style="word-wrap: break-word; word-break:break-all"/>
+                                        </td>
+                                        <td align="right">
+                                            <h:outputText value="#{pppMsg['ppp.progr.propositoUM']}"/>
+                                        </td>
+                                        <td>
+                                            <h:outputText value="#{comp.unitmeasure.unitMeasureDescription}" style="word-wrap: break-word; word-break:break-all"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:outputText value="#{pppMsg['ppp.progr.propositoDesInd']}"/>
+                                        </td>
+                                        <td colspan="3">
+                                            <h:outputText value="#{comp.indicatordescription}" style="word-wrap: break-word; word-break:break-all"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <table cellspacing="1" width="100%" class="tableDetailForm1" border="0" >
+                                                <tr>
+                                                    <td colspan="4">
+                                                        <h:outputText value="#{pppMsg['ppp.progr.propositoMPP']}" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Ini']}" /></th>
+                                                    <td >
+                                                        <p:inputText  id ="#{propositController.nextId}" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                                      value="#{comp.mapGolPro['INI']}"
+                                                                      title="${comp.mapGolPro['INI']}"
+                                                                      size="12" />
+                                                        <p:tooltip for="#{propositController.id}" showEvent=""  hideEvent="" />
+
+                                                    </td>
+                                                    <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Fin']}" /></th>
+                                                    <td >
+                                                        <p:inputText id ="#{propositController.nextId}"  readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                                     value="#{comp.mapGolPro['FIN']}"
+                                                                     title="${comp.mapGolPro['FIN']}"
+                                                                     size="12"/>
+                                                        <p:tooltip for="#{propositController.id}" showEvent=""  hideEvent="" />
+                                                    </td>
+                                                </tr> 
+                                                <tr>
+                                                    <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Ene']}" /></th>
+                                                    <td>
+                                                        <p:inputText id ="#{propositController.nextId}" readonly="true"  style="background-color:#BDBDBD; text-align: right"
+                                                                     value="#{comp.mapGolPro['ENE']}"
+                                                                     title="${comp.mapGolPro['ENE']}"
+                                                                     size="12"/>
+                                                        <p:tooltip for="#{propositController.id}" showEvent=""  hideEvent="" />
+                                                    </td>
+                                                    <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Feb']}" /></th>
+                                                    <td >
+                                                        <p:inputText id ="#{propositController.nextId}" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                                     value="#{comp.mapGolPro['FEB']}"
+                                                                     title="${comp.mapGolPro['FEB']}"
+                                                                     size="12" />
+                                                        <p:tooltip for="#{propositController.id}" showEvent=""  hideEvent="" />
+                                                    </td>   
+                                                    <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Mar']}" /></th>
+                                                    <td >
+                                                        <p:inputText id ="#{propositController.nextId}" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                                     value="#{comp.mapGolPro['MAR']}"
+                                                                     title="${comp.mapGolPro['MAR']}"
+                                                                     size="12"/>
+                                                        <p:tooltip for="#{propositController.id}" showEvent=""  hideEvent="" />
+                                                    </td>
+                                                    <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Abr']}" /></th>
+                                                    <td >
+                                                        <p:inputText id ="#{propositController.nextId}" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                                     value="#{comp.mapGolPro['ABR']}"
+                                                                     title="${comp.mapGolPro['ABR']}"
+                                                                     size="12"/>
+                                                        <p:tooltip for="#{propositController.id}" showEvent=""  hideEvent="" />
+                                                    </td>
+                                                    <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.May']}" /></th>
+                                                    <td >
+                                                        <p:inputText id ="#{propositController.nextId}" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                                     value="#{comp.mapGolPro['MAY']}"
+                                                                     title="${comp.mapGolPro['MAY']}"
+                                                                     size="12"/>
+                                                        <p:tooltip for="#{propositController.id}" showEvent=""  hideEvent="" />
+                                                    </td>
+                                                    <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Jun']}" /></th>
+                                                    <td >
+                                                        <p:inputText id ="#{propositController.nextId}" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                                     value="#{comp.mapGolPro['JUN']}"
+                                                                     title="${comp.mapGolPro['JUN']}"
+                                                                     size="12"/>
+                                                        <p:tooltip for="#{propositController.id}" showEvent=""  hideEvent="" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Jul']}" /></th>
+                                                    <td >
+                                                        <p:inputText id ="#{propositController.nextId}" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                                     value="#{comp.mapGolPro['JUL']}"
+                                                                     title="${comp.mapGolPro['JUL']}"
+                                                                     size="12"/>
+                                                        <p:tooltip for="#{propositController.id}" showEvent=""  hideEvent="" />
+                                                    </td>
+                                                    <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Ago']}" /></th>
+                                                    <td >
+                                                        <p:inputText id ="#{propositController.nextId}" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                                     value="#{comp.mapGolPro['AGO']}"
+                                                                     title="${comp.mapGolPro['AGO']}"
+                                                                     size="12"/>
+                                                        <p:tooltip for="#{propositController.id}" showEvent=""  hideEvent="" />
+                                                    </td>
+                                                    <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Sep']}" /></th>
+                                                    <td >
+                                                        <p:inputText id ="#{propositController.nextId}" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                                     value="#{comp.mapGolPro['SEP']}"
+                                                                     title="${comp.mapGolPro['SEP']}"
+                                                                     size="12"/>
+                                                        <p:tooltip for="#{propositController.id}" showEvent=""  hideEvent="" />
+                                                    </td>
+                                                    <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Oct']}" /></th>
+                                                    <td >
+                                                        <p:inputText id ="#{propositController.nextId}" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                                     value="#{comp.mapGolPro['OCT']}"
+                                                                     title="${comp.mapGolPro['OCT']}"
+                                                                     size="12"/>
+                                                        <p:tooltip for="#{propositController.id}" showEvent=""  hideEvent="" />
+                                                    </td>
+                                                    <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Nov']}" /></th>
+                                                    <td >
+                                                        <p:inputText id ="#{propositController.nextId}" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                                     value="#{comp.mapGolPro['NOV']}"
+                                                                     title="${comp.mapGolPro['NOV']}"
+                                                                     size="12"/>
+                                                        <p:tooltip for="#{propositController.id}" showEvent=""  hideEvent="" />
+                                                    </td>
+                                                    <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Dic']}" /></th>
+                                                    <td >
+                                                        <p:inputText id ="#{propositController.nextId}" readonly="true" style="background-color:#BDBDBD; text-align: right"
+                                                                     value="#{comp.mapGolPro['DIC']}"
+                                                                     title="${comp.mapGolPro['DIC']}"
+                                                                     size="12" />
+                                                        <p:tooltip for="#{propositController.id}" showEvent=""  hideEvent="" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="12">
+                                                        <table align="right">
+                                                            <tr>
+                                                                <th class="cellColorgray" colspan="2"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Total']}" style="font-size: small" /></th>
+                                                                <td colspan="2">
+                                                                    <p:inputText id ="#{propositController.nextId}" readonly="true" style="background-color:#BDBDBD; width: 98px; text-align: right"
+                                                                                value="#{comp.mapGolPro['TOTAL']}"
+                                                                                title="${comp.mapGolPro['TOTAL']}"
+                                                                                size="12"/>
+                                                                    <p:tooltip for="#{propositController.id}" showEvent=""  hideEvent="" />
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:outputText value="#{pppMsg['ppp.progr.pondRecurso']}" />
+                                        </td>
+                                        <td align="left"  width="20%">
+                                            <h:outputText value="#{comp.weighingResource}"  />
+                                        </td>
+                                        <td>
+                                            <h:outputText value="#{pppMsg['ppp.progr.pondImport']}" />
+                                        </td>
+                                        <td align="left">
+                                            <h:outputText value="#{comp.weighingImport}"  />
+                                        </td>
+                                    </tr>    
+
+                                    <tr>
+                                        <td colspan="4">
+                                            <table width="100%" border="0" class="tableDetailForm1">
+                                                <tr><td class="btnUpdate" align="right" >
+                                                        <p:commandButton   value="#{pppMsg['ppp.progr.propositoUpdate']}"
+                                                                           update=":tabDraftProjectDetails:proposit:hProposit,
+                                                                           :tabDraftProjectDetails:proposit:pnlComponent,
+                                                                           :tabDraftProjectDetails:proposit:btnSaveDelivery"
+                                                                           >
+
+                                                            <f:setPropertyActionListener
+                                                                value="#{comp}"
+                                                                target="#{propositController.updateCom}"
+                                                                render=":tabDraftProjectDetails:proposit:modalAddActivities" 
+                                                                />
+
+                                                        </p:commandButton>
+
+                                                    </td>
+                                                    <td align="center" width="10%">
+                                                        <p:commandButton   value="#{pppMsg['ppp.progr.propositoDelete']}"
+                                                                           update=":tabDraftProjectDetails:proposit:pnlComponent,
+                                                                           :tabDraftProjectDetails:proposit:aGP,
+                                                                           :tabDraftProjectDetails:proposit:number,
+                                                                           :tabDraftProjectDetails:proposit:msgs,
+                                                                           :tabDraftProjectDetails:proposit:btnSaveDelivery,
+                                                                           :tabDraftProjectDetails:">
+                                                            <f:setPropertyActionListener
+                                                                value="#{comp}"
+                                                                target="#{propositController.deleteCom}"
+                                                                />
+                                                        </p:commandButton>
+                                                        <br/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </ui:repeat>
+                    </ui:repeat>
+                </div>
+            </p:panel>
+            <!--Dialogo para captura de Actividad-->
+            <div id="addActivities">
+                <p:dialog id="modalAddActivities" header="Actividad" widgetVar="dlg3"
+                          maximizable="false" minimizable="false" closable="false"
+                          modal="true" height="450" width="800" resizable="false">
+                    <p:panel id="addActividad">
+                        <p:messages  id="msgsAct"/>
+                        <table class="tableDetailForm1">
+                            <tr>
+                                <td>
+                                    <h:outputText value="#{pppMsg['ppp.progr.propositoActividad']}"/>
+                                </td>
+                                <td colspan="3">
+                                    <p:inputText id="propositAct" size="4"
+                                                 style="background-color:#BDBDBD;"
+                                                 readonly="true"
+                                                 value="#{propositController.nextActivity}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h:outputText value="#{pppMsg['ppp.progr.propositoDescripcion']}"/>
+                                </td>
+                                <td colspan="3">
+                                    <p:inputText id="actDesc" size="20"
+                                                 maxlength="255"
+                                                 readonly="false"
+                                                 value="#{propositController.deliveryFile.currentComp.currentActivity.description}"
+                                                 label="#{pppMsg['ppp.progr.propositoDescripcion']}"
+                                                 >
+                                        <f:validateRequired/>
+                                    </p:inputText>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h:outputText value="#{pppMsg['ppp.progr.propositoActResp']}"/>
+                                </td>
+                                <td>
+                                    <p:inputText id="actResp" size="20" maxlength="255"
+                                                 readonly="false"
+                                                 value="#{propositController.deliveryFile.
+                                                          currentComp.currentActivity.responsible}"
+                                                 label="#{pppMsg['ppp.progr.propositoActResp']}"
+                                                 >
+                                        <f:validateRequired/>
+                                    </p:inputText>
+                                </td>
+                                <td>
+                                    <h:outputText value="#{pppMsg['common.cant']}"/>
+                                </td>
+                                <td>
+                                    <p:inputText id="txtCant" size="4"                                                 
+                                                 value="#{propositController.quantity}"
+                                                 label="#{pppMsg['common.cant']}"
+                                                 onkeypress="return soloNumeros(event, this.value)" 
+                                                 onkeyup="format(this)"
+                                                 style="text-align: right"
+                                                 >                                        
+                                    </p:inputText>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <h:outputText value="#{pppMsg['ppp.progr.propositoActInicio']}"/>
+                                </td>
+                                <td>
+                                    <p:calendar id="txtDateIniAct"
+                                                lang="es"
+                                                locale="es"
+                                                mindate="${propositController.minDate}"
+                                                maxdate="${propositController.maxDate}"
+                                                navigator="true" 
+                                                readOnlyInputText="true"
+                                                pattern="dd/MM/yyyy"
+                                                maxlength="11" size="11"
+                                                value="${propositController.deliveryFile.
+                                                         currentComp.currentActivity.startDate}" showOn="button" 
+                                                label="#{pppMsg['ppp.progr.propositoActInicio']}">
+                                        <p:ajax event="dateSelect" listener="#{propositController.selectStarDate}" 
+                                                />
+                                        <f:validateRequired/>
+                                    </p:calendar>
+                                </td>
+                                <td>
+                                    <h:outputText value="#{pppMsg['ppp.progr.propositoActFin']}"/>
+                                </td>
+                                <td>
+                                    <p:calendar id="txtDateFinAct"
+                                                lang="es"
+                                                locale="es"                                                        
+                                                mindate="${propositController.minDate}"
+                                                maxdate="${propositController.maxDate}"
+                                                navigator="true" 
+                                                readOnlyInputText="true"
+                                                pattern="dd/MM/yyyy"
+                                                maxlength="11" size="11"
+                                                value="${propositController.deliveryFile.
+                                                         currentComp.currentActivity.endDate}" 
+                                                showOn="button" 
+                                                label="#{pppMsg['ppp.progr.propositoActFin']}"
+                                                >
+                                        <p:ajax event="dateSelect" listener="#{propositController.validateDatesToEnableMonths}" 
+                                                update=":tabDraftProjectDetails:proposit:dateProg,
+                                                :tabDraftProjectDetails:proposit:msgsAct" />  
+                                        <f:validateRequired/>
+                                    </p:calendar>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <p:panel id="dateProg">
+                                        <table width="100%" class="tableDetailForm1">
+                                            <tr>
+                                                <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Ene']}" /></th>
+                                                <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Feb']}" /></th>
+                                                <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Mar']}" /></th>
+                                                <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Abr']}" /></th>
+                                                <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.May']}" /></th>
+                                                <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Jun']}" /></th>
+                                                <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Jul']}" /></th>
+                                                <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Ago']}" /></th>
+                                                <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Sep']}" /></th>
+                                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Oct']}" /></th>
+                                                            <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Nov']}" /></th>
+                                                <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Dic']}" /></th>
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    <p:inputText id="actvropMpp_ENE"
+                                                                 value="#{propositController.activityProComp['ENE']}"
+                                                                 maxlength="11" size="3"
+                                                                 title="${propositController.activityProComp['ENE']}"
+                                                                 disabled="#{propositController.disableEn}"
+                                                                 onkeypress="return soloNumeros(event, this.value)" 
+                                                                 onkeyup="format(this)"
+                                                                 style="text-align: right">
+                                                        <p:tooltip for="actvropMpp_ENE" showEvent="" hideEvent="" />
+                                                    </p:inputText>
+
+                                                </td>
+                                                <td >
+                                                    <p:inputText id="actvropMpp_FEB"
+                                                                 value="#{propositController.activityProComp['FEB']}"
+                                                                 maxlength="11" size="3"
+                                                                 title="${propositController.activityProComp['FEB']}"
+                                                                 disabled="#{propositController.disableFeb}"
+                                                                 onkeypress="return soloNumeros(event, this.value)" 
+                                                                 onkeyup="format(this)"
+                                                                 style="text-align: right" >
+                                                    </p:inputText>
+                                                    <p:tooltip for="actvropMpp_FEB" showEvent="" hideEvent="" />
+                                                </td>
+                                                <td >
+                                                    <p:inputText id="actvropMpp_MAR"
+                                                                 value="#{propositController.activityProComp['MAR']}"
+                                                                 maxlength="11" size="3"
+                                                                 title="${propositController.activityProComp['MAR']}"
+                                                                 disabled="#{propositController.disableMar}"
+                                                                 onkeypress="return soloNumeros(event, this.value)" 
+                                                                 onkeyup="format(this)"
+                                                                 style="text-align: right">
+                                                    </p:inputText>
+                                                    <p:tooltip for="actvropMpp_MAR" showEvent="" hideEvent="" />
+                                                </td>
+                                                <td >
+                                                    <p:inputText id="actvropMpp_ABR"
+                                                                 value="#{propositController.activityProComp['ABR']}"
+                                                                 maxlength="11" size="3"
+                                                                 title="${propositController.activityProComp['ABR']}"
+                                                                 disabled="#{propositController.disableAbr}"
+                                                                 onkeypress="return soloNumeros(event, this.value)" 
+                                                                 onkeyup="format(this)"
+                                                                 style="text-align: right">
+                                                    </p:inputText>
+                                                    <p:tooltip for="actvropMpp_ABR" showEvent="" hideEvent="" />
+                                                </td>
+                                                <td >
+                                                    <p:inputText id="actvropMpp_MAY"
+                                                                 value="#{propositController.activityProComp['MAY']}"
+                                                                 maxlength="11" size="3"
+                                                                 title="${propositController.activityProComp['MAY']}"
+                                                                 disabled="#{propositController.disableMay}"
+                                                                 onkeypress="return soloNumeros(event, this.value)" 
+                                                                 onkeyup="format(this)"
+                                                                 style="text-align: right">
+                                                    </p:inputText>
+                                                    <p:tooltip for="actvropMpp_MAY" showEvent="" hideEvent="" />
+                                                </td>
+                                                <td >
+                                                    <p:inputText id="actvropMpp_JUN"
+                                                                 value="#{propositController.activityProComp['JUN']}"
+                                                                 maxlength="11" size="3"
+                                                                 title="${propositController.activityProComp['JUN']}"
+                                                                 disabled="#{propositController.disableJun}"
+                                                                 onkeypress="return soloNumeros(event, this.value)" 
+                                                                 onkeyup="format(this)"
+                                                                 style="text-align: right">
+                                                    </p:inputText>
+                                                    <p:tooltip for="actvropMpp_JUN" showEvent="" hideEvent="" />
+                                                </td>
+                                                <td >
+                                                    <p:inputText id="actvropMpp_JUL"
+                                                                 value="#{propositController.activityProComp['JUL']}"
+                                                                 maxlength="11" size="3"
+                                                                 title="${propositController.activityProComp['JUL']}"
+                                                                 disabled="#{propositController.disableJul}"
+                                                                 onkeypress="return soloNumeros(event, this.value)" 
+                                                                 onkeyup="format(this)"
+                                                                 style="text-align: right">
+                                                    </p:inputText>
+                                                    <p:tooltip for="actvropMpp_JUL" showEvent="" hideEvent="" />
+                                                </td>
+                                                <td >
+                                                    <p:inputText id="actvropMpp_AGO"
+                                                                 value="#{propositController.activityProComp['AGO']}"
+                                                                 maxlength="11" size="3"
+                                                                 title="${propositController.activityProComp['AGO']}"
+                                                                 disabled="#{propositController.disableAgt}"
+                                                                 onkeypress="return soloNumeros(event, this.value)" 
+                                                                 onkeyup="format(this)"
+                                                                 style="text-align: right">
+                                                    </p:inputText>
+                                                    <p:tooltip for="actvropMpp_AGO" showEvent="" hideEvent="" />
+                                                </td>
+                                                <td >
+                                                    <p:inputText id="actvropMpp_SEP"
+                                                                 value="#{propositController.activityProComp['SEP']}"
+                                                                 maxlength="11" size="3"
+                                                                 title="${propositController.activityProComp['SEP']}"
+                                                                 disabled="#{propositController.disableSep}"
+                                                                 onkeypress="return soloNumeros(event, this.value)" 
+                                                                 onkeyup="format(this)"
+                                                                 style="text-align: right">
+                                                    </p:inputText>
+                                                    <p:tooltip for="actvropMpp_SEP" showEvent="" hideEvent="" />
+                                                </td>
+                                                <td >
+                                                    <p:inputText id="actvropMpp_OCT"
+                                                                 value="#{propositController.activityProComp['OCT']}"
+                                                                 maxlength="11" size="3"
+                                                                 title="${propositController.activityProComp['OCT']}"
+                                                                 disabled="#{propositController.disableOct}"
+                                                                 onkeypress="return soloNumeros(event, this.value)" 
+                                                                 onkeyup="format(this)"
+                                                                 style="text-align: right">
+                                                    </p:inputText>
+                                                    <p:tooltip for="actvropMpp_OCT" showEvent="" hideEvent="" />
+                                                </td>
+                                                <td >
+                                                    <p:inputText id="actvropMpp_NOV"
+                                                                 value="#{propositController.activityProComp['NOV']}"
+                                                                 maxlength="11" size="3"
+                                                                 title="${propositController.activityProComp['NOV']}"
+                                                                 disabled="#{propositController.disableNov}"
+                                                                 onkeypress="return soloNumeros(event, this.value)" 
+                                                                 onkeyup="format(this)"
+                                                                 style="text-align: right">
+                                                    </p:inputText>
+                                                    <p:tooltip for="actvropMpp_NOV" showEvent="" hideEvent="" />
+                                                </td>
+                                                <td >
+                                                    <p:inputText id="actvropMpp_DIC"
+                                                                 value="#{propositController.activityProComp['DIC']}"
+                                                                 maxlength="11" size="3"
+                                                                 title="${propositController.activityProComp['DIC']}"
+                                                                 disabled="#{propositController.disableDic}"
+                                                                 onkeypress="return soloNumeros(event, this.value)" 
+                                                                 onkeyup="format(this)"
+                                                                 style="text-align: right">
+                                                    </p:inputText>
+                                                    <p:tooltip for="actvropMpp_DIC" showEvent="" hideEvent="" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </p:panel>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" >
+                                    <table width="100%" border="0" class="tableDetailForm1">
+                                        <tr>
+                                            <td align="right" >
+                                                <p:commandButton
+                                                    disabled="#{propositController.btnSrvSave}"
+                                                    value="#{pppMsg['ppp.progr.propositoSalvar']}"
+                                                    update=":tabDraftProjectDetails:proposit:grdActivities
+                                                    :tabDraftProjectDetails:proposit:addActividad
+                                                    :tabDraftProjectDetails:proposit:msgsAct"    >
+                                                    <f:setPropertyActionListener value="#{specificActiv}"
+                                                                                 target="#{propositController.saveAction}"
+                                                                                 />
+                                                    <f:ajax id="saveAndUpdateList" render="grdActivities"/> <!--//TODO Renderea el GRID-->
+                                                </p:commandButton>
+                                            </td>
+                                            <td align="center" width="15%">
+                                                <p:commandButton   id="btnCloseAddAction"
+                                                                   value="#{pppMsg['ppp.progr.Back']}"
+                                                                   update=":tabDraftProjectDetails:proposit:propositAct
+                                                                   :tabDraftProjectDetails:proposit:addActividad"
+                                                                   onclick="dlg3.hide()">
+                                                    <f:setPropertyActionListener
+                                                        value="#{specificActiv}"
+                                                        target="#{propositController.closeAction}"
+
+                                                        />
+                                                </p:commandButton>
+
+                                                <br/>
+                                            </td>
+                                            <tr>
+                                                <td colspan="2">
+                                                    Nota Acciones a registrar: mínimo 3 
+                                                </td>   
+                                            </tr>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <p:dataTable id="grdActivities"
+                                                 var="specificActiv"
+                                                 emptyMessage="No existen registros que mostrar"
+                                                 value="#{propositController.deliveryFile.currentActivities}"
+                                                 sortBy="#{specificActiv.description}" sortOrder="ascending"
+                                                 paginator="true" rows="5"
+                                                 style="word-wrap: break-word; word-break:break-all; font-size: small"
+                                                 rowIndexVar="rowIndex">
+                                        <f:facet name="header" >
+                                            <h:outputText  value="#{pppMsg['ppp.progr.propositoActividades']}"/>
+                                        </f:facet> 
+                                        <p:column style="width: 125px; font-size: small">
+                                            <f:facet name="header">
+                                                <h:outputText
+                                                    value="#{pppMsg['ppp.progr.invPreFileDetail.Number']}" />
+                                            </f:facet>
+                                            #{rowIndex+1}
+                                        </p:column>
+                                        <p:column  style="width: 110px; font-size: small">
+                                            <f:facet name="header">
+                                                <h:outputText
+                                                    value="#{pppMsg['ppp.progr.propositoActGridDesc']}" />
+                                            </f:facet>
+                                            <h:outputText  value="#{specificActiv.description}"  />
+                                        </p:column>
+
+                                        <p:column style="width: 125px; font-size: small">
+                                            <f:facet name="header">
+                                                <h:outputText
+                                                    value="#{pppMsg['ppp.progr.propositoActResp']}" />
+                                            </f:facet>
+                                            <h:outputText  value="#{specificActiv.responsible}"  />
+                                        </p:column>
+
+                                        <p:column style="width: 120px; font-size: small">
+                                             <f:facet name="header">
+                                                 <h:outputText
+                                                     value="#{pppMsg['ppp.progr.propositoGriFeIni']}" />
+                                             </f:facet>
+                                             <h:outputText value="#{specificActiv.startDate}">
+                                                 <f:convertDateTime
+                                                     pattern="MM/dd/yyyy" />
+                                             </h:outputText>
+
+
+                                         </p:column>
+
+                                         <p:column style="width: 120px; font-size: small">
+                                             <f:facet name="header">
+                                                 <h:outputText
+                                                     value="#{pppMsg['ppp.progr.propositoGriFeFin']}" />
+                                             </f:facet>
+                                             <h:outputText value="#{specificActiv.endDate}">
+                                                 <f:convertDateTime
+                                                     pattern="MM/dd/yyyy" />
+                                             </h:outputText>
+                                         </p:column>
+
+                                         <p:column style="width: 94px; font-size: small">
+                                             <f:facet name="header">
+                                                 <h:outputText
+                                                     value="#{pppMsg['ppp.progr.propositoGriCant']}" />
+                                             </f:facet>
+                                             <div align ="right">
+                                                 <h:outputText value="#{specificActiv.quantity}">                                                
+                                                    <f:convertNumber pattern="###,###" />
+                                                </h:outputText>
+                                             </div>                                             
+                                         </p:column>
+
+
+                                         <p:column>
+                                             <p:commandButton id="btnSelectedSpecificActivity"
+                                                              update=":tabDraftProjectDetails:proposit:addActividad"
+                                                              icon="ui-icon-pencil" 
+                                                              title="#{pppMsg['ppp.edit']}">
+
+                                                 <f:setPropertyActionListener
+                                                     value="#{specificActiv}"
+                                                     target="#{propositController.selectedActivity}"
+                                                     />
+
+                                             </p:commandButton>
+                                         </p:column>
+                                         <p:column>
+                                             <p:commandButton id="btnDeleteSpecificActivity"
+                                                              update=":tabDraftProjectDetails:proposit:addActividad,
+                                                                      :tabDraftProjectDetails:proposit:CompPanel"
+                                                              title="#{pppMsg['ppp.delete']}"
+                                                              icon="ui-icon-trash">
+                                                 <f:setPropertyActionListener value="#{specificActiv}"
+                                                                              target="#{propositController.selectedToDeleteAct}"
+                                                                              />
+
+                                             </p:commandButton>
+                                         </p:column>
+
+                                        </p:dataTable>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </p:panel>
+                    </p:dialog>
+                </div>
+            </h:form>
+
+        </ui:composition>
+    </html>

@@ -1,0 +1,33 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.abs.ppp</groupId>
+        <artifactId>siif-ppp-business</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.abs.ppp.business</groupId>
+    <artifactId>siif-ppp-business-api</artifactId>
+    <packaging>jar</packaging>
+    <name>SIIF - PPP - Business - api</name>
+    <dependencies>
+        <dependency>
+            <groupId>com.abs.ppp</groupId>
+            <artifactId>siif-ppp-domain</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.abs.siif</groupId>
+            <artifactId>siif-commons</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.abs.siif</groupId>
+            <artifactId>siif-base</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+</project>

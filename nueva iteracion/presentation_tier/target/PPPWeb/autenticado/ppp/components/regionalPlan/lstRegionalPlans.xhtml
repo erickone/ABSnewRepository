@@ -1,0 +1,66 @@
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+
+        <p:dataTable id="grdObjectives"  var="regionPlan" 
+                     value="#{RegionalPlanController.theirRegionalDataModel}"
+                     paginator="true" rows="10"  
+                     selection="#{RegionalPlanController.theirSelectedPlans}"
+                     selectionMode="multiple"
+                     emptyMessage="#{pppMsg['ppp.common.DataTable.NotFound']}"
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rowsPerPageTemplate="5,10,15"
+                     style="width: 1061px;word-wrap: break-word; word-break:break-all">
+
+            <p:ajax event="rowSelect" 
+                    update=":formDetails:pnlDetails"
+                    listener="#{RegionalPlanController.onRowSelect}" />
+            <f:facet name="header">
+                #{pppMsg['ppp.progr.RegionalPlan.Obj']}
+            </f:facet>             
+            
+            <p:column style="width: 80px; text-align: center">
+                <f:facet name="header">
+                    <h:outputText value="#{pppMsg['ppp.progr.RegionalPlan.No']}" />
+                </f:facet>
+                     #{regionPlan.regionalObjectiveNumber}
+            </p:column>
+
+            <p:column sortBy="#{regionPlan.regionalPlanObjective}" 
+                      filterBy="#{regionPlan.regionalPlanObjective}"
+                      filterMatchMode="contains"
+                      style="width: 965px">
+                <f:facet name="header">
+                    <h:outputText value="#{pppMsg['ppp.progr.RegionalPlan.Obj']}" />
+                </f:facet>
+                <h:outputText value="#{regionPlan.regionalPlanObjective}" />
+            </p:column>
+
+            <f:facet class="divFooterDataTable" name="footer" >
+                <h:panelGrid style="width: 20%" columns="2">
+                    <p:column style="width:  10%;text-align: left">
+                        <p:commandButton id="btnAddObjective" value="#{pppMsg['ppp.add']}" 
+                                         update=":formDetails:pnlDetails"
+                                         ajax="false"
+                                         actionListener="#{RegionalPlanController.prepareNewEntity()}"
+                                         />
+                    </p:column>
+                    <p:column>
+                        <p:commandButton id="btnDeleteObjective" ajax="false"
+                                         update=":formDetails:pnlDetails grdObjectives"
+                                         actionListener="#{RegionalPlanController.deleteRegionalPlans()}"
+                                         value="#{pppMsg['ppp.delete']}"   />
+                    </p:column>
+                </h:panelGrid>
+
+
+            </f:facet>
+        </p:dataTable>
+
+    </ui:composition>
+</html>

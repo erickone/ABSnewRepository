@@ -1,0 +1,342 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml"
+                xmlns:cr="http://java.sun.com/jsp/jstl/core">
+
+
+    <ui:define name="body">
+        <div style="padding-top: 27px">
+            <table>
+                <tr>
+                    <td>                        
+                        <img src="#{request.contextPath}/styles/images/iconHeaderStyle.png" /> 
+                    </td>
+                    <td style="vertical-align: center">
+                        <h:outputText value="#{pppMsg['ppp.progr.InvPreFileSearch.MainTitle']}" styleClass="headerTitleStyle" style="position: absolute; top: 135px"/>
+                    </td>
+                </tr>
+            </table>
+        </div>  
+        <div id="contentPage" class="divContentPage">
+            <h:form id="frmInvPrefileSearch">
+                <cr:if test="#{!backPreFichaController.isFromConsult()}" >
+                    #{invPrefileSearchController.init()}
+                    #{backPreFichaController.setFromConsult(true)}
+                </cr:if>
+                <label class="titlesInstitutional">   
+                </label>
+
+                <p:panel id="pnlBusqueda" header="#{pppMsg['ppp.progr.InvPrefileSearch.PanelTitle']}">
+                    <table>
+                        <tr>
+                            <td>
+                                <p:messages autoUpdate="true" id="msgs"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="tableDetailForm1">
+                        <tr>
+                            <td>
+                                <h:outputText value="#{pppMsg['ppp.progr.InvPrefileSearch.Year']}"/>
+                            </td>
+                            <td colspan="3">
+                                <p:inputText 
+                                    id="txtAnio" 
+                                    value="#{invPrefileSearchController.year}">
+                                  <f:ajax
+                                    event="keyup"
+                                    listener="#{invPrefileSearchController.reloadList()}"
+                                    render="cboUnidadPresupuestal cboUnidadResponsable cboUnidadEjecutora"/>
+                                </p:inputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputText value="#{pppMsg['ppp.progr.InvPreFileSearch.BudgetUnit']}"/>
+                            </td>
+                            <td colspan="3">
+                                <p:selectOneMenu 
+                                    disabled="#{invPrefileSearchController.isCboUPDisabled}"
+                                    id="cboUnidadPresupuestal"
+                                    value="#{invPrefileSearchController.uniPresupuestalId}"
+                                    style="width: 710px">
+                                    <f:selectItem 
+                                        itemLabel="#{InfoMsg['ppp.progr.comboSelectedItem']}"
+                                        itemValue="" />
+                                    <f:selectItems
+                                        var="dependences"
+                                        value="#{invPrefileSearchController.listOfBudgetDependences}"
+                                        itemLabel="#{dependences.composedDependenceName}"
+                                        itemValue="#{dependences.dependenceId}"/>
+                                    <f:ajax render="cboUnidadResponsable cboUnidadEjecutora"
+                                            listener="#{invPrefileSearchController.changeComboStatus()}"/>
+                                </p:selectOneMenu>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputText value="#{pppMsg['ppp.progr.InvPreFileSearch.UnitResponsible']}"/>
+                            </td>
+                            <td colspan="3">
+                                <p:selectOneMenu
+                                    disabled="#{invPrefileSearchController.isCboResponsible}"
+                                    id="cboUnidadResponsable"
+                                    value="#{invPrefileSearchController.uniResponsableId}"
+                                    style="width: 710px">
+                                    <f:selectItem 
+                                        itemLabel="#{InfoMsg['ppp.progr.comboSelectedItem']}"
+                                        itemValue="" />
+                                    <f:selectItems
+                                        var="UniResponsables"
+                                        value="#{invPrefileSearchController.listOfResponsibleDependences}"
+                                        itemLabel="#{UniResponsables.composedDependenceName}"
+                                        itemValue="#{UniResponsables.idDependency}"/>
+                                    <f:ajax render="cboUnidadEjecutora cboUnidadPresupuestal"
+                                            listener="#{invPrefileSearchController.changeComboStatus()}"/>
+                                </p:selectOneMenu>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputText value="#{pppMsg['ppp.progr.InvPreFileSearch.ExecutingUnit']}"/>
+                            </td>
+                            <td colspan="3">
+                                <p:selectOneMenu
+                                    disabled="#{invPrefileSearchController.isCboUEGDisabled}"
+                                    id="cboUnidadEjecutora"
+                                    value="#{invPrefileSearchController.uniEjecutoraId}" 
+                                    style="width: 710px">
+                                    <f:selectItem 
+                                        itemLabel="#{InfoMsg['ppp.progr.comboSelectedItem']}"
+                                        itemValue="" />
+                                    <f:selectItems
+                                        var="UniEjecutoras"
+                                        value="#{invPrefileSearchController.listOfExecutorDependences}"
+                                        itemLabel="#{UniEjecutoras.composedDependenceName}"
+                                        itemValue="#{UniEjecutoras.idDependency}"/>
+                                    <f:ajax render="cboUnidadResponsable cboUnidadPresupuestal"
+                                            listener="#{invPrefileSearchController.changeComboStatus()}"/>
+                                </p:selectOneMenu>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputText value="#{pppMsg['ppp.progr.InvPrefileSearch.FileNumber']}"/>
+                            </td>
+                            <td colspan="3">
+                                <p:inputText 
+                                    id="txtNumFicha"
+                                    maxlength="36"
+                                    value="#{invPrefileSearchController.number}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputText value="#{pppMsg['ppp.progr.InvPrefileSearch.buildingName']}"/>
+                            </td>
+                            <td colspan="3">
+                                <p:inputText
+                                    id="txtbuildingName"
+                                    maxlength="100"
+                                    value="#{invPrefileSearchController.buildingName}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputText value="#{pppMsg['ppp.progr.InvPrefileSearch.description']}"/>
+                            </td>
+                            <td colspan="3" >
+                                <p:inputText
+                                    id="txtdescription"
+                                    maxlength="100"
+                                    value="#{invPrefileSearchController.description}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputText value="#{pppMsg['ppp.progr.InvPrefileSearch.partyNumber']}"/>
+                            </td>
+                            <td colspan="3">
+                                <p:inputText
+                                    id="txtpartyNumber"
+                                    maxlength="100"
+                                    value="#{invPrefileSearchController.partyNumber}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputText value="#{pppMsg['ppp.progr.InvPrefileSearch.destNumber']}"/>
+                            </td>
+                            <td colspan="3">
+                                <p:inputText
+                                    id="txtdestNumber"
+                                    maxlength="100"
+                                    value="#{invPrefileSearchController.destNumber}"/>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <p:commandButton
+                                    id="btnBuscar"
+                                    value="#{pppMsg['ppp.progr.InvPrefileSearch.Search']}"
+                                    actionListener="#{invPrefileSearchController.searchInvPrefiles()}"
+                                    ajax="true"
+                                    update="dtInvPrefile"/>
+                            </td>
+                            <td>
+                                <p:commandButton
+                                    id="btnClean"
+                                    value="#{pppMsg['ppp.progr.InvPrefileSearch.Clean']}"
+                                    actionListener="#{invPrefileSearchController.cleanSearch()}"
+                                    ajax="true"
+                                    update="dtInvPrefile, txtAnio, txtNumFicha, txtbuildingName, txtdescription,
+                                    txtpartyNumber, txtdestNumber, cboUnidadPresupuestal, cboUnidadResponsable, cboUnidadEjecutora"/>
+                            </td>
+                            <td>
+                                <p:commandButton
+                                    id="btnPrior"
+                                    value="#{pppMsg['ppp.progr.InvPrefileSearch.Priority']}"
+                                    disabled="#{invPrefileSearchController.btnSrvSave}"
+                                    actionListener="#{invPrefileSearchController.filePriority()}"
+                                    update="dtInvPrefile" ajax="true"
+                                    />
+                            </td>
+                            <td>
+                                <p:commandButton
+                                    id="btnClose"
+                                    value="#{pppMsg['ppp.progr.InvPrefileSearch.Close']}"
+                                    action="#{invPrefileSearchController.navigateToMainMenu()}"
+                                    ajax="true"
+                                    />
+                            </td>
+                        </tr>
+                    </table>
+                </p:panel>
+                <p:dataTable id="dtInvPrefile"
+                             var="InvPrefile" 
+                             value="#{invPrefileSearchController.invPrefileList}"
+                             paginator="true" 
+                             rows="10" 
+                             sortBy="#{InvPrefile.invprefilepriority}" sortOrder="ascending"
+                             emptyMessage="#{pppMsg['ppp.progr.InvPrefileSearch.NoRecords']}"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15" 
+                             rendered="true">                
+                    <p:columnGroup type="header">
+                        <!-- Nombres de las columnas, agrupadas y subagrupadas-->
+                        <p:row>
+                            <p:column headerText="#{pppMsg['ppp.progr.InvPreFileSearch.Table.Header.PreFile']}" colspan="6" />  
+                            <p:column headerText="#{pppMsg['ppp.progr.InvPreFileSearch.Table.Header.Preject']}" colspan="4" />
+                            <p:column headerText="#{pppMsg['ppp.progr.InvPreFileSearch.Table.Header.UEG']}" colspan="2"/>
+                            <p:column headerText=""/><p:column headerText=""/>
+                        </p:row>
+                        <p:row>
+                            <!--Headers de la Pre-Ficha -->
+                            <p:column headerText="#{pppMsg['ppp.progr.InvPrefileSearch.File']}"/>
+                            <p:column headerText="#{pppMsg['ppp.progr.InvPrefileSearch.Name']}"/>
+                            <p:column headerText="#{pppMsg['ppp.progr.InvPrefileSearch.CPriority']}"/>
+                            <p:column headerText="#{pppMsg['ppp.progr.InvPrefileSearch.AsignIni']}"/>
+                            <p:column headerText="#{pppMsg['ppp.progr.InvPrefileSearch.Additional']}"/>
+                            <p:column headerText="#{pppMsg['ppp.progr.InvPrefileSearch.Total']}"/>
+                            <!--Headers del ANteproyecto/Proceso-->
+                            <p:column headerText="#{pppMsg['ppp.progr.InvPrefileSearch.NoFile']}"/>
+                            <p:column headerText="#{pppMsg['ppp.progr.InvPrefileSearch.shortName']}"/>
+                            <p:column headerText="#{pppMsg['ppp.progr.InvPrefileSearch.party']}"/>
+                            <p:column headerText="#{pppMsg['ppp.progr.InvPrefileSearch.dest']}"/>
+                            <!-- Headers de UEG -->
+                            <p:column headerText="#{pppMsg['ppp.progr.InvPreFileSearch.Table.Header.No']}"/>
+                            <p:column headerText="#{pppMsg['ppp.progr.InvPreFileSearch.Table.Header.Name']}"/>
+                            <!-- HEADER EN BLANCO PARA EL BOTÓN DE EDITAR -->
+                            <p:column headerText=""/>
+                            <!-- HEADER EN BLANCO PARA EL BOTÓN DE ELIMINAR -->
+                            <p:column headerText=""/>
+                        </p:row>
+                    </p:columnGroup>
+                    <p:column>
+                        #{InvPrefile.invprefilenumber} 
+                    </p:column>
+                    <p:column>           
+                        #{InvPrefile.invprefilename}
+                    </p:column>
+                    <p:column>   
+                           <p:inputText id="txtPriority"  maxlength="3"  style="width:80px"  
+                                        value="#{InvPrefile.invprefilepriority}"  
+                            disabled="#{invPrefileSearchController.disabledPriorizar}">                                                 
+                           </p:inputText>  
+                       
+                            <p:commandButton id="btnSavePriority" 
+                                        value="#{pppMsg['ppp.progr.InvPrefileSearch.btnPriority']}"                                            
+                                        action="#{invPrefileSearchController.savePriority()}"
+                                        disabled="#{invPrefileSearchController.disabledPriorizar}">
+                            <f:setPropertyActionListener value="#{InvPrefile}"
+                                target="#{invPrefileSearchController.selectedInvPreFileDTO}" /> 
+                        </p:commandButton>  
+                       
+                    </p:column>
+                    <p:column>
+                        #{InvPrefile.invprefileinitialasignation}
+                    </p:column>
+                    <p:column>
+                        #{InvPrefile.invprefileaditionalasignation}
+                    </p:column>
+                    <p:column>           
+                        #{InvPrefile.invprefiletotal}
+                    </p:column>
+                    <p:column>           
+                        #{InvPrefile.invprefiledraftprojectnumber}
+                    </p:column>
+                    <p:column>           
+                        #{InvPrefile.invprefiledraftprojectshortname}
+                    </p:column>
+                    <p:column>           
+                        <!-- PArtida -->
+                    </p:column>
+                    <p:column>           
+                        <!-- Destino -->
+                    </p:column>
+                    <p:column>           
+                        #{InvPrefile.invprefileuegnumber}
+                    </p:column>
+                    <p:column>           
+                        #{InvPrefile.invprefileuegdescription}
+                    </p:column>
+                    <p:column>
+                        <p:commandButton
+                            id="btnEditInvPreFile"
+                            icon="ui-icon-pencil"
+                            title="#{pppMsg['ppp.edit']}"
+                            action="#{invPrefileSearchController.navigateToInvPrefile()}">
+                            <f:setPropertyActionListener 
+                                value="#{InvPrefile}"
+                                target="#{invPrefileSearchController.selectedInvPreFileDTO}" /> 
+                        </p:commandButton>
+                    </p:column> 
+                     <p:column>
+                        <p:commandButton
+                            id="btnDeleteInvPreFile" 
+                            title="#{pppMsg['ppp.delete']}"
+                            icon="ui-icon-trash"
+                            onclick="confirmation.show()">
+                            <f:setPropertyActionListener 
+                                value="#{InvPrefile}"
+                                target="#{invPrefileSearchController.selectedInvPreFileDTO}" /> 
+                        </p:commandButton>
+                    </p:column> 
+                </p:dataTable>                
+                <p:confirmDialog id="confirmDialog" message="#{pppMsg['ppp.progr.InvPrefileSearch.ConfirmationMessage']}"
+				 header="#{pppMsg['ppp.progr.InvPrefileSearch.ConfirmationTitle']}" severity="alert" widgetVar="confirmation"
+                                 closable="false">	
+                    <p:commandButton id="confirm" value="#{pppMsg['ppp.progr.InvPrefileSearch.Yes']}" oncomplete="confirmation.hide()"
+                                     actionListener="#{invPrefileSearchController.deleteInvPreFile()}" style="width:50px" update="dtInvPrefile"/>
+                    <p:commandButton id="cancel" value="#{pppMsg['ppp.progr.InvPrefileSearch.No']}" onclick="confirmation.hide()"
+                                     style="width:50px" type="button" /> 	
+                </p:confirmDialog>
+            </h:form>
+        </div> 
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,83 @@
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+
+        <p:outputPanel id="pnlDetails"> 
+
+            <table style="width: 100%; "  class="tableDetailForm">
+                <tr>
+                    <td colspan="2">
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" />
+                    </td>
+                </tr>
+                <tr>
+                    <td  style="width: 10%"  class="tableColumnRight" >
+                        <h:outputText id="lblRegion" value="#{pppMsg['ppp.progr.Region']}"/>
+                        <!--     <label class="titlesInstitutional">
+                                 Región
+                             </label> -->
+                    </td>
+                    <td style="width: 90%"  class="tableColumnLeft">
+                        <p:selectOneMenu  style="width: 400px"
+                                          id="cboRegions" 
+                                          value="#{RegionalPlanController.theirRegionId}" >
+                            <f:selectItem itemValue="" itemLabel="(Seleccionar)"/>
+                            <f:selectItems value="#{RegionalPlanController.regionsList}"
+                                           var="region"
+                                           itemLabel="#{region.regionalClassifierDescription}" 
+                                           itemValue="#{region.regionalClassifierId}"/>
+                            <p:ajax update="pnlDetails grdObjectives" 
+                                    listener="#{RegionalPlanController.loadRegionalPlanByRegionalClassifier()}" />
+                        </p:selectOneMenu>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width: 10%"  class="tableColumnRight" >
+                        <h:outputText id="lblObjetivo" value="#{pppMsg['ppp.planning.objective']}" styleClass="text"/>
+                    </td>
+                    <td style="width: 90%"  class="tableColumnLeft">
+                        <p:inputTextarea id="txtObjetivo"  style="width: 100%"
+                                         value="#{RegionalPlanController.regionalObjectiveDescription}"
+                                         disabled="#{RegionalPlanController.theirInputsDisabled}"
+                                         cols="100" rows="5" maxlength="250"/>
+                    </td> 
+                </tr>
+                <tr>
+                    <td colspan="2" class="tableColumnLeft">
+                        <table style="width: 100%" >
+                            <tr>
+                                <td   style="width: 95%; text-align: right">
+
+                                    <p:commandButton value="#{pppMsg['ppp.save']}"
+                                                     disabled="#{RegionalPlanController.theirInputsDisabled}"
+                                                     update=":formDetails:grdObjectives"
+                                                     ajax="false"
+                                                     actionListener="#{RegionalPlanController.persistRegionalPlan()}"
+                                                     />
+
+                                </td>
+                                <td style="width: 5%; text-align: left">  
+                                    <p:commandButton value="#{pppMsg['ppp.cancel']}" 
+                                                     update="pnlDetails"
+                                                     ajax="false"
+                                                     disabled="#{RegionalPlanController.theirInputsDisabled}"
+                                                     actionListener="#{RegionalPlanController.cancelPersist()}"    
+                                                     />
+
+                                </td> 
+                            </tr>
+                        </table>  
+                    </td>
+
+                </tr>
+
+            </table> 
+        </p:outputPanel>
+    </ui:composition>
+</html>

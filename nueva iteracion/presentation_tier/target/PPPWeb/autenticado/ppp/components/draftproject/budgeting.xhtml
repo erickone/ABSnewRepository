@@ -1,0 +1,137 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+
+    <ui:composition>
+        #{budgetingSummaryController.initListOfComponents()}
+            <h:form id="budgetingForm" prependId="false" >
+                <p:panel id="panSummaryTotalsByUEG" header="#{InfoMsg['ppp.budgetingSummary.UEGBreakdown']}">
+                    <div class="divTablePED">
+                        <p:dataTable id="grdBudgetingSummaryDependences"  
+                                     value="#{budgetingSummaryController.myListOfBreakDownDependences}" 
+                                     var="budgetingSummaryDependences" 
+                                     paginator="true" rows="5"  
+                                     paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+                                     emptyMessage="#{InfoMsg['ppp.common.DataTable.NotFound']}">
+
+
+                            <p:column style="width: 60%">
+                                <f:facet name="header" >
+                                    <h:outputText  value="#{InfoMsg['ppp.budgeting.DependenceSummaryName']}" />
+                                </f:facet>
+                                <h:outputText id="budgetingSummarySpendingChapter" value="#{budgetingSummaryDependences.itsDependenceKey} #{budgetingSummaryDependences.itsDependenceName}" />
+                            </p:column>
+
+                            <p:column style="width: 10%; text-align: right" >
+                                <f:facet name="header">
+                                    <h:outputText value="#{InfoMsg['ppp.budgeting.summary.initial.asignation']}" />
+                                </f:facet>
+                                <h:outputText id="budgetingInitialAsignation"  value="#{budgetingSummaryDependences.itsDependenceInitialTotal}"/>
+                            </p:column>   
+                            <p:column style="width: 10%; text-align: right">
+                                <f:facet name="header">
+                                    <h:outputText  value="#{InfoMsg['ppp.budgeting.summary.additional.budget']}" />
+                                </f:facet>
+                                <h:outputText id="budgetingSummaryAdditionalBudget" value="#{budgetingSummaryDependences.itsDependenceAdditionalTotal}"/>
+                            </p:column>  
+                            <p:column style="width: 10%; text-align: right">
+                                <f:facet name="header">
+                                    <h:outputText value="#{InfoMsg['ppp.budgeting.summary.addition']}" />
+                                </f:facet>
+                                <h:outputText id="budgetingSummaryAddition" value="#{budgetingSummaryDependences.itsDependenceSummatoryTotal}"/>
+                            </p:column>   
+
+                            <f:facet name="footer"> 
+                                <p:summaryRow>  
+                                    <p:column style="text-align: right">  
+                    #{InfoMsg['ppp.budgetingSummary.Total']}  
+                                    </p:column>  
+
+                                    <p:column style="text-align: right">  
+                    #{budgetingSummaryController.myInitialTotalDependenceStringFormat}
+                                    </p:column>  
+                                    <p:column style="text-align: right">
+                     #{budgetingSummaryController.myadditionalTotalDependenceStringFormat}
+                                    </p:column>
+                                    <p:column style="text-align: right">
+                     #{budgetingSummaryController.mySumTotalDependenceStringformat}
+                                    </p:column>
+                                </p:summaryRow>  
+                            </f:facet>
+                        </p:dataTable>                          
+                    </div>
+                </p:panel>
+               <p:panel id="panBudgetingSummary" header="#{InfoMsg['ppp.budgeting.summary']}">
+                         <div class="divTablePED">
+                        <div class="divlabelBudgetingSummary">
+                            <h:outputText value="#{InfoMsg['ppp.budgeting.UEG']}"/>
+                        </div>
+                        <div class="divInputBudgetingSummary">
+                            <p:selectOneMenu disabled="#{budgetingSummaryController.itsComboDependenceCheck}" 
+                                             style="min-width: 300px; width: 100%" id="inputBudgetingSummaryUEG" 
+                                             value="#{budgetingSummaryController.itsSelectedDependenceId}" >
+                                <f:selectItems value="#{budgetingSummaryController.myListOfUEG}" var="UEGs"
+                                               itemLabel="#{UEGs.clave} #{UEGs.nameDepend}"
+                                               itemValue="#{UEGs.idDependency}"/>
+                                <p:ajax listener="#{budgetingSummaryController.loadTheSummary()}" 
+                                    update=":tabDraftProjectDetails:budgetingForm:grdBudgetingSummary,
+                                    :tabDraftProjectDetails:budgetingForm:panSummaryTotals,
+                                    :tabDraftProjectDetails:budgetingForm:panSummaryTotalsByUEG" />
+                            </p:selectOneMenu>
+
+                        </div>
+                             <div class="divlabelCheckBoxBudgetingSummary">
+                                 <p:selectBooleanCheckbox itemLabel="#{InfoMsg['ppp.budgeting.checkBox.MegaSummary']}" 
+                                                          value="#{budgetingSummaryController.itsMegaSummaryCheck}">  
+                                     <p:ajax update=":tabDraftProjectDetails:budgetingForm:inputBudgetingSummaryUEG,
+                                             :tabDraftProjectDetails:budgetingForm:grdBudgetingSummary,
+                                    :tabDraftProjectDetails:budgetingForm:panSummaryTotals,
+                                    :tabDraftProjectDetails:budgetingForm:panSummaryTotalsByUEG" 
+                                    listener="#{budgetingSummaryController.loadBudgetMegaSummaryByUR()}"/>  
+                                 </p:selectBooleanCheckbox>  
+                             </div>  
+               
+                    </div>
+                </p:panel>
+
+                    <div class="divTablePED">
+                            <ui:include src="budgeting/lstbudgetingsummary.xhtml"/>
+                    </div>
+                <p:panel id="panSummaryTotals">
+                <div class="divTablePED">
+                    <div class="divLabelBudgetingTotal">
+                        <h:outputLabel value="#{InfoMsg['ppp.budgetingSummary.OperationExpenseTotal']}"/>
+                    </div>
+                    <div class="divTextBudgetingTotal">
+                          <p:inputText style="width: 99%; text-align: right" value="#{budgetingSummaryController.myOperationalExpenseTotalInit}" readonly="true"/>
+                    </div>
+                    <div class="divTextBudgetingTotal">
+                          <p:inputText style="width: 99%; text-align: right" value="#{budgetingSummaryController.myOperationalExpenseTotalAditional}" readonly="true"/>
+                    </div>
+                    <div class="divTextBudgetingTotal">
+                          <p:inputText style="width: 99%; text-align: right" value="#{budgetingSummaryController.myOperationalExpenseTotalSum}" readonly="true"/>
+                    </div>
+                    <div class="divLabelBudgetingTotal">
+                          <h:outputLabel value="#{InfoMsg['ppp.budgetingSummary.InvestExpenseTotal']}" />
+                    </div>
+                    <div class="divTextBudgetingTotal">
+                         <p:inputText style="width: 99%; text-align: right" value="#{budgetingSummaryController.myInvestExpenseTotalInit}" readonly="true"/>
+                    </div>
+                    <div class="divTextBudgetingTotal">
+                         <p:inputText style="width: 99%; text-align: right" value="#{budgetingSummaryController.myInvestExpenseTotalAditional}" readonly="true"/>
+                    </div>
+                    <div class="divTextBudgetingTotal">
+                         <p:inputText style="width: 99%; text-align: right" value="#{budgetingSummaryController.myInvestExpenseTotalSum}" readonly="true"/>
+                    </div>                              
+                </div>
+                </p:panel>
+                
+                <ui:include src="budgeting/dialogBudgeting.xhtml"/>
+            </h:form>
+
+</ui:composition>
+</html>

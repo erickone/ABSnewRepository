@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+
+    <ui:define name="body">
+        
+        <div class="headerTitleStyle">
+          <h:outputLabel value="#{pppMsg['ppp.progr.Binnacle.Header']}"/>
+        </div>
+        <div class="divContentPage">
+          <h:form id="form" enctype="multipart/form-data">
+            <div class="tabular">
+              <div class="tabular-row">
+                <div class="tabular-cell">
+                  <h:outputLabel value="#{pppMsg['ppp.progr.Binnacle.lblNoFicha']}"/>
+                </div>
+                <div class="tabular-cell">
+                  <h:outputText value="#{DraftProjectBinnacleController.theirDraftProjectEntity.draftProjectKey}"/>
+                </div>
+              </div>
+            </div>
+              <div class="tabular">
+                <div class="tabular-row">
+                  <p:dataTable id="grdBinnacle"
+                               value="#{DraftProjectBinnacleController.theirBinnacleCollection}"
+                               emptyMessage="#{pppMsg['ppp.progr.Binnacle.Grid.Empty']}"
+                               var="binnacle">
+                    <p:column>
+                      <f:facet name="header">
+                    <h:outputText value="#{pppMsg['ppp.progr.Binnacle.Grid.hrNoFicha']}" />
+                      </f:facet>
+                      <h:outputText value="#{binnacle.draftProject.draftProjectKey}"/>
+                    </p:column>
+                    <p:column>
+                      <f:facet name="header">
+                        <h:outputText value="#{pppMsg['ppp.progr.Binnacle.Grid.hrEstInicial']}" />
+                      </f:facet>
+                      <h:outputText value="#{binnacle.draftProjectStatus.draftProjectStatusDescription}"/>
+                    </p:column>
+                    <p:column>
+                      <f:facet name="header">
+                        <h:outputText value="#{pppMsg['ppp.progr.Binnacle.Grid.hrFecha']}" />
+                      </f:facet>
+                      <h:outputText value="#{binnacle.draftProjectBinnacleDate}"/>
+                    </p:column>
+                    <p:column>
+                      <f:facet name="header">
+                        <h:outputText value="#{pppMsg['ppp.progr.Binnacle.Grid.hrUsuario']}" />
+                      </f:facet>
+                      <h:outputText value="#{binnacle.userBinnacle.userDescription}"/>
+                    </p:column>
+                    <p:column>
+                      <f:facet name="header">
+                        <h:outputText value="#{pppMsg['ppp.progr.Binnacle.Grid.hrDiasEst']}" />
+                      </f:facet>
+                      <h:outputText value="#{binnacle.draftProjectStatus.draftProjectStatusEstimatedDays}"/>
+                    </p:column>
+                    <p:column>
+                      <f:facet name="header">
+                        <h:outputText value="#{pppMsg['ppp.progr.Binnacle.Grid.hrDiasReal']}" />
+                      </f:facet>
+                      <h:outputText value="#{binnacle.draftProjectBinnacleRealDay}"/>
+                    </p:column>
+                  </p:dataTable>
+              </div>
+            </div>
+          </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

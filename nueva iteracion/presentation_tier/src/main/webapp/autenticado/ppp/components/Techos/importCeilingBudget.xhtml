@@ -1,0 +1,159 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+    <ui:define name="body">
+        #{importCeilingBudgetController.init()}
+        <div class="imgHeaderStyle" />
+        <div class="headerTitleStyle">
+            <h:outputLabel value="#{pppMsg['ppp.techo.cargatechopresupuestalTitle']}"/>
+        </div>
+        <div class="divContentPage">
+            <h:form id="frmCargaTechoPresupuestal">
+                <p:panel
+                    id="pnlCargaTechoPresupuestal"
+                    header="#{pppMsg['ppp.techo.cargatechopresupuestalTitle']}">
+
+                    <div style="width:1150;overflow-x:auto" >
+                        <table>
+                            <tr>
+                                <td colspan="3">
+                                    <p:messages id="msgs" showDetail="true" showSummary="false" autoUpdate="true"   />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="280">
+                                    <h:outputText value="#{pppMsg['ppp.techo.clavetecho']}" /> 
+                                </td>                        
+                                <td>
+                                    <p:inputText size="13"  id="txtAnio" value="#{importCeilingBudgetController.currentOperationYear}" 
+                                                 readonly="#{importCeilingBudgetController.disabledComboFilterCeilingBudget}"
+                                                 rendered="true">
+                                        <f:ajax
+                                            event="keyup"
+                                            listener="#{importCeilingBudgetController.reloadListFilterCeilingBudget()}"
+                                            render="cboClaveTechoPresupuestal"/>
+                                    </p:inputText>
+                                </td>
+                                <td>
+                                    <p:selectOneMenu panelStyle="width: 380px" style="width: 380px; max-width: 380px"
+                                                     id="cboClaveTechoPresupuestal" 
+                                                     disabled="#{importCeilingBudgetController.disabledComboFilterCeilingBudget}"
+                                                     value="#{importCeilingBudgetController.keyCeilingBudgetId}" rendered="true">
+                                        <f:selectItem 
+                                            itemLabel="#{InfoMsg['ppp.progr.cargatechopresupuestalTitle.comboSelectedItem']}"
+                                            itemValue="" />
+                                        <f:selectItems
+                                            var="filtros" 
+                                            value="#{importCeilingBudgetController.configurationFilter}"
+                                            itemLabel="#{filtros.ceilingConfigName}"
+                                            itemValue="#{filtros.ceilingConfigId}"/>
+                                        <f:ajax render="txtDescripcion" 
+                                                listener="#{importCeilingBudgetController.changeDescription()}"/>
+                                    </p:selectOneMenu>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="280">
+                                    <h:outputText value="#{pppMsg['ppp.techo.descripcion']}" /> 
+
+                                </td>
+                                <td colspan="2">
+                                    <p:inputText size="69"  id="txtDescripcion" value="#{importCeilingBudgetController.descriptionFilter}" readonly="true"  />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="280">
+                                    <h:outputText value="#{pppMsg['ppp.techo.cargatechopresupuestalTitle.archivo']}"/> 
+                                </td>
+                                <td colspan="2">
+                                    <p:inputText size="69" id="txtArchivo" readonly="true" value="#{importCeilingBudgetController.currentFilePath}" />
+                                </td>
+                                <td>
+                                    <p:fileUpload id="btnBuscar" label="#{InfoMsg['ppp.techo.cargatechopresupuestalTitle.btnBuscar']}" 
+                                                  styleClass="width:86px" mode="advanced" showButtons="false" update="txtArchivo, btnAgregar msgs"
+                                                  fileUploadListener="#{importCeilingBudgetController.processFileUpload}"
+                                                  auto="true" disabled="#{importCeilingBudgetController.disabledButtonBrowse}" />
+                                </td>
+                                <td>
+                                    <p:commandButton id ="btnAgregar" value="#{InfoMsg['ppp.techo.cargatechopresupuestalTitle.btnAgregar']}"
+                                                     update="txtAnio, tblArchivo, txtArchivo, msgs, btnEliminar, btnAgregar, btnValidar , cboClaveTechoPresupuestal" style="width:86px" ajax="true"
+                                                     actionListener="#{importCeilingBudgetController.agregarArchivo()}" rendered="true"
+                                                     disabled="#{importCeilingBudgetController.disabledButtonAddFile}"/>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" />
+                                <td colspan="2">
+                                    <p:selectBooleanCheckbox id="chkBoxError" value="#{importCeilingBudgetController.isCheckBoxClicked}" 
+                                                             disabled="#{importCeilingBudgetController.disabledCheckboxErrores}" /> 
+                                    <h:outputText value="#{pppMsg['ppp.techo.cargatechopresupuestalTitle.chkboxImprimirErrores']}"/> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" />
+                                <td colspan="2">
+                                    <p:selectBooleanCheckbox id="chkBoxImport" value="#{importCeilingBudgetController.isCheckBoxImportClicked}" 
+                                                             disabled="#{importCeilingBudgetController.disabledCheckBoxImport}">
+                                        <p:ajax update="btnImportar" listener ="#{importCeilingBudgetController.setDisabledButtonImport(!importCeilingBudgetController.isCheckBoxImportClicked)}" />
+                                    </p:selectBooleanCheckbox> 
+
+                                    <h:outputText value="#{pppMsg['ppp.techo.cargatechopresupuestalTitle.chkboxImportarCorrectos']}"/> 
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br/>
+                    <div style="width:800;overflow-x:auto" >
+                        <table>
+                            <tr>
+                                <td width="800">
+                                    <h:outputText value="#{pppMsg['ppp.techo.cargatechopresupuestalTitle.title.archivos']}" /> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p:dataTable id="tblArchivo" var="archivo" 
+                                                 value="#{importCeilingBudgetController.lstArchivos}"
+                                                 emptyMessage="" 
+                                                 rendered="true"> 
+                                        <p:column>
+                                            #{archivo.fileName}
+                                        </p:column>
+
+                                    </p:dataTable>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </p:panel>
+                <p:panel>
+                    <p:commandButton id ="btnValidar" actionListener="#{importCeilingBudgetController.executeValidationFiles()}" 
+                                     value="#{InfoMsg['ppp.techo.cargatechopresupuestalTitle.btnValidar']}" style="width:140px"  rendered="true"
+                                     disabled="#{importCeilingBudgetController.disabledButtonValidate}" 
+                                     update="btnImportar btnImprimir chkBoxError chkBoxImport msgs"/>
+                    <p:commandButton id ="btnImportar" actionListener="#{importCeilingBudgetController.executeImportFiles()}" 
+                                     value="#{InfoMsg['ppp.techo.cargatechopresupuestalTitle.btnImportar']}" style="width:140px" 
+                                     disabled="#{importCeilingBudgetController.disabledButtonImport}" rendered="true"
+                                     action="#{importCeilingBudgetController.navigateToImportCeilingbudget(true)}"
+                                     update="msgs" />
+                    <p:commandButton id ="btnImprimir" value="#{InfoMsg['ppp.techo.cargatechopresupuestalTitle.btnImprimir']}" style="width:140px" 
+                                     disabled="#{importCeilingBudgetController.disabledButtonPrintError}" 
+                                     action="#{importCeilingBudgetController.navigateToImportCeilingbudget(false)}" rendered="true"
+                                     update="msgs"/>
+                    <p:commandButton id ="btnEliminar" value="#{InfoMsg['ppp.techo.cargatechopresupuestalTitle.btnEliminar']}" 
+                                     actionListener="#{importCeilingBudgetController.removeFileForList()}" 
+                                     update="btnEliminar, tblArchivo, txtAnio, cboClaveTechoPresupuestal, txtDescripcion, 
+                                     btnValidar, btnImportar, btnImprimir chkBoxError chkBoxImport msgs"
+                                     style="width:140px" disabled="#{importCeilingBudgetController.disabledButtonDelete}" rendered="true"/>
+                    <p:commandButton id ="btnCerrar" action="#{importCeilingBudgetController.navigateToMainMenu()}"
+                                     ajax="true" value="#{InfoMsg['ppp.techo.cargatechopresupuestalTitle.btnCerrar']}" style="width:140px" />
+                </p:panel>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

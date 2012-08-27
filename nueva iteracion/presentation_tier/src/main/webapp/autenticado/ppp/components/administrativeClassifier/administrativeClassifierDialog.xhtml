@@ -1,0 +1,235 @@
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+
+    <ui:composition>
+
+        <p:dialog id="admClassifierDetails" 
+                  widgetVar="dlg" modal="true"  showHeader="true"
+                  maximizable="false" minimizable="false"  
+                  position="center" closable="false"
+                  height="500" width="900"> 
+
+            <p:messages id="messageName" showDetail="true" showSummary="false" autoUpdate="true"  />
+
+
+            <table style="width: 100%" class="tableDetailForm">
+                <tr>
+                    <td colspan="4">
+                        <h:outputText id="lblHeader"
+                                      value="#{administrativeClassifier.theirHeaderForm}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;width: 10%">
+                        <h:outputText value="#{pppMsg['ppp.progr.AdminClassifierCollectType']}"/>
+                    </td>
+                    <td style="text-align: left;width: 50%"
+                        colspan="2">
+                        <p:inputText id="txtColectiveType"
+                                     style="width: 100%"
+                                     value="#{administrativeClassifier.
+                                              theirColectiveColectiveType}"
+                                     readonly="true"
+                                     maxlength="255"/>
+                    </td>
+                    <td style="text-align: right;width: 10%">
+                        <h:outputText value="#{pppMsg['ppp.progr.AdminClassifierCollectStatus']}"/>
+                    </td>
+                    <td style="text-align: left;width: 30%"
+                        colspan="2">
+                        <p:selectOneMenu id="cboColectiveStatus"  style="width: 150px"
+                                         value="#{administrativeClassifier.theirSelectedStatusColective}">
+                            <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}" />
+                            <f:selectItems value="#{administrativeClassifier.itsSupportList['StatusColectives']}"
+                                           var="statusColective"
+                                           itemLabel="#{statusColective.statusColectiveDescription}"
+                                           itemValue="#{statusColective.statusColectiveId}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </td> 
+                </tr>
+                <tr>
+                    <td style="text-align: right;width: 10%">
+                        Clave
+                    </td>
+                    <td  style="text-align: left;width: 10%">
+                        <p:inputText id="txtKey" maxlength="50"
+                                     value="#{administrativeClassifier
+                                              .theirColectiveKey}"/>
+                    </td>
+                    <td  style="text-align: right;width: 10%">
+                        <h:outputText value="#{pppMsg['ppp.progr.AdminClassifierName']}"/>
+                    </td>
+                    <td colspan="3"  style="text-align: left;width: 70%">
+                        <p:inputText id="txtName" maxlength="255"
+                                     value="#{administrativeClassifier
+                                              .theirColectiveName}"
+                                     style="width: 100%"/>
+                    </td>  
+                </tr>
+                <tr>
+                    <td style="text-align: right;width: 10%">
+                        <h:outputText value="#{pppMsg['ppp.progr.AdminClassifierShortName']}"/>
+                    </td>
+                    <td style="text-align: left;width: 50%">
+                        <p:inputText id="txtShortName" maxlength="50" 
+                                     value="#{administrativeClassifier
+                                              .theirColectiveShortName
+                                                  }"
+                                     style="width: 100%"/>
+                    </td>
+                    <td style="text-align: right;width: 5%">
+                         <h:outputText value="#{pppMsg['ppp.progr.AdminClassifierDischargeDate']}"/>
+                    </td>
+                    <td style="text-align: left;width: 20%"> 
+                        <p:calendar id="calRegisterDate" showOn="button"
+                                    navigator="true" 
+                                    pattern="dd/MM/yyyy"
+                                    maxlength="11" size="11" 
+                                    value="#{administrativeClassifier.theirRegisterDate}"> 
+                        </p:calendar>
+                    </td>
+                    <td style="text-align: right;width: 5%">
+                       <h:outputText value="#{pppMsg['ppp.progr.AdminClassifierLastModDate']}"/>
+                    </td>
+                    <td style="text-align: left;width: 10%">
+                        <p:calendar id="calLastModify"  
+                                    readOnlyInputText="true"
+                                    readonly="true"
+                                    pattern="dd/MM/yyyy"
+                                    maxlength="11" size="11" 
+                                    disabled="true"
+                                    value="#{administrativeClassifier.theirLastModifiedDate}">
+
+                        </p:calendar>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;width: 10%">
+                         <h:outputText value="#{pppMsg['ppp.progr.AdminClassifierDesc']}"/>
+                    </td>
+                    <td colspan="5" style="text-align: right;width: 90%">
+                        <p:inputTextarea id="txtDescription" 
+                                         value="#{administrativeClassifier
+                                                  .theirDescLong}"
+                                         autoResize="false"
+                                         cols="5"
+                                         style="width: 100%"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;width: 10%">
+                       <h:outputText value="#{pppMsg['ppp.progr.AdminClassifierFund']}"/>
+                    </td>
+                    <td colspan="5" style="text-align: right;width: 60%">
+                        <p:inputTextarea id="txtFundametal" 
+                                         value="#{administrativeClassifier
+                                                  .theirColectiveFundament}"
+                                                  autoResize="false"
+                                         cols="5"
+                                         style="width: 100%"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;width: 10%">
+                        <h:outputText value="#{pppMsg['ppp.progr.AdminClassifierResp']}"/>
+                        
+                    </td>
+                    <td colspan="3" style="text-align: left;width: 50%">
+                        <p:selectOneMenu id="cboResponsible"  style="width: 150px"
+                                         value="#{administrativeClassifier
+                                                  .theirSelectedResponsible}">
+                            <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}" />
+                            <f:selectItems value="#{administrativeClassifier.itsSupportList['Responsibles']}"
+                                           var="responsible"
+                                           itemLabel="#{responsible.compositeName()}"
+                                           itemValue="#{responsible.employeeId}"
+                                           />
+
+                        </p:selectOneMenu> 
+                    </td> 
+                    <td style="text-align: center;width: 30%" colspan="2" rowspan="3">
+                        <p:panel header="#{pppMsg['ppp.progr.AdminClassifierInvertion']}" style="width: 100%">
+                            <p:selectManyCheckbox id="chkOptions"
+                                                  value="#{administrativeClassifier.theirSelectedOptions}"
+                                                  >
+
+                                <f:selectItem itemLabel="#{pppMsg['ppp.progr.AdminClassifierCheckExecute']}" itemValue="1"/>
+                                <f:selectItem itemLabel="#{pppMsg['ppp.progr.AdminClassifierCheckNormative']}" itemValue="2"/>
+                            </p:selectManyCheckbox>
+                        </p:panel>
+                    </td> 
+                </tr>
+                <tr>
+                    <td style="text-align: right;width: 10%">
+                        <h:outputText value="#{pppMsg['ppp.progr.AdminClassifierClassifType']}"/> 
+                    </td>
+                    <td colspan="3" style="text-align: left;width: 50%">
+                        <p:selectOneMenu id="cboTypeClassifier"  style="width: 150px"
+                                         disabled="#{administrativeClassifier
+                                                     .theirDisabledClassifierType}"
+                                         value="#{administrativeClassifier.theirSelectedAdmClassType}">
+                            <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}" />
+                            <f:selectItems value="#{administrativeClassifier.itsSupportList['AdminClassTypes']}"
+                                           var="adminClassType"
+                                           itemLabel="#{adminClassType.adminClassTypeDescription}"
+                                           itemValue="#{adminClassType.adminClassTypeId}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td style="text-align: right;width: 10%">
+                         <h:outputText value="#{pppMsg['ppp.progr.AdminClassifierCONAC']}"/>  
+                    </td>
+                    <td colspan="3" style="text-align: left;width: 50%">
+                        <p:selectOneMenu id="cboClassifierConac"  style="width: 150px"
+                                         value="#{administrativeClassifier
+                                                  .theirSelectedClassConac}"
+                                         disabled="#{administrativeClassifier
+                                                     .theirDisabledCONAC}"
+                                         >
+                            <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}" />
+                            <f:selectItems value=""
+                                           var="adminClassType"
+                                           itemLabel=""
+                                           itemValue=""
+                                           /> 
+                        </p:selectOneMenu>  
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="6" style="width: 100%;text-align: right">
+
+                        <div  class="btnLayoutSaveStrategic">
+                            <p:commandButton id="btnSave" value="#{pppMsg['ppp.save']}"
+                                            
+                                             actionListener="#{administrativeClassifier
+                                                               .persistDependency()}"
+                                             disabled="#{
+                                             administrativeClassifier.theirDisabledEdit}"
+                                             update="tvTree"
+                                             />
+                        </div>
+                        <div  class="btnLayoutCancel">
+                            <p:commandButton id="btnClose" 
+                                              
+                                             value="#{pppMsg['ppp.close']}" onclick="dlg.close()" />
+                        </div>
+                    </td>
+                </tr>
+            </table> 
+        </p:dialog>
+
+    </ui:composition>
+</html>

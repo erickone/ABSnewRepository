@@ -1,0 +1,280 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <ui:composition>
+
+        #{goalsBeneficiariesController.initSupportList()}
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/validateInput.js"  />
+        <h:form  id="frmMetasBeneficiarios">
+            <div class="divContentPageMetasBenefic" >
+                <table class="tableDetailForm">
+                    <tr>
+                        <td colspan="3">
+                            <p:messages autoUpdate="true"  id="msgGoalsMensajes"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align:top">
+                            <p:panel id="pnlMetayBeneficiarios"  header="#{InfoMsg['ppp.progr.MetasBenefMeta']}">
+                                <table class="tableDetailForm" >
+                                    <tr>
+                                        <td style="text-align: right">
+                                            <h:outputText value="*" style="; color: red; font-weight: bold"/>
+                                        </td>
+                                        <td class="tableColumnRight" colspan="2" >                                            
+                                            <p:selectOneRadio id="rdoOptionsGoal" 
+                                                              disabled="#{invPreFileController.isGoalsTabDisabled}"
+                                                              value="#{goalsBeneficiariesController.theirSelectedExecutionTime}">
+                                                <p:ajax event="change"  listener="${goalsBeneficiariesController.changeOptGoals()}" 
+                                                        update="txtMeta2013, txtTotalGoal"/>
+                                                <f:selectItem itemLabel="#{InfoMsg['ppp.progr.MetasBenefAnual']}"
+                                                              itemValue="0"/>
+                                                <f:selectItem itemLabel="#{InfoMsg['ppp.progr.MetasBenefMultianual']}"
+                                                              itemValue="1"/>
+                                            </p:selectOneRadio>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableColumnRight">
+                                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                            <h:outputLabel value="#{InfoMsg['ppp.progr.MetasBenefUM']}"/>
+                                        </td>
+                                        <td>
+                                            <p:selectOneMenu id="cboUnitMeasureGoal" effect="fade" style="width: 160px; max-width: 160px"
+                                                             disabled="#{invPreFileController.isGoalsTabDisabled}"
+                                                             value="#{goalsBeneficiariesController.theirSelectedUnitGoalId}">
+                                                <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}"/>
+                                                <f:selectItems value="#{goalsBeneficiariesController.theirSupportList['Goals']}" 
+                                                               var = "unitMeasureGoal"
+                                                               itemLabel="#{unitMeasureGoal.unitMeasureGoalDescription}"
+                                                               itemValue="#{unitMeasureGoal.unitMeasureGoalId}"/>
+                                            </p:selectOneMenu>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableColumnRight">
+                                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                            <h:outputLabel value="#{InfoMsg['ppp.progr.MetasBenef2013']}"/>
+                                        </td>
+                                        <td>
+                                            <p:inputText id="txtMeta2013"    maxlength="15" 
+                                                         disabled="#{goalsBeneficiariesController.disableYearGoal}" 
+                                                         style="text-align: right"
+                                                         value="#{goalsBeneficiariesController.theirGoalAnnual}" 
+                                                         onkeypress=" return soloNumeros(event, this)" 
+                                                         onkeyup="format(this)"
+                                                         converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" >
+                                            </p:inputText>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableColumnRight">
+                                            <h:outputLabel value="#{InfoMsg['ppp.progr.MetasBenefMetaMultiAnual']}"/>
+                                        </td>
+                                        <td>
+                                            <p:inputText id="txtTotalGoal"  maxlength="15" 
+                                                         disabled="#{goalsBeneficiariesController.disableMultGoal}" 
+                                                         style="text-align: right"
+                                                         value="#{goalsBeneficiariesController.theirTotalGoal}" 
+                                                         onkeypress=" return soloNumeros(event, this)" 
+                                                         onkeyup="format(this)"
+                                                         converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" >
+                                            </p:inputText>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p:panel>
+                        </td>
+                        <td style="vertical-align:top">
+                            <p:panel id="pnlBeneficiarios" header="#{InfoMsg['ppp.progr.MetasBeneficiarios']}">
+                                <table class="tableDetailForm">
+                                    <tr>
+                                        <td class="tableColumnRight">
+                                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                            <h:outputLabel value="#{InfoMsg['ppp.progr.MetasBenefDirectos']}"/>
+                                        </td>
+                                        <td>
+                                            <p:inputText id="txtDirects"   maxlength="15"
+                                                         style="text-align: right"
+                                                         disabled="#{invPreFileController.isGoalsTabDisabled}"
+                                                         value="#{goalsBeneficiariesController.theirDirects}"
+                                                         onkeypress=" return soloNumeros(event, this)" 
+                                                         onkeyup="format(this)"
+                                                         converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" >
+                                                
+                                            </p:inputText>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableColumnRight">
+                                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                            <h:outputLabel value="#{InfoMsg['ppp.progr.MetasBenefUM']}"/>
+                                        </td>
+                                        <td>
+                                            <p:selectOneMenu id="cboUnitMeasureBenefAndGoal" effect="fade" style="width: 160px; max-width: 160px"
+                                                             disabled="#{invPreFileController.isGoalsTabDisabled}"
+                                                             value="#{goalsBeneficiariesController.theirSelectedUnitBenefAndGoalId}">
+                                                <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}"/>
+                                                <f:selectItems value="#{goalsBeneficiariesController.theirSupportList['BenefAndGoals']}" 
+                                                               var = "unitMeasureBenefAndGoal"
+                                                               itemLabel="#{unitMeasureBenefAndGoal.unitMeasureBenefAndGoalDescription}"
+                                                               itemValue="#{unitMeasureBenefAndGoal.unitMeasureBenefAndGoalId}"/>
+                                            </p:selectOneMenu>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableColumnRight">
+                                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                            <h:outputLabel value="#{InfoMsg['ppp.progr.MetasBenefIndirectos']}"/>
+                                        </td>
+                                        <td>
+                                            <p:inputText id="txtIndirects"   maxlength="15"
+                                                         style="text-align: right"
+                                                         disabled="#{invPreFileController.isGoalsTabDisabled}"
+                                                         value="#{goalsBeneficiariesController.theirIndirects}"
+                                                         onkeypress=" return soloNumeros(event, this)" 
+                                                         onkeyup="format(this)"
+                                                         converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" >
+                                            </p:inputText>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <hr/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableColumnRight">
+                                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                            <h:outputLabel value="#{InfoMsg['ppp.progr.MetasBenefGrupVulnerable']}"/>
+                                        </td>
+                                        <td>
+                                            <p:selectOneMenu panelStyle="width: 380px" id="cboVulnerableGroup" effect="fade" style="width: 160px; max-width: 160px"
+                                                             disabled="#{invPreFileController.isGoalsTabDisabled}"
+                                                             value="#{goalsBeneficiariesController.theirSelectedVulnerableGroupId}" >
+                                                <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}"/>
+                                                <f:selectItems value="#{goalsBeneficiariesController.theirSupportList['VulnerableGroups']}"
+                                                               var = "vulnerableGroup"
+                                                               itemLabel="#{vulnerableGroup.vulnerableGroupDescription}"
+                                                               itemValue="#{vulnerableGroup.vulnerableGroupId}"/>
+                                            </p:selectOneMenu>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p:panel>
+                        </td>
+                        <td style="vertical-align:top">
+                            <p:panel id="pnlMeta" header="#{InfoMsg['ppp.progr.MetasBenefClasif']}">
+                                <table class="tableDetailForm">
+                                    <tr>
+                                        <td class="tableColumnRight">
+                                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                            <h:outputLabel value="#{InfoMsg['ppp.progr.MetasBenefConcepGral']}"/>
+                                        </td>
+                                        <td>
+                                            <p:selectOneMenu id="cboGeneralConcept" effect="fade" style="width: 150px; max-width: 150px"
+                                                             disabled="#{invPreFileController.isGoalsTabDisabled}"
+                                                             value="#{goalsBeneficiariesController.theirSelectedGeneralConceptId}">
+                                                <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}"/>
+                                                <f:selectItems value="#{goalsBeneficiariesController.theirSupportList['GeneralConcepts']}"
+                                                               var = "generalConcept"
+                                                               itemLabel="#{generalConcept.generalConceptDescription}"
+                                                               itemValue="#{generalConcept.generalConceptId}"/>
+                                                <p:ajax  update="cboBuildingConcept cboActions"
+                                                         listener="#{goalsBeneficiariesController.loadBuildingConcepts()}" />
+
+                                            </p:selectOneMenu>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableColumnRight">
+                                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                            <h:outputLabel value="#{InfoMsg['ppp.progr.MetasBenefConcepObra']}"/>
+                                        </td>
+                                        <td>
+                                            <p:selectOneMenu panelStyle="width: 380px" id="cboBuildingConcept" effect="fade" style="width: 150px; max-width: 150px"
+                                                             disabled="#{invPreFileController.isGoalsTabDisabled}"
+                                                             value="#{goalsBeneficiariesController.theirSelectedBuildingConceptId}">
+                                                <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}"/>
+                                                <f:selectItems value="#{goalsBeneficiariesController.theirBuildingConcepts}"
+                                                               var = "buildingConcept"
+                                                               itemLabel="#{buildingConcept.buildingConceptDescription}"
+                                                               itemValue="#{buildingConcept.buildingConceptId}"/>
+                                                <p:ajax  update="cboActions"
+                                                         listener="#{goalsBeneficiariesController.loadActionsGB()}" />
+
+                                            </p:selectOneMenu>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableColumnRight">
+                                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                            <h:outputLabel value="#{InfoMsg['ppp.progr.MetasBenefAccion']}"/>
+                                        </td>
+                                        <td>
+                                            <p:selectOneMenu id="cboActions" effect="fade" style="width: 150px; max-width: 150px"
+                                                             disabled="#{invPreFileController.isGoalsTabDisabled}"
+                                                             value="#{goalsBeneficiariesController.theirSelectedActionId}">
+                                                <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}"/>
+                                                <f:selectItems value="#{goalsBeneficiariesController.theirActions}"
+                                                               var = "action"
+                                                               itemLabel="#{action.actionGBDescription}"
+                                                               itemValue="#{action.actionGBId}"/>
+                                            </p:selectOneMenu>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableColumnRight">
+                                            <h:outputLabel value="#{InfoMsg['ppp.progr.MetasBenefLineaInv']}"/>
+                                        </td>
+                                        <td>
+                                            <p:selectOneMenu panelStyle="width: 380px" id="cboLines" effect="fade" style="width: 150px; max-width: 150px"
+                                                             disabled="#{invPreFileController.isGoalsTabDisabled}"
+                                                             value="#{goalsBeneficiariesController.theirSelectedInvestmentLineId}">
+                                                <f:selectItem itemValue="-1" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}"/>
+                                                <f:selectItems value="#{goalsBeneficiariesController.theirSupportList['Lines']}"
+                                                               var = "Line"
+                                                               itemLabel="#{Line.investLineDescription}"
+                                                               itemValue="#{Line.investLineId}"/>
+                                            </p:selectOneMenu>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableColumnRight">
+                                            <h:outputLabel value="#{InfoMsg['ppp.progr.MetasBenefMacroObra']}"/>
+                                        </td>
+                                        <td>
+                                            <p:selectOneMenu panelStyle="width: 380px" id="cboMacro" effect="fade" style="width: 150px; max-width: 150px"
+                                                             disabled="#{invPreFileController.isGoalsTabDisabled}"
+                                                             value="#{goalsBeneficiariesController.theirSelectedMacroBuild}">
+                                                <f:selectItem itemValue="-1" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}"/>
+                                                <f:selectItems value="#{goalsBeneficiariesController.theirSupportList['Macros']}"
+                                                               var = "macro"
+                                                               itemLabel="#{macro.macroBuildDescription}"
+                                                               itemValue="#{macro.macroBuildId}"/>
+                                            </p:selectOneMenu>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p:panel>
+                        </td>
+                    </tr>
+
+                </table>
+
+
+            </div>
+
+            <p:commandButton id="btnSaveBenef"  ajax="true"
+                             actionListener="#{goalsBeneficiariesController.persistGoalAndBenef()}"
+                             disabled="#{invPreFileController.isGoalsTabDisabled}"
+                             value="#{InfoMsg['ppp.progr.DraftProjectGuardar']}">
+            </p:commandButton>
+        </h:form>
+
+
+    </ui:composition>
+</html>

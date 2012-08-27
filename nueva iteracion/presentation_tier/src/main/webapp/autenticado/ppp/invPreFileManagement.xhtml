@@ -1,0 +1,324 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+
+    <ui:define name="body">
+        #{invPreFileManagementController.initInvPreFileManageView()} 
+                                           
+        <div style="padding-top: 27px">
+            <table>
+                <tr>
+                    <td>                        
+                        <img src="#{request.contextPath}/styles/images/iconHeaderStyle.png" /> 
+                    </td>
+                    <td style="vertical-align: center">
+                        <h:outputText value="#{pppMsg['ppp.planning.draftPreFile.projHeader']}" styleClass="headerTitleStyle" style="position: absolute; top: 135px"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="divContentPage">
+        <f:view contentType="text/html">
+            <p:panel id="mainPanel" header="#{pppMsg['ppp.planning.draftPreFile.projHeader']}">
+                 <h:form  id="draftManagement">
+                    <p:messages id="msgMensajes"/>
+                    <table id="draftManagementTable" style="width: 100px;" align="center">
+                        <tr id="draftFilters">                            
+                            <td>
+                                <table id="idFilters" style="width: 100%">
+                                    <tr style="height: 15px">                            
+                                    </tr>
+                                    <tr>
+                                        <td>                                        
+                                            <h:outputText value="#{pppMsg['ppp.planning.draftPreFile.drop.dependencia']}" /> 
+                                        </td>
+                                        <td colspan="5">
+                                            <p:selectOneMenu id="cboDependencia"
+                                                             value="#{invPreFileManagementController.dependenciaSeleccionada}" 
+                                                             style="width: 920px">  
+                                                <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.planning.draftPreFile.cmbSeleccDepen']}" />
+                                                <f:selectItems value="#{invPreFileManagementController.listDependencias}"
+                                                               var="dependencia"
+                                                               itemLabel="#{dependencia.dependenceKey} #{dependencia.dependenceDescription}"
+                                                               itemValue="#{dependencia.dependenceId}"/>
+                                            </p:selectOneMenu>
+                                        </td>
+                                        <td align="left">
+                                            <p:commandButton id="btnSearch"
+                                                             actionListener="#{invPreFileManagementController.search()}"
+                                                             value="#{pppMsg['ppp.planning.draftPreFile.btn.buscar']}"
+                                                             update="gridResult, :draftManagement:msgMensajes, :draftManagement:cboActions, :draftManagement:grdBinnacle" >
+                                            </p:commandButton>                                             
+                                        </td>
+                                    </tr>
+                                    <tr style="height: 15px">                            
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table  style="width: 150px">
+                                                <tr>
+                                                    <td>
+                                                        <h:outputText value="#{pppMsg['ppp.planning.draftPreFile.drop.fechaInicial']}" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p:calendar id="dateInit"
+                                                                    lang="es"
+                                                                    locale="es"                                                                    
+                                                                    navigator="true" 
+                                                                    readOnlyInputText="true"
+                                                                    pattern="dd/MM/yyyy"
+                                                                    maxlength="11" size="11"
+                                                                    value="${invPreFileManagementController.fechaIinicio}" showOn="button">
+                                                        </p:calendar>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <h:outputText value="#{pppMsg['ppp.planning.draftPreFile.drop.fechaFin']}" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p:calendar id="dateFin"
+                                                                    lang="es"
+                                                                    locale="es"                                                                    
+                                                                    navigator="true" 
+                                                                    readOnlyInputText="true"
+                                                                    pattern="dd/MM/yyyy"
+                                                                    maxlength="11" size="11"
+                                                                    value="${invPreFileManagementController.fechaFin}" showOn="button">
+                                                        </p:calendar>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <p:panel>
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <p:outputPanel id="customPanel">  
+                                                                <p:selectOneRadio id="optionRadio" layout="custom"
+                                                                                value="${invPreFileManagementController.isFicha}"  >  
+                                                                    <f:selectItem itemLabel="#{InfoMsg['ppp.planning.draftPreFile.radio.ficha']}" itemValue="true" />                                            
+                                                                    <f:selectItem itemLabel="#{InfoMsg['ppp.planning.draftPreFile..radio.preficha']}" itemValue="false" />                                                </p:selectOneRadio>
+                                                                <h:panelGrid columns="2">  
+                                                                    <p:radioButton id="opt1" for="optionRadio" itemIndex="0"/>  
+                                                                    <h:outputLabel for="opt1" value="#{InfoMsg['ppp.planning.draftPreFile.radio.ficha']}" />                                          
+                                                                    <p:radioButton id="opt2" for="optionRadio" itemIndex="1"/>  
+                                                                    <h:outputLabel for="opt2" value="#{InfoMsg['ppp.planning.draftPreFile..radio.preficha']}" /> 
+                                                                </h:panelGrid>
+                                                            </p:outputPanel> 
+                                                        </td>
+                                                        <td>
+                                                             <table>
+                                                                <tr>
+                                                                    <td>
+                                                                    <h:outputText value="#{pppMsg['ppp.planning.draftPreFile.input.ficha']}" /> 
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <p:inputText id="inpNoFicha" value="${invPreFileManagementController.noFicha}"/>  
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table> 
+                                            </p:panel>                                             
+                                        </td>                                        
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                       <h:outputText value="#{pppMsg['ppp.planning.draftPreFile.input.nombre']}" /> 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p:inputText id="inpNomCorto" value="${invPreFileManagementController.nombreCorto}"/>  
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <h:outputText value="#{pppMsg['ppp.planning.draftPreFile.drop.status']}" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p:selectOneMenu id="cboEstatus"
+                                                                         value="#{invPreFileManagementController.statusSeleccionado}" >  
+                                                            <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.planning.draftPreFile.cmbSeleccStatus']}" />
+                                                            <f:selectItems value="#{invPreFileManagementController.listStatus}"
+                                                                        var="status"
+                                                                        itemLabel="#{status.draftProjectStatusDescription}"
+                                                                        itemValue="#{status.draftProjectStatusId}"/>
+                                                        </p:selectOneMenu>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <h:outputText value="#{pppMsg['ppp.planning.draftPreFile.drop.all']}" />
+                                                    </td>
+                                                    <td>
+                                                        <p:selectBooleanCheckbox value="#{invPreFileManagementController.all}" />  
+                                                    </td>
+                                                </tr>
+                                            </table>  
+                                        </td>
+                                    </tr>                                   
+                                </table>
+                            </td>                            
+                        </tr>
+                        <tr style="height: 15px">                            
+                        </tr>
+                        <tr id="resultTable">
+                            <td>                                
+                                 <p:dataTable id="gridResult" var="proceso"                                            
+                                            value="#{invPreFileManagementController.listProcess}"
+                                            rowKey="#{proceso.draftProjectId}" 
+                                            selection="#{invPreFileManagementController.selectedProcess}"
+                                            selectionMode="multiple"
+                                            paginator="true" rows="30"
+                                            emptyMessage="#{pppMsg['ppp.planning.draftPreFile.table.results']}"
+                                            sortBy="" sortOrder="ascending" 
+                                            style="word-wrap: break-word; word-break:break-all"
+                                            >
+                                    <p:ajax event="rowSelect" listener="#{invPreFileManagementController.onRowSelect}"
+                                            update=":draftManagement:cboActions, :draftManagement:grdBinnacle, :draftManagement:msgMensajes"/>
+                                    <p:ajax event="rowUnselect" listener="#{invPreFileManagementController.onRowUnselect}"
+                                            update=":draftManagement:cboActions, :draftManagement:grdBinnacle, :draftManagement:msgMensajes"/>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText
+                                                value="#{pppMsg['ppp.planning.draftPreFile.table.dependencia']}" />
+                                        </f:facet>
+                                        <h:outputText  value="#{proceso.draftProjectDependency.dependenceDescription}"  />
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText
+                                                value="#{pppMsg['ppp.planning.draftPreFile.table.noFicha']}" />
+                                        </f:facet>
+                                        <h:outputText  value="#{proceso.draftProjectKey}"  />
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText
+                                                value="#{pppMsg['ppp.planning.draftPreFile.table.nombreCorto']}" />
+                                        </f:facet>
+                                        <h:outputText  value="#{proceso.draftProjectShortName}"  />
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText                                                
+                                                value="#{pppMsg['ppp.planning.draftPreFile.table.nombre']}" />
+                                        </f:facet>
+                                        <h:outputText  value="#{proceso.draftProjectName}"  />
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText
+                                                value="#{pppMsg['ppp.planning.draftPreFile.table.subprog']}" />
+                                        </f:facet>
+                                        <h:outputText  value="#{proceso.draftProjectProgramming.programmingObjective.objectiveName}"  />
+                                    </p:column>
+                                    <!--p:column>
+                                        <f:facet name="header">
+                                            <h:outputText
+                                                value="#{pppMsg['ppp.planning.draftPreFile.table.objetivo']}" />
+                                        </f:facet>
+                                        <h:outputText  value="#{proceso.draftProjectProgramming.programmingObjective.father.objectiveName}"  />
+                                    </p:column-->
+                                    <p:column style="width: 140px">
+                                        <f:facet name="header">
+                                            <h:outputText
+                                                value="#{pppMsg['ppp.planning.draft.table.estatus']}" />
+                                        </f:facet>
+                                        <h:outputText  value="#{proceso.draftProjectStatus.draftProjectStatusDescription}"  />
+                                    </p:column>
+                                </p:dataTable>
+                            </td>
+                        </tr>
+                        <tr id="bitacora" style="width: 1160px">
+                            <td colspan="6">
+                                <div>
+                                    <div>
+                                       <p:dataTable id="grdBinnacle"
+                                                    value="#{invPreFileManagementController.listBitacora}"
+                                                    emptyMessage="#{pppMsg['ppp.planning.draftPreFile.table.bitacora.empty']}"
+                                                    var="bitacora" style="width: 100%">                                           
+                                            <p:column>
+                                            <f:facet name="header">
+                                            <h:outputText value="#{pppMsg['ppp.planning.draftPreFile.table.bitacora.statusIni']}" />
+                                            </f:facet>
+                                                <h:outputText value="#{bitacora.draftProjectStatus.draftProjectStatusDescription}"/>
+                                            </p:column>
+                                            <p:column>
+                                            <f:facet name="header">
+                                            <h:outputText value="#{pppMsg['ppp.planning.draftPreFile.table.bitacora.User']}" />
+                                            </f:facet>
+                                                <h:outputText value="#{bitacora.userBinnacle.userDescription}"/>
+                                            </p:column> 
+                                            <p:column>
+                                            <f:facet name="header">
+                                            <h:outputText value="#{pppMsg['ppp.planning.draftPreFile.table.bitacora.DateMov']}" />
+                                            </f:facet>
+                                                <h:outputText value="#{bitacora.draftProjectBinnacleDate}"/>
+                                            </p:column> 
+                                        </p:dataTable>
+                                    </div>
+                                </div>
+                            </td>                          
+                        </tr>
+                        <tr id="buttons">
+                            <td colspan="6" align="right" style="vertical-align: central">
+                                <table>
+                                    <tr>
+                                        <td style="vertical-align: central">
+                                             <p:selectOneMenu id="cboActions"
+                                                              value="#{invPreFileManagementController.accionSelecionada}" >                                  
+                                                <f:selectItems value="#{invPreFileManagementController.listAcciones}"
+                                                               var="status"
+                                                               itemLabel="#{status.draftProjectStatusDescription}"
+                                                               itemValue="#{status.draftProjectStatusId}"/>
+                                            </p:selectOneMenu>
+                                        </td>
+                                        <td>
+                                            <p:commandButton id="btnGestionar" ajax="true"
+                                                             update=":draftManagement:grdBinnacle, :draftManagement:msgMensajes,
+                                                                     :draftManagement:cboActions,  :draftManagement:gridResult"
+                                                            action="#{invPreFileManagementController.gestionar()}"
+                                                            value="#{pppMsg['ppp.planning.draftPreFile.btn.gestionar']}">
+                                            </p:commandButton> 
+                                        </td>
+                                    </tr>
+                                </table>  
+                            </td>                                                  
+                        </tr>
+                    </table>
+                </h:form>                
+            </p:panel>             
+        </f:view> 
+      </div>
+    </ui:define>
+</ui:composition>

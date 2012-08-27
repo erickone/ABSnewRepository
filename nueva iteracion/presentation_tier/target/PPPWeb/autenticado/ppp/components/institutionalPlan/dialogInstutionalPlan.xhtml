@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+
+        <p:dialog id="dlgDetailsInstitutionalPlan" header="#{pppMsg['ppp.progr.DialogInstitutionalPLan.Header']}" widgetVar="dlg" modal="true" 
+                  maximizable="false" minimizable="false"  
+                  minHeight="200" minWidth="400" position="center"
+                  height="520" width="910" closable="false"> 
+            <p:panel id="panDependenceNameHeader" header="${institutionalPlanHeaderController.ADepdenceName}" />
+            <p:messages id="msgName" showDetail="true" showSummary="false" autoUpdate="true"  />
+            <p:tabView id="tbCreationDecree"  activeIndex="0" dynamic="true" cache="false" >
+                <p:tab title="#{pppMsg['ppp.planning.tabCreationDecree']}" > 
+                    <ui:include src="tabCreationDecree.xhtml" />
+                </p:tab>
+                <p:tab title="#{pppMsg['ppp.planning.tabRulesOfProcedure']}"  id="tbRulesOfProcedure"> 
+                    <ui:include src="tabRulesOfProcedure.xhtml" />
+                </p:tab>
+                <p:tab title="#{pppMsg['ppp.planning.tabPlanMission']}" id="tbInstitutionalPlanMission" > 
+                    <ui:include src="tabInstitutionalPlanMission.xhtml" />
+                </p:tab>
+                 <p:tab title="#{pppMsg['ppp.planning.tabObjetives']}" > 
+                    <ui:include src="tabObjectives.xhtml" />
+                </p:tab>
+            </p:tabView>
+            <table style="width: 100%">
+                <tr align="right">
+                    <td>
+                        <table>
+                            <td>
+                                <td>
+                                     <div>
+                                        <p:commandButton value="#{pppMsg['ppp.save']}" disabled="" update=":form:tbCreationDecree" 
+                                                        actionListener="${institutionalPlanHeaderController.SaveOrUpdateAnInstitutionalPlan}"/>                     
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p:commandButton  ajax="closeAndUpdateList" action="${institutionalPlanHeaderController.executePopulation}"
+                                                        value="#{pppMsg['ppp.close']}">  
+                                            <f:ajax id="closeAndUpdateList" render=":form:dtBasicInstitutional"/>
+                                        </p:commandButton>
+                                    </div>
+                                </td>
+                            </td>
+                        </table>  
+                    </td>                  
+                </tr>
+            </table>
+        </p:dialog>
+    </ui:composition>
+</html>

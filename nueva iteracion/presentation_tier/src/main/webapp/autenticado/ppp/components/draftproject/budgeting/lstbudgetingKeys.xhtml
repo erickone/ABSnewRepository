@@ -1,0 +1,60 @@
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+        <p:panel id="panBudgetingKeys">           
+                    <p:dataTable id="grdObjectives"  
+                                 var="budgetingKeys"  
+                                 value="#{budgetingController.itsBudgetingKeysModel}"
+                                 selection="#{budgetingController.itsSelectedBudgetKeyRow}"
+                                 selectionMode="single"
+                                 emptyMessage="#{InfoMsg['ppp.common.DataTable.NotFound']}"
+                                 paginator="true" rows="5">
+                        <f:facet name="header">
+                            <h:outputText value="#{InfoMsg['ppp.budgeting.budgetingkeys']}" />
+                        </f:facet>
+                        <p:column style="width: 10%">
+                            <f:facet name="header" >
+                                <h:outputText  value="#{InfoMsg['ppp.budgeting.budgetingkey']}" />
+                            </f:facet>
+                            <h:outputText id="budgetingKeyColumn" value="#{budgetingKeys.itsProgrammaticKey}" />
+                        </p:column>
+                        <p:column style="width: 60%">
+                            <f:facet name="header">
+                                <h:outputText value="#{InfoMsg['ppp.budgeting.objectexpense']}" />
+                            </f:facet>
+                            <h:outputText id="budgetingObjectExpense" value="#{budgetingKeys.itsBudgetingKeyObjectExpense}" />
+                        </p:column>   
+                        <p:column style="width: 10%">
+                            <f:facet name="header">
+                                <h:outputText value="#{InfoMsg['ppp.budgeting.Destination']}" />
+                            </f:facet>
+                            <h:outputText id="budgetingDestination" value="#{budgetingKeys.itsBudgetingKeyDestination}" />
+                        </p:column>   
+                        <p:column style="width: 10%">
+                            <f:facet name="header">
+                                <h:outputText value="#{InfoMsg['ppp.budgeting.budgetingData']}" />
+                            </f:facet>                       
+                                <div style="text-align: right"><h:outputText style="text-align: right" value="#{budgetingKeys.itsBudgetingKeyAmount}" id="budgetingData" /></div>
+                        </p:column>   
+
+                        <p:column style="width: 10%">
+                            <f:facet name="header">
+                                <h:outputText value="#{InfoMsg['ppp.budgeting.additional']}" />
+                            </f:facet>                       
+                                <div style="text-align: right"><h:outputText value="#{budgetingKeys.itsAditionalBudgetingKeyAmount}" id="IsBudgeingAdditional" /></div>
+                        </p:column>   
+                        <p:column style="width: 10%">
+                            <f:facet name="header">
+                                <h:outputText value="#{InfoMsg['ppp.budgeting.Total']}" />
+                            </f:facet>
+                            <div style="text-align: right"><h:outputText style="text-align: right" id="budgetingAvailable" value="#{budgetingKeys.itsTotalBudgetingKeyAmount}" /></div>
+                        </p:column>  
+                    </p:dataTable>
+        </p:panel>
+    </ui:composition>
+</html>

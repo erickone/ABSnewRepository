@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml"
+                >
+    <ui:define name="body">
+        #{renumerationController.init()}
+        <div style="padding-top: 27px">
+            <table>
+                <tr>
+                    <td>                        
+                        <img src="#{request.contextPath}/styles/images/iconHeaderStyle.png" /> 
+                    </td>
+                    <td style="vertical-align: center">
+                        <h:outputText value="#{InfoMsg['ppp.programing.renumeration.header']}"  styleClass="headerTitleStyle" style="position: absolute; top: 135px"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="divContentPage">
+            <p:panel>
+                <h:form id="form">
+                    <br/>
+                    <div style="height: 50px" >
+                        <p:selectOneMenu  styleClass=".divTextsizeProgramming" id="cboDependenceOfProgramming" value="#{renumerationController.ADependenceId}" >
+                            <f:selectItem itemLabel="#{InfoMsg['ppp.progr.comboSelectedItem']}" itemValue="0" />
+                            <f:selectItems value="#{renumerationController.itsListOfDependences}" var="dep"
+                                           itemLabel="#{renumerationController.formatDependenceKey(dep.dependenceKey)} #{dep.dependenceDescription}"
+                                           itemValue="#{dep.dependenceId}" />
+                            <p:ajax  update="tableRenumeration"
+                                     listener= "#{renumerationController.loadDraftprojects()}"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <p:messages id="messages" autoUpdate="true" showDetail="false"/>  
+                    <p:dataTable id="tableRenumeration" rowStyleClass="#{renumerations.isCorrect == true ? null : 'divRowRed'}" 
+                                 var="renumerations" value="#{renumerationController.myRenumerationDtos}" editable="true"
+                                 emptyMessage="#{InfoMsg['ppp.planning.emptyMessage']}">  
+                        <p:column  headerText="#{InfoMsg['ppp.programing.renumeration.draftprojectNumber']}" style="width:15%">  
+                            <h:outputText value="#{renumerations.draftprojectNumber}" />  
+                        </p:column>  
+                        <p:column headerText="#{InfoMsg['ppp.programing.renumeration.newDraftprojectNumber']}" style="width:15%">  
+                            <f:facet name="output">  
+                                <h:outputText value="#{renumerations.newDraftprojectNumber}" />  
+                            </f:facet>  
+                            <p:inputText id="txtNewKey" value="#{renumerations.newDraftprojectNumber}" 
+                                         style="width:100%">
+                                <p:ajax update=":form:btnRenumeration"/>
+                            </p:inputText>  
+                        </p:column>  
+                        <p:column headerText="#{InfoMsg['ppp.programing.renumeration.shortName']}" style="width:35%">  
+                            <h:outputText value="#{renumerations.draftprojectShortName}" />
+                        </p:column>  
+                        <p:column headerText="#{InfoMsg['ppp.programing.renumeration.name']}" style="width:35%">  
+                            <h:outputText value="#{renumerations.draftprojectName}" />  
+                        </p:column>
+                    </p:dataTable>  
+                    <br/>                        
+                    <table style="width: 100%">
+                        <td style="text-align: right;width: 48%">
+                            <p:commandButton id="btnRenumeration" style="width: 100px" update="tableRenumeration"
+                                             disabled="#{renumerationController.isEnabledRenumeration}"
+                                             value="#{InfoMsg['ppp.programing.renumeration.renumerate']}"
+                                             action="#{renumerationController.validateValues()}" />        
+                        </td>
+                        <td style="width: 4%">
+
+                        </td>
+                        <td style="width: 48%">
+                            <p:commandButton style="width: 100px" value="#{InfoMsg['common.close']}" action="#{renumerationController.returnToOptions()}" />
+                        </td>
+                    </table>
+                </h:form>  
+            </p:panel>
+        </div>
+    </ui:define>
+</ui:composition>

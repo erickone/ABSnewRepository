@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (C) 2012 Advanced Business Systems S.A. de C.V. 
+ All rights reserved 
+ Filename:  funcClassifier
+ Purpose:  This view shows a tree with the Functional Classifier information.
+       
+ The copyright to the computer program(s) herein is the property
+ of Advanced Business Systems S.A. de C.V. The programs may be 
+ used and/or copied only with written permission from Advanced 
+ Business Systems S.A. de C.V. or in accordance with the terms 
+ and conditions stipulated in the agreement/contract under which
+ the program(s) have been supplied.
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+
+    
+    <ui:define name="body">
+        #{functionalClassifierController.init()}
+        <div style="padding-top: 10px">
+            <table>
+                <tr>
+                    <td>  
+                        <div class="imgHeaderStyle" />                      
+                    </td>
+                    <td style="vertical-align: center">
+                        <h:outputText value="#{functionalClassifierController.itsHeader}" class="headerTitleStyle"/>
+                    </td>
+                </tr>
+            </table>
+        </div> 
+        <div class="divContentPage">
+            <h:form id="formTreeview">
+                <p:messages id="message2" autoUpdate="true" />
+                <label class="titlesInstitutional">
+                    <!--a href="../options.abs">#{pppMsg['ppp.planning.goToStart']}</a-->    
+                </label>
+                <p:tree  value="#{functionalClassifierController.root}" var="node" dynamic="true" cache="true"  style="width:95% " 
+                         selectionMode="single" selection="#{functionalClassifierController.itsSelectedNode}"  id="tvTree">   
+                    <p:treeNode>  
+                        <h:outputText value="#{node.itsNodeText}"/>  
+                    </p:treeNode>
+                     
+                   <!-- <p:treeNode type="level1" icon="ui-icon-level-1">  
+                        <h:outputText value="#{node.itsNodeText}"/> 
+                    </p:treeNode>
+                    <p:treeNode type="level2" icon="ui-icon-level-2">  
+                        <h:outputText value="#{node.itsNodeText}" />  
+                    </p:treeNode>
+                    <p:treeNode type="level3" icon="ui-icon-level-3">  
+                        <h:outputText value="#{node.itsNodeText}" />  
+                    </p:treeNode> -->
+                 
+                </p:tree>  
+                <p:contextMenu for=":formTreeview:tvTree" id="ctxMnuTreeviewOptions"  >
+                    <p:menuitem value="#{pppMsg['ppp.new']}"   
+                                icon="ui-common-icon-new" 
+                                update="formTreeview, btnSaveFuncClasif, txtFatherName, txtClave,
+                                txtDesc, txtDefinition"
+                                actionListener="#{functionalClassifierController.prepareNewFuncClassifier()}" 
+                                oncomplete="dlg.show()"   />                               
+                    <p:menuitem value="#{pppMsg['ppp.edit']}" icon="ui-common-icon-edit"
+                                update="formTreeview, btnSaveFuncClasif, txtFatherName, txtClave,
+                                txtDesc, txtDefinition"
+                                actionListener="#{functionalClassifierController.prepareEditFuncClassifier()}" 
+                                oncomplete="dlg.show()"      />
+                    <p:menuitem value="#{pppMsg['ppp.delete']}" 
+                                update=":formTreeview:tvTree, message2"
+                                actionListener="#{functionalClassifierController.deleteFunctionalClassifier()}"
+                                icon="ui-common-icon-delete" />
+                </p:contextMenu>
+                <ui:include src="components/functionalClassifier/dialogFuncClassifier.xhtml"/>
+            </h:form>
+        </div> 
+    </ui:define>
+</ui:composition>
+

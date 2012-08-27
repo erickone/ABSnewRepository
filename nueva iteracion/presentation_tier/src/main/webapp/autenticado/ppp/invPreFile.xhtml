@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+
+
+    <ui:define name="body">
+         <div style="padding-top: 27px">
+            <table>
+                <tr>
+                    <td>                        
+                        <img src="#{request.contextPath}/styles/images/iconHeaderStyle.png" /> 
+                    </td>
+                    <td style="vertical-align: center">
+                        <h:outputText value="#{pppMsg['ppp.programming.InvPrefile.Header']}"  styleClass="headerTitleStyle" style="position: absolute; top: 135px"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="divContentPage">
+            <table class="tableDetailForm">
+                <tr>
+                    <td> 
+                        <ui:include src="components/InvPreFile/invPreFileDetails.xhtml"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>  
+                        <p:tabView id="tabInversionPublicaDetails" dynamic="true" cache="false">
+                            <p:tab title="#{pppMsg['ppp.progr.InvPreFile.Tab.GoalsAndBeneficiaries']}" disabled="#{invPreFileController.isGoalsTabDisabled}">
+                                <ui:include src="components/InvPreFile/goalsBeneficiaries.xhtml"/>
+                            </p:tab>
+                            <p:tab title="#{pppMsg['ppp.progr.InvPreFile.Tab.Ubication']}" disabled="#{invPreFileController.isUbicationTabDisabled}">
+                                <ui:include src="components/InvPreFile/invPreFileUbication.xhtml"/>
+                            </p:tab>
+                            <p:tab title="#{pppMsg['ppp.progr.InvPreFile.Tab.FinancialStructure']}" disabled="#{invPreFileController.isFinStructureTabDisabled}">
+                                <ui:include src="components/InvPreFile/financialStructure.xhtml"/>
+                            </p:tab>
+                            <p:tab title="#{pppMsg['ppp.progr.InvPreFile.Tab.PhysicalAndFinancialProgramme']}" disabled="#{invPreFileController.isPFProgTabDisabled}">
+                                <ui:include src="components/InvPreFile/physicalFinancialProg.xhtml"/>
+                            </p:tab>
+                            <p:tab title="#{pppMsg['ppp.progr.InvPreFile.Tab.Dimensioning']}" disabled="#{invPreFileController.isSizingTabDisabled}">
+                                <ui:include src="components/InvPreFile/sizing.xhtml"/>
+                            </p:tab>
+                            <p:tab title="#{pppMsg['ppp.progr.InvPreFile.Tab.Requirements']}" disabled="#{invPreFileController.isRequestTabDisabled}">
+                                <ui:include src="components/InvPreFile/requirements.xhtml"/>
+                            </p:tab>
+                        </p:tabView> 
+                    </td>
+                </tr>
+            </table>
+        </div> 
+       
+    </ui:define>
+</ui:composition>

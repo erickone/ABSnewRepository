@@ -1,0 +1,802 @@
+body
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+
+.divTop
+{
+    position: absolute;
+    height: 100px;
+}
+
+.divFooterDataTable
+{
+    text-align: left;
+
+}
+
+.divImageUserAutenticado
+{
+    top: -5px;
+    position: absolute;
+    float:right;
+    right: 5%;
+    width: auto;
+}
+
+.divNameUserAutenticado
+{
+    left: 5px;
+    top:15px;
+    display:inline;
+}
+
+.divMenuAutenticado
+{
+    top: 10px;
+    left: 10px;
+    display:inline;
+}
+
+
+.divBackgroundBodyOptions
+{
+    position: absolute;
+    left: 1px;
+    background-color: #4FA6DD;
+    width: 100%;
+}
+
+.divContentMain
+{
+    width: 100%;
+    background-color: #FFFFFF;
+
+}
+
+
+
+.divContentMainPage
+{
+    background-color: #FFFFFF;
+    border-width: 1px;
+    border-color:  #CCCCCC;
+    border-style: none;
+    position: relative;
+    left: 5px;
+    top: 5px;
+    width: 99%;
+    min-height: 500px;
+}
+.divDetailsForm
+{
+    background-color: #FFFFFF;
+    border-width: 1px;
+    border-color:  #CCCCCC;
+    border-style: solid;
+
+}
+
+
+
+.divContentPage
+{
+    vertical-align: top;
+    top: 50px;
+    width: 95%;
+    left: 30px;
+    position: absolute;
+    top: 185px
+/*    min-height: 900px;*/
+/*    position: relative;
+    left: 50px;
+    top: 70px;
+    min-height: 800px;*/
+}
+
+.divContentPageProp{
+    position: relative;
+    left: 50px;
+    top: 70px;
+    width: 70%;
+    min-height: 300px;
+}
+
+.divContentPageUbication{
+    position: relative;
+    width: 100%;
+    min-height: 300px;
+}
+
+.tableColumnRight
+{
+    text-align: right;
+}
+
+
+.tableColumnLeft
+{
+    text-align: left;
+
+}
+
+.tableColumnCenter
+{
+    text-align: center;
+}
+
+.tableColumnCenterDraftProjectSearch
+{
+    text-align: center;
+    font-size: small
+}
+
+.tableDetailForm
+{
+    width: 90%;
+    border-collapse: separate;
+    border-spacing: 7px;
+    vertical-align: top;
+}
+
+.tableDetailForm1
+{
+    width: 90%;
+    border-collapse: separate;
+    border-spacing: 7px;
+    vertical-align: top;
+    font-size: small
+}
+
+.tableDetailForm2
+{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 2px;
+    vertical-align: top;
+    font-size: small
+}
+
+
+.tableDetailsObjectiveStrategyPlanColumnRight
+{
+    text-align: right;
+    width: 40%;
+}
+
+.tableDetailsObjectiveStrategyPlanColumnLeft
+{
+    text-align: left;
+    width: 60%;
+}
+
+.tableDetailsObjectiveStrategyPlanColSpan
+{
+    text-align: left;
+    width: 100%;
+}
+
+.divSeparator
+{
+    position: absolute;
+    top: 28%;
+    right: 50%;
+    min-height: 500px;
+}
+.divImageSIIF
+{
+    text-align: right;
+    position: absolute;
+    top: 33%;
+    right:  55%;
+    width: 30%;
+    min-width: 350px;
+}
+
+.divBoxLogin
+{
+    position: absolute;
+    background-color: #FFFFFF;    
+    left: 50%;
+    width: 30%;
+    height: 230px;
+    min-height: 35%;
+    min-width: 450px;
+}
+
+.divMessageLoginBox
+{
+    position: absolute;
+    top: 12% ;left: 10%;
+    width: 80%;
+    min-width: 275px
+}
+
+.divTextLogin
+{
+    position: absolute;
+    top: 5%;
+    left: 20px;
+
+}
+.divBoxLoginBar
+{
+    position: absolute;
+    top: 15%;
+    right: 2%;
+    min-height: 2px;
+    min-width: 96%;
+    background-color: #4FA6DD;
+}
+
+.divBoxLabelPass
+{
+    position: absolute;
+    top: 60%;
+    left: 15%;
+    min-height: 2px;
+    min-width: 20%;
+    text-align : right;
+}
+
+.divBoxLabelUser
+{
+    position: absolute;
+    top: 45%;
+    left: 15%;
+    min-height: 2px;
+    min-width: 20%;
+    text-align:  right;
+}
+
+.divTxtUser
+{
+    position: absolute;
+    left: 100%;
+    top: 0%;
+
+}
+.divtxtPass
+{
+    position: absolute;
+    left: 100%;
+    top: 0%;
+}
+
+.divBtnLogin
+{
+    position: absolute;
+    left: 65%;
+    top: 72%;
+
+}
+
+.divBtnRole
+{
+    position: absolute;
+    min-width: 200px;
+    left: 65%;
+    top: 85%;
+
+}
+
+.divBtnCancel
+{
+    position: absolute;
+    min-width: 200px;
+    left: 78%;
+    top: 85%;
+
+}
+
+.divCboRole
+{
+    
+    position: absolute;
+    left: 35%;
+    top: 82%;
+    min-width: 400px;
+
+}
+
+.divContentMainlogin
+{
+    top: 75px;
+    position: relative;
+    width: 100%;
+    background-color: #F0F0F0;
+    min-height: 550px;
+    min-width: 1350px;
+}
+
+.divTopLogin
+{
+    left: 20px;
+    background-color: #FFFFFF;
+    min-height: 50px;
+
+    position: absolute;
+    top: 10px;
+    width: 95%;
+}
+
+.btnLayoutSaveStrategic
+{   position: absolute;
+    right: 110px;
+    float: right;
+}
+
+.btnLayoutEncuadrar
+{   position: absolute;
+    right: 210px;
+    float: right;
+}
+
+.btnLayoutSave
+{
+    right: 110px;
+    float: right;
+}
+
+.btnLayoutCancel
+{
+
+    position: absolute;
+    right: 20px;
+    float: right;
+    min-height: 200px;
+}
+
+
+
+.divContentMain
+{
+    top: 75px;
+    position: absolute;
+    width: 100%;
+    background-color: #F0F0F0;
+    min-height: 550px;
+}
+
+.divImageSIIF
+{
+    position: absolute;
+    top: 33%;
+    right: 60%;
+    min-height: 500px;
+}
+
+.divSeparator
+{
+    position: absolute;
+    top: 28%;
+    right: 55%;
+    min-height: 500px;
+}
+
+.divBoxLogin
+{
+    background-color: #FFFFFF;
+    top: 30%;
+    right: 10%;
+    position: absolute;
+    width: 25%;
+    min-height: 35%;
+    min-width: 40%;
+}
+
+.divTextLogin
+{
+    position: absolute;
+    top: 5%;
+    left: 20px;
+
+}
+.divBoxLoginBar
+{
+    position: absolute;
+    top: 15%;
+    right: 2%;
+    min-height: 2px;
+    min-width: 96%;
+    background-color: #4FA6DD;
+}
+
+.divMessageIdentified
+{
+    border-color: #92B470;
+    background-color: #B7D873;
+    font-size: 12px;
+    font-weight: bold;
+    min-height: 30px;
+    color: #000000;
+}
+.divTablePED
+{
+    display: table;
+    width: 100%;
+}
+.divTableProgramming
+{
+    display: table;
+    width: 100%;
+}
+.divProgrammingLabel
+{
+    text-align: left;
+    float: left;
+    width: 10%;
+    height: 30px;
+}
+.divLabelWithBorder
+{
+    float: left;
+    width: 30%;
+    height: 30px;
+    text-align: center;
+}
+.divLabelPED
+{
+    float: left;
+    width: 20%;
+    height: 30px;
+}
+.divTextsizePED
+{
+    width: 80%;
+}
+.divButtonUnistsCosting
+{
+    float: left;
+    width: 20%;
+    height: 30px;
+}
+.divTextBudgetingKey
+{
+    float: left;
+    width: 80%;
+    height: 30px;
+}
+.divLabelBudgeting
+{
+    float: left;
+    width: 20%;
+    height: 30px;
+}
+.divTextBudgeting
+{
+    float: left;
+    width: 25%;
+    height: 30px;
+}
+.divCheckButton
+{
+    text-align: center;
+    float: left;
+    width: 20%;
+    height: 30px;
+}
+.divLabelMonths
+{
+    float: left;
+    width: 30%;
+    height: 30px;
+}
+
+.divInputTextMonths
+{
+
+    float: left;
+    width: 70%;
+    height: 30px;
+}
+
+.divMonths
+{
+
+    float: left;
+    width: 33%;
+    height: 120px;
+}
+
+.divMonthsWithBorder
+{
+    border-left: appworkspace 2px solid;
+    float: left;
+    width: 33%;
+    height: 120px;
+}
+.divTextObjectExpense
+{
+   float: left;
+    width: 30%;
+    height: 30px;
+}
+.divTextObjectComboExpense
+{
+    float: left;
+    width: 20%;
+    height: 30px;
+}
+.divLabelObjectExpense
+{
+    float: left;
+    text-align: center;
+    width: 10%;
+    height: 30px;
+}
+.divButtonsObjectExpense
+{
+    float: left;
+    width: 100%;
+    height:30px;
+}
+.divTextsizeProgramming
+{
+    width: 90%;
+}
+.divInputTextProgramming
+{
+    float: left;
+    width: 90%;
+    height: 30px;
+}
+
+.divInputTextPED
+{
+
+    float: left;
+    width: 80%;
+    height: 30px;
+}
+
+.tabular
+{
+    display: table;
+    padding: 5px;
+}
+
+.divLabel
+{
+    width: 30%;
+    float: left;
+}
+.divInputText
+{
+    width: 70%;
+    float: left;
+}
+
+.tabular-cell
+{
+    display:table-cell;
+    padding: 5px;
+}
+.tabular-row
+{
+    display: table-row;
+}
+.divInputTextClassifier
+{
+
+    float: left;
+    width: 23%;
+    height: 30px;
+}
+.divLabelClassifier
+{
+    float: left;
+    width: 8%;
+    height: 30px;
+}
+.divButtonsObjectExpense
+{
+
+}
+.divlabelBudgetingSummary
+{
+    float: left;
+    width: 10%;
+    height: 30px;
+}
+.divInputBudgetingSummary
+{
+    float: left;
+    width: 60%;
+    height: 30px;
+}
+.divlabelCheckBoxBudgetingSummary
+{
+    float: left;
+    width: 30%;
+    height: 30px;
+}
+
+.ui-selectmanymenu
+{
+    height:80px;
+}
+.divSizingDesc
+{
+    float: left;
+    width: 60%;
+    height: 30px;
+}
+.divSizingColumn
+{
+    float: left;
+    width: 10%;
+    height: 30px;
+}
+.divSizingDescLabel
+{
+    float: left;
+    width: 60%;
+    height: 30px;
+}
+.divSizingColumnLabel
+{
+    float: left;
+    width: 10%;
+    height: 30px;
+}
+.divSizingColumnLabelSumAndPercent
+{
+    float: left;
+    text-align: center;
+    width: 10%;
+    height: 30px;
+}
+.divBlank
+{
+    float: left;
+    width: 70%;
+    height: 20px;
+}
+.divLogicFrame
+{
+    float: left;
+    width: 100%;
+    height: 30px;
+}
+.divRadioButtons
+{
+    float: left;
+    width: 40%;
+    height: 30px;
+}
+.divSpace
+{
+    float: left;
+    width: 100%;
+    height: 20px;
+}
+.divLogicFrameButtons
+{
+    float: left;
+    text-align: center;
+    width: 20%;
+    height: 20px;
+}
+.divLoadFileLogicFrame
+{
+    float: left;
+    width: 80%;
+    height: 120px;
+}
+.divButtonPEDVinculation
+{
+    float: left;
+    text-align: center;
+    width: 30%;
+    height: 20px;
+}
+.divCeilingBudgetLabel
+{
+    text-align: left;
+    float: left;
+    width: 10%;
+    height: 20px;
+}
+
+.divTextBudgetingJustification
+{
+    float: left;
+    width: 80%;
+    height: 30px;
+}
+
+.divLabelBudgetingTotal
+{
+    text-align: right;
+    float: left;
+    width: 70%;
+    height: 30px;
+}
+
+.divTextBudgetingTotal
+{
+    text-align: center;
+    float: left;
+    width: 10%;
+    height: 30px;
+}
+.divLabelBudgetingTotalsOfScheduling
+{
+    text-align: right;
+    float: left;
+    width: 80%;
+    height: 30px;
+}
+
+.divTextBudgetingTotalTokenofScheduling
+{
+    text-align: center;
+    float: left;
+    width: 20%;
+    height: 30px;
+}
+.divLabelBudgetingTotalsbyUEG
+{
+    text-align: right;
+    float: left;
+    width: 30%;
+    height: 30px;
+}
+.divLabelLevelsOfClassifierAdministrative
+{
+    text-align: center;
+    float: left;
+    width: 10%;
+    height: 30px; 
+}
+.divLastLabelLevelsOfClassifierAdministrative
+{
+    text-align: left;
+    float: left;
+    width: 70%;
+    height: 30px; 
+}
+.divLabelLevelsAllTheRow
+{
+    text-align: left;
+    float: left;
+    width: 100%;
+    height: 30px; 
+}
+.divLabelCheckBox
+{
+    text-align: left;
+    float: left;
+    width: 25%;
+    height: 30px; 
+}
+.divlabelLastCheckBox
+{
+    text-align: left;
+    float: left;
+    width: 75%;
+    height: 30px; 
+}
+
+.divBasicPartsLabels
+{
+    float: left;
+    width: 10%;
+    height: 30px; 
+}
+
+.divBasicPartsText
+{
+     float: left;
+    width: 20%;
+    height: 30px; 
+}
+
+.divRowRed
+{
+    background: #FF0000;
+}
+

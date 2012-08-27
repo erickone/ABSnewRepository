@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+
+        <p:outputPanel id="panCreation">  
+            <table style="width: 100%; " class="tableDetailForm">
+                <tr>
+                    <td colspan="2">
+                        <label class="titlesInstitutional">
+                            #{pppMsg['ppp.planning.operationBeginning']}
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 35%">
+                        <label class="commonFontDetailForm">
+                            #{pppMsg['ppp.planning.numberOfficialNP']}
+                        </label>
+                    </td>
+                    <td style="text-align: left">
+                        <p:inputText id="txtOfficialNewsNumber"  value="${institutionalPlanController.itsInstitutionalNumPerOficial}"
+                                     style="width: 90%"    maxlength="500" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 35%">
+                        <label class="commonFontDetailForm">
+                            #{pppMsg['ppp.planning.datePublication']} 
+                        </label>
+                    </td>
+                    <td>
+                        <p:calendar id="txtDateOfPublication" lang="es" locale="es" 
+                                    navigator="true" readOnlyInputText="true"
+                                    pattern="dd/MM/yyyy"
+                                    mindate="01/01/1940"
+                                    yearRange="75"
+                                    maxlength="11" size="11"
+                                    value="${institutionalPlanController.itsInstitutionalOfficialPubOnDailyDate}" showOn="button" />  
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="commonFontDetailForm">  
+                            #{pppMsg['ppp.planning.dateBeginning']} 
+                        </label>
+                    </td>
+                    <td>
+                        <p:calendar id="txtDateOfStartOfActivities" lang="es" locale="es"  
+                                    navigator="true" readOnlyInputText="true"
+                                    pattern="dd/MM/yyyy"
+                                    mindate="01/01/1940"
+                                    yearRange="75"
+                                    maxlength="11" size="11"
+                                    value="${institutionalPlanController.itsInstitutionalstartDateOfActivities}" showOn="button" />  
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="commonFontDetailForm">
+                            #{pppMsg['ppp.planning.extintionDate']} 
+                        </label>
+                    </td>
+                    <td>
+                        <p:calendar id="txtDateOfExtintion" lang="es" locale="es" 
+                                    navigator="true" readOnlyInputText="true"
+                                    pattern="dd/MM/yyyy"
+                                    mindate="01/01/1940"
+                                    yearRange="75"
+                                    maxlength="11" size="11"
+                                    value="${institutionalPlanController.itsInstitutionalDateOfExtintion}" showOn="button" />  
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="commonFontDetailForm">
+                            #{pppMsg['ppp.planning.extintionForm']} 
+                        </label>
+                    </td>
+                    <td>
+                        <p:inputText id="txtExtintionForm"  value="${institutionalPlanController.itsInstitutionalFormOfExtintion}" 
+                                     style="width: 90%"    maxlength="500"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label class="titlesInstitutional"> 
+                            #{pppMsg['ppp.planning.modification']}
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="commonFontDetailForm"> 
+                            #{pppMsg['ppp.planning.lastModification']} 
+                        </label>
+                    </td>
+                    <td>
+                        <p:inputText id="txtLastModificationNumber" value="${institutionalPlanController.itsInstitutionalNumberOfLastModif}" 
+                                     style="width: 90%"    maxlength="500"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="commonFontDetailForm">  
+                            #{pppMsg['ppp.planning.publicationDate']} 
+                        </label>
+                    </td>
+                    <td>
+                        <p:calendar id="txtPublicationOfLastModification" lang="es" locale="es" 
+                                    navigator="true" readOnlyInputText="true"
+                                    pattern="dd/MM/yyyy"
+                                    mindate="01/01/1940"
+                                    yearRange="75"
+                                    maxlength="11" size="11"
+                                    value="${institutionalPlanController.itsInstitutionalDateOfLastModif}" showOn="button"/>
+                    </td>
+                </tr>
+            </table>
+        </p:outputPanel>
+    </ui:composition>
+
+</html>

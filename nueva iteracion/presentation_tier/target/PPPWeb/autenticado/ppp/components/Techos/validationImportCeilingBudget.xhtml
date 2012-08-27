@@ -1,0 +1,104 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+    <ui:define name="body">
+        #{validationImportCeilingBudgetController.init()}
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/validateInput.js"></script>
+        <div class="imgHeaderStyle" />
+        <div class="headerTitleStyle">
+            <h:outputLabel value="#{pppMsg['ppp.techo.validationimportceilingbudget']}"/>
+        </div>
+        <div class="divContentPage">
+            <h:form id="frmValidacionCargaTechoPresupuestal">
+                <p:panel
+                    id="pnlValidacionCargaTechoPresupuestal">
+                    <div>
+                        <table>
+                            <tr>
+                                <td colspan="6">
+                                    <p:messages id="msgs" showDetail="true" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" width="850">
+                                    <h:outputText value="#{pppMsg['ppp.techo.cargatechopresupuestalTitle']}" /> 
+                                </td>
+                                <td>
+                                    <h:outputText value="#{pppMsg['ppp.techo.validationimportceilingbudget.ingreso']}" /> 
+                                </td>
+                                <td>
+                                    <p:inputText size="13"  id="txtIngreso" value="#{validationImportCeilingBudgetController.ingressBudget}" onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)">
+                                        <p:ajax update="txtDiferencia" listener="#{validationImportCeilingBudgetController.calculateDifferentIngressAndPlusBudgetString()}" />
+                                    </p:inputText>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" />
+                                <td>
+                                    <h:outputText value="#{pppMsg['ppp.techo.validationimportceilingbudget.egreso']}" /> 
+                                </td>
+                                <td>
+                                    <p:inputText size="13"  id="txtEgreso" value="#{validationImportCeilingBudgetController.dischargeBudgetString}" readonly="true" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" />
+                                <td>
+                                    <h:outputText value="#{pppMsg['ppp.techo.validationimportceilingbudget.diferencia']}" /> 
+                                </td>
+                                <td>
+                                    <p:inputText size="13" id="txtDiferencia" value="#{validationImportCeilingBudgetController.differentIngressAndPlusBudgetString}" readonly="true" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p:selectBooleanCheckbox value="#{validationImportCeilingBudgetController.isCheckBoxDeleteCurrentCeilingClicked}" />
+                                    <h:outputText value="#{pppMsg['ppp.techo.validationimportceilingbudget.eliminartechos']}" /> 
+                                </td>
+                                <td></td>
+                                <td colspan="4" />
+                            </tr>                        
+                        </table>
+                        <br />
+                        <p:separator id="customSeparator" style="height:2px" />  
+                        <br />
+                        <p:dataTable id="tbltechos" scrollable="true" scrollHeight="350" scrollRows="25"
+                                     var="techoPresupuestal"
+                                     value="#{validationImportCeilingBudgetController.lstImportCeilingbudget}"
+                                     rendered="true">
+
+                            <p:column headerText="#{pppMsg['ppp.techo.validationimportceilingbudget.Numero']}" style="width: 200px">
+                                <h:outputText value="#{techoPresupuestal.techoPresupuestalId}"/>
+                            </p:column>
+                            <p:column headerText="#{pppMsg['ppp.techo.validationimportceilingbudget.clave']}"  style="width: 750px">
+                                <h:outputText value="#{techoPresupuestal.claveCarga}"/>
+                            </p:column>
+                            <p:column headerText="#{pppMsg['ppp.techo.validationimportceilingbudget.total']}"  style="width: 250px; text-align: right;">
+                                <h:outputText style="text-align: right;" value="#{techoPresupuestal.montoToString}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+
+                </p:panel>
+                <p:panel>
+                    <p:commandButton id ="btnAceptarTecho" 
+                                     value="#{InfoMsg['ppp.techo.validationimportceilingbudget.aceptartecho']}" style="width:340px" 
+                                     actionListener="#{validationImportCeilingBudgetController.acceptImportCeilingBudget()}"
+                                     update="msgs, btnAceptarTecho, btnRechazarTecho" rendered="true"
+                                     disabled="#{validationImportCeilingBudgetController.disabledButtonAceptarTecho}"/>
+
+                    <p:commandButton id ="btnRechazarTecho" value="#{InfoMsg['ppp.techo.validationimportceilingbudget.rechazartecho']}"
+                                     action="#{validationImportCeilingBudgetController.navigateMenuCeiling()}"
+                                     style="width:180px" disabled="#{validationImportCeilingBudgetController.disabledButtonRechazarTecho}"
+                                     />
+                    <p:commandButton id ="btnVaalidationCerrar" action="#{validationImportCeilingBudgetController.navigateMainMenu()}"
+                                     ajax="true" style="width:140px" value="#{InfoMsg['ppp.techo.cargatechopresupuestalTitle.btnCerrar']}" />
+                </p:panel>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,93 @@
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+
+        <p:dataTable id="grdObjectives"  var="objectiveLevel"
+                     value="#{objectiveLevelController.itsObjectiveLevels}"
+                     paginator="true" rows="10"  
+                     selection="#{objectiveLevelController.itsSelectedObjectives}" selectionMode="multiple"
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rowsPerPageTemplate="5,10,15">
+            
+            <p:ajax event="rowSelect" 
+                    update=":formDetails:pnlObjectiveLevelDetails
+                    :formDetails:grdObjectives:btnAddObjectiveLevel" 
+                    listener="#{objectiveLevelController.onRowSelect}" />
+            <f:facet name="header">
+                #{pppMsg['ppp.planning.objDetailsHeader']}
+            </f:facet>
+
+
+
+
+            <p:column sortBy="#{objectiveLevel.objectiveLevel}" filterBy="#{objectiveLevel.objectiveLevel}"
+                      filterMatchMode="contains">
+                <f:facet name="header">
+                    <h:outputText value="#{pppMsg['ppp.planning.level']}" />
+                </f:facet>
+                <h:outputText value="#{objectiveLevel.objectiveLevel}" />
+            </p:column>
+
+            <p:column filterBy="#{objectiveLevel.objectiveLevelKey}" sortBy="#{objectiveLevel.objectiveLevelKey}"
+                      filterMatchMode="contains">
+                <f:facet name="header">
+                    <h:outputText value="#{pppMsg['ppp.planning.key']}" />
+                </f:facet>
+                <h:outputText value="#{objectiveLevel.objectiveLevelKey}" />
+            </p:column>
+
+
+            <p:column filterBy="#{objectiveLevel.objectiveLevelDescription}" sortBy="#{objectiveLevel.objectiveLevelDescription}"
+                      filterMatchMode="contains">
+                <f:facet name="header">
+                    <h:outputText value="#{pppMsg['ppp.planning.description']}" />
+                </f:facet>
+                <h:outputText value="#{objectiveLevel.objectiveLevelDescription}" />
+            </p:column>
+
+            <p:column filterBy="#{objectiveLevel.objectiveLevelHasIndicator}" sortBy="#{objectiveLevel.objectiveLevelHasIndicator}"
+                      filterMatchMode="contains">
+                <f:facet name="header">
+                    <h:outputText value="#{pppMsg['ppp.planning.indicators']}" />
+                </f:facet>
+                <h:selectBooleanCheckbox readonly="true" value="#{objectiveLevel.objectiveLevelHasIndicator}" />
+            </p:column>
+
+            <p:column filterBy="#{objectiveLevel.objectiveLevelShowBudgetKey}" sortBy="#{objectiveLevel.objectiveLevelShowBudgetKey}"
+                      filterMatchMode="contains">
+                <f:facet name="header">
+                    <h:outputText value="#{pppMsg['ppp.planning.frame']}" />
+                </f:facet>
+                <h:selectBooleanCheckbox readonly="true" value="#{objectiveLevel.objectiveLevelShowBudgetKey}"   />
+            </p:column>
+
+            
+
+            <f:facet class="divFooterDataTable" name="footer" >
+                <h:panelGrid style="width: 20%" columns="2">
+                    <p:column style="width:  10%;text-align: left">
+                        <p:commandButton id="btnAddObjectiveLevel" value="#{pppMsg['ppp.add']}" 
+                                         update=":formDetails:pnlObjectiveLevelDetails :formDetails:grdObjectives" 
+                                         disabled="#{objectiveLevelController.itsAddObjectiveLevelDisabled}"
+                                         actionListener="#{objectiveLevelController.prepareNewObjectiveLevel()}"/>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="#{pppMsg['ppp.delete']}" 
+                                         update=":formDetails:pnlObjectiveLevelDetails
+                                                 :formDetails:grdObjectives
+                                                 btnAddObjectiveLevel"
+                                         actionListener="#{objectiveLevelController.deleteObjectives()}" />
+                    </p:column>
+                </h:panelGrid>
+
+
+            </f:facet>
+        </p:dataTable>
+
+    </ui:composition>
+</html>

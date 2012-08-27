@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+
+
+    <ui:define name="body">
+        #{administrativeClassifier.init()}
+       
+        <div style="padding-top: 10px">
+            <table>
+                <tr>
+                    <td>  
+                        <div class="imgHeaderStyle" />                      
+                    </td>
+                    <td style="vertical-align: center">
+                        <h:outputText value="#{pppMsg['ppp.progr.AdminClassifierTitle']}" class="headerTitleStyle"/>
+                    </td>
+                </tr>
+            </table>
+        </div> 
+
+        <div class="divContentPage">
+            <h:form id="formTreeview">
+                <p:messages autoUpdate="true" showDetail="true" showSummary="false"/>
+                <p:commandButton value="#{pppMsg['ppp.progr.Update']}"
+                                 actionListener="#{administrativeClassifier
+                                                   .restartTreeNode()}"
+                                 update="tvTree"/>
+                <label class="titlesInstitutional">
+                    <!--a href="../options.abs">#{pppMsg['ppp.planning.goToStart']}</a-->    
+                </label>
+                <p:tree value="#{administrativeClassifier.theirTreeNode}"  var="node"
+                        dynamic="true" cache="true"  style="width:95% " 
+                        selection="#{administrativeClassifier.theirSelectedNode}"
+                        selectionMode="single"   id="tvTree">   
+
+                    <p:ajax event="expand" update="tvTree" 
+                            listener="#{administrativeClassifier
+                                        .onNodeExpand}" />
+                    <p:treeNode>  
+                        <h:outputText value="#{node.itsNodeText}"/>  
+                    </p:treeNode> 
+                </p:tree>  
+
+                <p:contextMenu for="tvTree" id="ctxMnuTreeviewOptions"  > 
+                    
+                    <p:menuitem value="#{pppMsg['ppp.new']}" icon="ui-common-icon-new"
+                                actionListener="#{administrativeClassifier.prepareNewItem()}"
+                                update="txtColectiveType cboColectiveStatus cboTypeClassifier 
+                                txtKey txtName txtDescription calRegisterDate calLastModify
+                                txtFundametal cboResponsible txtShortName chkOptions
+                                lblHeader btnSave cboClassifierConac"
+                                onclick="dlg.show()"
+                                /> 
+                    <p:menuitem value="#{pppMsg['ppp.edit']}" icon="ui-common-icon-edit"
+                                actionListener="#{administrativeClassifier.prepareEditItem()}"
+                                update="txtColectiveType cboColectiveStatus cboTypeClassifier 
+                                txtKey txtName txtDescription calRegisterDate calLastModify
+                                txtFundametal cboResponsible txtShortName chkOptions 
+                                lblHeader btnSave cboClassifierConac"
+                                onclick="dlg.show()"
+                                /> 
+                     <p:menuitem value="#{pppMsg['ppp.delete']}" icon="ui-common-icon-delete" 
+                                 
+                                onclick="confirmation.show()"
+                                /> 
+                </p:contextMenu> 
+                <ui:include src="components/administrativeClassifier/administrativeClassifierDialog.xhtml"/> 
+                
+                 <p:confirmDialog id="confirmDialog" 
+                                    closable="false"  
+                                  message="#{pppMsg['ppp.planning.administrativeClassifier.confirmDelete']}"
+                              header="#{pppMsg['ppp.planning.administrativeClassifier.confirmDelete']}" severity="alert" widgetVar="confirmation">	
+                    <p:commandButton id="confirm" value="#{pppMsg['ppp.progr.InvPrefileSearch.Yes']}" oncomplete="confirmation.hide()"
+                                     actionListener="#{administrativeClassifier.delete()}" 
+                                     update=":formTreeview:tvTree"/>
+                    <p:commandButton id="decline" value="#{pppMsg['ppp.progr.InvPrefileSearch.No']}" onclick="confirmation.hide()" type="button" /> 	
+                </p:confirmDialog>
+            </h:form>
+        </div> 
+    </ui:define>
+</ui:composition>

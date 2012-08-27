@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (C) 2012 Advanced Business Systems S.A. de C.V. 
+ All rights reserved 
+ Filename:  regionalClassifierLevelDetails
+ Purpose:  [ short Description  ]
+       
+ The copyright to the computer program(s) herein is the property
+ of Advanced Business Systems S.A. de C.V. The programs may be 
+ used and/or copied only with written permission from Advanced 
+ Business Systems S.A. de C.V. or in accordance with the terms 
+ and conditions stipulated in the agreement/contract under which
+ the program(s) have been supplied.
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+        <p:outputPanel id="pnlRegClassifLevelDetails"> 
+            <table style="width: 100%" class="tableDetailForm">
+                <tr>
+                    <td  style="text-align: right">
+                        #{pppMsg['ppp.planning.year']}
+                    </td>
+                    <td style="text-align: left">
+                        <p:inputText value="#{regionalClassifierLevelController.itsCurrentRCLevel.regionalLevelClassifierYear}"   
+                                     disabled="#{regionalClassifierLevelController.itsEditInputsDisabled}" 
+                                     maxlength="4"> 
+                           </p:inputText>
+                    </td>
+                    <td class="commonFontDetailForm" style="text-align: right">
+                        #{pppMsg['ppp.planning.level']}
+                    </td>
+                    <td style="text-align: left">
+                        <p:inputMask id="txtNivel" value="#{regionalClassifierLevelController.itsCurrentRCLevel.regionalLevelClassifierLevel}"
+                                     mask="?99"    disabled="#{regionalClassifierLevelController.itsEditInputsDisabled}" readonly="true"
+                                     >
+                        </p:inputMask> 
+                        
+                    </td>
+                    <td class="commonFontDetailForm" style="text-align: right">
+                        #{pppMsg['ppp.planning.keyLevel']}
+                    </td>
+                    <td style="text-align: left">
+                        <p:inputText value="#{regionalClassifierLevelController.itsCurrentRCLevel.regionalLevelClassifierKey}"   
+                                     disabled="#{regionalClassifierLevelController.itsEditInputsDisabled}" 
+                                     maxlength="15"> 
+                        </p:inputText>
+                    </td>
+                    <td colspan="3" style="text-align: right">
+                        <p:commandButton value="#{pppMsg['ppp.save']}" disabled="#{regionalClassifierLevelController.itsInputsDisabled}"
+                                         update=":formDetails:grdRegClassifiers :formDetails:pnlRegClassifLevelDetails"
+                                         actionListener="#{regionalClassifierLevelController.persistRegClassifLevel()}"/>
+                    </td>
+                    <td >
+                        <p:commandButton value="#{pppMsg['ppp.cancel']}" update=":formDetails:pnlRegClassifLevelDetails"    
+                               disabled="#{regionalClassifierLevelController.itsInputsDisabled}" 
+                               actionListener="#{regionalClassifierLevelController.cancelPersistFuncClassifLevel()}"    />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" class="commonFontDetailForm" style="width: 5%;text-align: right"> 
+                        #{pppMsg['ppp.planning.description']}
+                    </td>
+                    <td colspan="9" style="text-align: left">
+                        <p:inputTextarea id="txtDescription" 
+                                         maxlength="50"
+                                         style="width: 100%" disabled="#{regionalClassifierLevelController.itsInputsDisabled}" 
+                                         value="#{regionalClassifierLevelController.itsCurrentRCLevel.regionalLevelClassifierDescription}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="commonFontDetailForm" style="text-align: right">
+                        <p:selectBooleanCheckbox  disabled="#{regionalClassifierLevelController.itsInputsDisabled}"  
+                                                  value="#{regionalClassifierLevelController.itsCurrentRCLevel.regionalLevelClassifierIsCensus}" />
+                    </td>
+                    <td style="text-align: left" >
+                        #{pppMsg['ppp.planning.regClassifLevel.Census']}
+                    </td>
+                    <td class="commonFontDetailForm" style="text-align: right">
+                        <p:selectBooleanCheckbox  disabled="#{regionalClassifierLevelController.itsInputsDisabled}"  
+                                                  value="#{regionalClassifierLevelController.itsCurrentRCLevel.regionalLevelClassifierIsGender}" />
+                    </td>
+                    <td style="text-align: left" >
+                        #{pppMsg['ppp.planning.regClassifLevel.Gender']}
+                    </td>
+                    <td class="commonFontDetailForm" style="text-align: right">
+                        <p:selectBooleanCheckbox  disabled="#{regionalClassifierLevelController.itsInputsDisabled}"  
+                                                  value="#{regionalClassifierLevelController.itsCurrentRCLevel.regionalLevelClassifierIsState}" />
+                    </td>
+                    <td style="text-align: left" >
+                        #{pppMsg['ppp.planning.regClassifLevel.State']}
+                    </td>
+                    <td class="commonFontDetailForm" style="text-align: right">
+                        <p:selectBooleanCheckbox  disabled="#{regionalClassifierLevelController.itsInputsDisabled}"  
+                                                  value="#{regionalClassifierLevelController.itsCurrentRCLevel.regionalLevelClassifierIsMunicipality}" />
+                    </td>
+                    <td style="text-align: left" >
+                        #{pppMsg['ppp.planning.regClassifLevel.Municipality']}
+                    </td>
+                    <td class="commonFontDetailForm" style="text-align: right">
+                        <p:selectBooleanCheckbox  disabled="#{regionalClassifierLevelController.itsInputsDisabled}"  
+                                                  value="#{regionalClassifierLevelController.itsCurrentRCLevel.regionalLevelClassifierIsPostalCode}" />
+                    </td>
+                    <td style="text-align: left" >
+                        #{pppMsg['ppp.planning.regClassifLevel.PostalCode']}
+                    </td>
+                </tr>
+            </table>
+        </p:outputPanel>
+    </ui:composition>
+</html>

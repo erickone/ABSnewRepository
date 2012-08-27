@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration PUBLIC "-//LOGGER" "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+        
+  <appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+    <!-- layout class="org.apache.log4j.SimpleLayout"/ -->
+	<layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d %5p %c{1}:%L - %m%n"/>
+    </layout>
+
+  </appender>
+
+  
+  <logger name="com.abs">
+      <level value="ERROR" />
+  </logger>
+  
+  <logger name="org.hibernate.SQL">
+      <level value="ERROR" />
+  </logger>
+  
+  <logger name="org.hibernate.tool.hbm2ddl">
+      <level value="ERROR" />
+  </logger>
+  
+  <logger name="org.hibernate.type">
+      <level value="ERROR" />
+  </logger>
+  
+    <logger name="org.hibernate">
+      <level value="ERROR" />
+  </logger>
+
+  <root>
+    <priority value ="error" />
+    <appender-ref ref="ConsoleAppender"/>
+  </root>
+</log4j:configuration>

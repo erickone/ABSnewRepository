@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (C) 2012 Advanced Business Systems S.A. de C.V. 
+ All rights reserved 
+ Filename:  listRegionalClassifierLevels
+ Purpose:  [ short Description  ]
+       
+ The copyright to the computer program(s) herein is the property
+ of Advanced Business Systems S.A. de C.V. The programs may be 
+ used and/or copied only with written permission from Advanced 
+ Business Systems S.A. de C.V. or in accordance with the terms 
+ and conditions stipulated in the agreement/contract under which
+ the program(s) have been supplied.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+        
+        <p:dataTable id="grdRegClassifiers"  var="RCLevel" rowKey="#{RCLevel.regionalLevelClassifierLevel}"
+                     value="#{regionalClassifierLevelController.itsRCLDataModel}"
+                     paginator="true" rows="10"  
+                     selection="#{regionalClassifierLevelController.itsSelectedRCLevels}" selectionMode="multiple"
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rowsPerPageTemplate="5,10,15"
+                     resizableColumns="true"  rendered="true">
+            
+            <p:ajax event="rowSelect" 
+                    update=":formDetails:pnlRegClassifLevelDetails
+                    :formDetails:grdRegClassifiers:btnAddFuncClassifLevel
+                    :formDetails:modalDeleteDialog" 
+                    listener="#{regionalClassifierLevelController.onRowSelect}" />
+            <f:facet name="header">
+                #{pppMsg['ppp.planning.funClassifierLevel']}
+            </f:facet>
+
+            <p:column sortBy="#{RCLevel.functionalLevelClassifierYear}" filterBy="#{RCLevel.regionalLevelClassifierYear}"
+                      filterMatchMode="contains">
+                <f:facet name="header" >
+                    <h:outputText value="#{pppMsg['ppp.planning.year']}" />
+                </f:facet>
+                <h:outputText value="#{RCLevel.regionalLevelClassifierYear}" />
+            </p:column> 
+
+            <p:column filterBy="#{RCLevel.regionalLevelClassifierLevel}" sortBy="#{RCLevel.regionalLevelClassifierLevel}"
+                      filterMatchMode="contains">
+                <f:facet name="header">
+                    <h:outputText value="#{pppMsg['ppp.planning.level']}" />
+                </f:facet>
+                <h:outputText value="#{RCLevel.regionalLevelClassifierLevel}" />
+            </p:column>
+
+
+            <p:column filterBy="#{RCLevel.regionalLevelClassifierKey}" sortBy="#{RCLevel.regionalLevelClassifierKey}"
+                      filterMatchMode="contains">
+                <f:facet name="header">
+                    <h:outputText value="#{pppMsg['ppp.planning.key']}" />
+                </f:facet>
+                <h:outputText value="#{RCLevel.regionalLevelClassifierKey}" />
+            </p:column>
+
+            <p:column filterBy="#{RCLevel.regionalLevelClassifierDescription}" sortBy="#{RCLevel.regionalLevelClassifierDescription}"
+                      filterMatchMode="contains">
+                <f:facet name="header">
+                    <h:outputText value="#{pppMsg['ppp.planning.description']}" />
+                </f:facet>
+                <h:outputText value="#{RCLevel.regionalLevelClassifierDescription}" />
+            </p:column>
+
+             <p:column filterBy="#{RCLevel.regionalLevelClassifierIsGender}" sortBy="#{RCLevel.regionalLevelClassifierIsGender}"
+                      filterMatchMode="contains">
+                <f:facet name="header">
+                    <h:outputText value="#{pppMsg['ppp.planning.Gender']}" />
+                </f:facet>
+                <h:selectBooleanCheckbox readonly="true" value="#{RCLevel.regionalLevelClassifierIsGender}"   />
+            </p:column>
+            
+            <p:column filterBy="#{RCLevel.regionalLevelClassifierIsState}" sortBy="#{RCLevel.regionalLevelClassifierIsState}"
+                      filterMatchMode="contains">
+                <f:facet name="header">
+                    <h:outputText value="#{pppMsg['ppp.planning.State']}" />
+                </f:facet>
+                <h:selectBooleanCheckbox readonly="true" value="#{RCLevel.regionalLevelClassifierIsState}"   />
+            </p:column>
+            
+            <p:column filterBy="#{RCLevel.regionalLevelClassifierIsMunicipality}" sortBy="#{RCLevel.regionalLevelClassifierIsMunicipality}"
+                      filterMatchMode="contains">
+                <f:facet name="header">
+                    <h:outputText value="#{pppMsg['ppp.planning.Municipality']}" />
+                </f:facet>
+                <h:selectBooleanCheckbox readonly="true" value="#{RCLevel.regionalLevelClassifierIsMunicipality}"   />
+            </p:column>
+            
+            <p:column filterBy="#{RCLevel.regionalLevelClassifierIsPostalCode}" sortBy="#{RCLevel.regionalLevelClassifierIsPostalCode}"
+                      filterMatchMode="contains">
+                <f:facet name="header">
+                    <h:outputText value="#{pppMsg['ppp.planning.PostalCode']}" />
+                </f:facet>
+                <h:selectBooleanCheckbox readonly="true" value="#{RCLevel.regionalLevelClassifierIsPostalCode}"   />
+            </p:column>
+            
+             <p:column filterBy="#{RCLevel.regionalLevelClassifierIsCensus}" sortBy="#{RCLevel.regionalLevelClassifierIsCensus}"
+                      filterMatchMode="contains">
+                <f:facet name="header">
+                    <h:outputText value="#{pppMsg['ppp.planning.Census']}" />
+                </f:facet>
+                <h:selectBooleanCheckbox readonly="true" value="#{RCLevel.regionalLevelClassifierIsCensus}"   />
+            </p:column>
+
+            <f:facet class="divFooterDataTable" name="footer" >
+                <h:panelGrid style="width: 20%" columns="2">
+                    <p:column style="width:  10%;text-align: left">
+                        <p:commandButton id="btnAddFuncClassifLevel" value="#{pppMsg['ppp.add']}" 
+                                         update=":formDetails:pnlRegClassifLevelDetails :formDetails:grdRegClassifiers" 
+                                         disabled="#{regionalClassifierLevelController.isAddDisabled}"
+                                         actionListener="#{regionalClassifierLevelController.prepareNewRegClassifLevel()}"/>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="#{pppMsg['ppp.delete']}" 
+                                         onclick="dlg.show();" />
+                    </p:column>
+                </h:panelGrid>
+            </f:facet>
+        </p:dataTable>
+
+        <p:dialog id="modalDeleteDialog" header="#{InfoMsg['options.Menu.EliminarHeader']}" widgetVar="dlg"
+                            maximizable="false" minimizable="false" closable="false"
+                            modal="true" position="center" resizable="false"
+                            height="120" width="250">
+                     <table  class="tableDetailForm">
+                         <tr>
+                             <td class="tableColumnCenter">
+                                <label class="titlesInstitutional">
+                                    <h:outputText value="#{InfoMsg['options.Menu.EliminarSeguro']}" />  
+                                </label>
+                            </td>
+                        </tr>
+                         <tr>
+                             <td class="tableColumnCenter">
+                                 <h:outputText value="#{regionalClassifierLevelController.selectedRowsToDelete}" />  
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tableColumnCenter">
+                                <p:commandButton id="btnDeleteOK" value="#{InfoMsg['ppp.techo.eliminar']}" 
+                                                ajax="false"    
+                                                actionListener="#{regionalClassifierLevelController.deleteRegClassifier()}"
+                                                style="width:86px"/>
+
+                                <p:commandButton id="btnDeleteCancel"  value="#{pppMsg['ppp.cancel']}" onclick="dlg.close()" />
+                            </td>               
+                        </tr>
+                     </table>
+                </p:dialog>
+    </ui:composition>
+</html>

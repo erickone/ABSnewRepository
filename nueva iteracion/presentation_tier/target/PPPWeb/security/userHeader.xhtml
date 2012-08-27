@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+
+    <ui:define name="body">
+         <div style="padding-top: 27px">
+            <table>
+                <tr>
+                    <td>                        
+                        <img src="#{request.contextPath}/styles/images/iconHeaderStyle.png" /> 
+                    </td>
+                    <td style="vertical-align: center">
+                        <h:outputText value="#{pppMsg['security.generalData.header']}" styleClass="headerTitleStyle" style="position: absolute; top: 135px"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="divContentPage">
+            <h:form id="formUserHeader" enctype="multipart/form-data">
+                #{userHeaderController.initViewElements()}
+                <table style="width: 95%">                          
+                    <tr>
+                        <td colspan="3">
+                            <p:messages id="msgName" showDetail="true" showSummary="false" autoUpdate="true"  />
+                            <p:tabView id="tabGeneralData"  activeIndex="0" dynamic="true" cache="false" >
+                                <p:tab title="#{pppMsg['security.header.tabGeneralData']}" > 
+                                    <ui:include src="userGeneralData.xhtml" />
+                                </p:tab>
+                                 <p:tab title="#{pppMsg['security.header.tabSystemAccess']}" > 
+                                    <ui:include src="userSystemAccess.xhtml" />
+                                </p:tab>
+                            </p:tabView> 
+                        </td>
+                    </tr>                
+                </table>               
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

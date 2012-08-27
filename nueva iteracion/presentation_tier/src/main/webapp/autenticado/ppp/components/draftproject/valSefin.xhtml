@@ -1,0 +1,191 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" xmlns:cr="http://java.sun.com/jsp/jstl/core">
+    <ui:composition>
+        #{sefinValidationController.init()}
+        <h:form id="frmValSefin" enctype="multipart/form-data">
+            <table>
+                <tr>
+                    <td>
+                        <p:messages autoUpdate="true" id="msgs"/>
+                    </td>
+                </tr>
+            </table>
+            <div style="width:650;overflow-x:auto">
+                <div class = "tabular">
+                    <!-- Propósito -->
+                    <div class ="tabular-row">
+                        <p:panel id="panProposito" header="#{pppMsg['ppp.progr.ValSefin.Proposit']}">
+                            <div class="tabular-row">
+                                <div class="tabular-cell" style="width:450" />
+                                <ui:repeat var="comp" value="#{sefinValidationController.theirComponentList}" varStatus="row"/>
+                            </div>
+                            <ui:repeat var="question" value="#{sefinValidationController.theirPropositQuestions}"  varStatus="rowquestion">
+                                <div class="tabular-row">
+                                    <div class="tabular-cell" style="width:450">
+                                        <h:outputText value="#{question.question}"/>
+                                    </div>
+                                    <cr:forEach begin="1" end="#{sefinValidationController.theirComponentList.size()}">
+                                        <div class="tabular-cell" style="width:100"/> 
+                                    </cr:forEach>
+                                    <ui:repeat var="comp" value="#{sefinValidationController.theirComponentList[0]}" varStatus="row">
+                                        <div class="tabular-cell">
+                                            <p:selectOneRadio
+                                                value="#{sefinValidationController.theirEvaluationMap[comp][question.indexQuestion].validationAnswer}">
+                                                <f:selectItem itemLabel="#{question.answer[0]}" itemValue="true"/>
+                                                <f:selectItem itemLabel="#{question.answer[1]}" itemValue="false"/>
+                                            </p:selectOneRadio>
+                                        </div>
+                                    </ui:repeat>
+                                </div>
+                            </ui:repeat>
+                        </p:panel>
+                    </div>
+                    <!-- Componentes -->
+                    <div class ="tabular-row">
+                        <p:panel id="panComponentes" header="#{pppMsg['ppp.progr.ValSefin.Component']}">
+                            <div class="tabular-row">
+                                <div class="tabular-cell" style="width:450" />
+                                <ui:repeat var="comp" value="#{sefinValidationController.theirComponentList}" varStatus="row">
+                                    <div class="tabular-cell"> 
+                                        <h:outputText value="#{comp.compDesc}"/>
+                                    </div>
+                                </ui:repeat>
+                            </div>
+                            <ui:repeat var="question" value="#{sefinValidationController.theirComponentQuestions}"  varStatus="rowquestion">
+                                <div class="tabular-row">
+                                    <div class="tabular-cell" style="width:450"> 
+                                        <h:outputText value="#{question.question}"/>
+                                    </div>
+                                    <ui:repeat var="comp" value="#{sefinValidationController.theirComponentList}" varStatus="row">
+                                        <div class="tabular-cell"> 
+                                            <p:selectOneRadio
+                                                value="#{sefinValidationController.theirEvaluationMap[comp][question.indexQuestion].validationAnswer}">
+                                                <f:selectItem itemLabel="#{question.answer[0]}" itemValue="true"/>
+                                                <f:selectItem itemLabel="#{question.answer[1]}" itemValue="false"/>
+                                            </p:selectOneRadio>
+                                        </div>
+                                    </ui:repeat>
+                                </div>
+                            </ui:repeat>
+                        </p:panel>
+                    </div>
+                    <!-- iNDICADORES -->
+                    <div class ="tabular-row">
+                        <p:panel id="panIndicadores" header="#{pppMsg['ppp.progr.ValSefin.Indicator']}">
+                            <div class="tabular-row">
+                                <div class="tabular-cell" style="width:450" />
+                                <ui:repeat var="comp" value="#{sefinValidationController.theirComponentList}" varStatus="row">
+                                    <div class="tabular-cell"> 
+                                        <h:outputText value="#{comp.compDesc}"/>
+                                    </div>
+                                </ui:repeat>
+                            </div>
+                            <ui:repeat var="question" value="#{sefinValidationController.theirIndicatorQuestions}"  varStatus="rowquestion">
+                                <div class="tabular-row">
+                                    <div class="tabular-cell" style="width:450"> 
+                                        <h:outputText value="#{question.question}"/>
+                                    </div>
+                                    <ui:repeat var="comp" value="#{sefinValidationController.theirComponentList}" varStatus="row">
+                                        <div class="tabular-cell"> 
+                                            <p:selectOneRadio
+                                                value="#{sefinValidationController.theirEvaluationMap[comp][question.indexQuestion].validationAnswer}">
+                                                <f:selectItem itemLabel="#{question.answer[0]}" itemValue="true"/>
+                                                <f:selectItem itemLabel="#{question.answer[1]}" itemValue="false"/>
+                                            </p:selectOneRadio>
+                                        </div>
+                                    </ui:repeat>
+                                </div>
+                            </ui:repeat>
+                        </p:panel>
+                    </div>
+                    <!-- Metas -->
+                    <div class ="tabular-row">
+                        <p:panel id="panMetas" header="#{pppMsg['ppp.progr.ValSefin.Goals']}">
+                            <div class="tabular-row">
+                                <div class="tabular-cell" style="width:450" />
+                                <ui:repeat var="comp" value="#{sefinValidationController.theirComponentList}" varStatus="row">
+                                    <div class="tabular-cell"> 
+                                        <h:outputText value="#{comp.compDesc}"/>
+                                    </div>
+                                </ui:repeat>
+                            </div>
+                            <ui:repeat var="question" value="#{sefinValidationController.theirGoalQuestions}"  varStatus="rowquestion">
+                                <div class="tabular-row">
+                                    <div class="tabular-cell" style="width:450"> 
+                                        <h:outputText value="#{question.question}"/>
+                                    </div>
+                                    <ui:repeat var="comp" value="#{sefinValidationController.theirComponentList}" varStatus="row">
+                                        <div class="tabular-cell"> 
+                                            <p:selectOneRadio
+                                                value="#{sefinValidationController.theirEvaluationMap[comp][question.indexQuestion].validationAnswer}">
+                                                <f:selectItem itemLabel="#{question.answer[0]}" itemValue="true"/>
+                                                <f:selectItem itemLabel="#{question.answer[1]}" itemValue="false"/>
+                                            </p:selectOneRadio>
+                                        </div>
+                                    </ui:repeat>
+                                </div>
+                            </ui:repeat>
+                        </p:panel>
+                    </div>
+                    <!-- En General -->
+                    <div class ="tabular-row">
+                        <p:panel id="panGenralInformation" header="#{pppMsg['ppp.progr.ValSefin.GenralDraftProject']}">
+                            <div class="tabular-row">
+                                <div class="tabular-cell" style="width:450" />
+                                <ui:repeat var="comp" value="#{sefinValidationController.theirComponentList}" varStatus="row"/>
+                            </div>
+                                <ui:repeat var="question" value="#{sefinValidationController.theirGeneralQuestions}"  varStatus="rowquestion">
+                                <div class="tabular-row">
+                                    <div class="tabular-cell" style="width:450">
+                                        <h:outputText value="#{question.question}"/>
+                                    </div>
+                                    <cr:forEach begin="1" end="#{sefinValidationController.theirComponentList.size()}">
+                                        <div class="tabular-cell" style="width:100"/> 
+                                    </cr:forEach>
+                                    <ui:repeat var="comp" value="#{sefinValidationController.theirComponentList[0]}" varStatus="row">
+                                        <div class="tabular-cell">
+                                            <p:selectOneRadio
+                                                value="#{sefinValidationController.theirEvaluationMap[comp][question.indexQuestion].validationAnswer}">
+                                                <f:selectItem itemLabel="#{question.answer[0]}" itemValue="true"/>
+                                                <f:selectItem itemLabel="#{question.answer[1]}" itemValue="false"/>
+                                            </p:selectOneRadio>
+                                        </div>
+                                    </ui:repeat>
+                                </div>
+                            </ui:repeat>
+                        </p:panel>
+                    </div>
+                    <div class = "tabular-row">
+                        <div class ="tabular-cell">
+                            <h:outputText value="#{pppMsg['ppp.progr.ValSefin.Observation']}"/>
+                            <p:inputTextarea
+                                id="txtDescription"
+                                rows="5"
+                                cols="50"
+                                maxlength="255"
+                                value="#{sefinValidationController.theirObservations}"
+                                />
+                        </div>
+                    </div>
+                    <div class = "tabular-row">
+                        <p:commandButton
+                            id="btnChangeStatus"
+                            value="Cambiar Estatus"
+                            disabled="#{sefinValidationController.isBtnChangeStatusDisabled}"
+                            actionListener="#{sefinValidationController.actualizarEstatusEnBitacora()}"
+                            update=":tabDraftProjectDetails:frmValSefin:btnChangeStatus "/>
+                        <p:commandButton
+                            id="btnGuardar"
+                            value="#{pppMsg['common.save']}"
+                            actionListener="#{sefinValidationController.saveSefinValidation()}"
+                            disabled="#{sefinValidationController.isBtnSaveDisabled}"/>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:composition>
+</html>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <p:outputPanel id="panMission">
+        <table style="width: 100%; " class="tableDetailForm">
+            <tr>
+                <td style="width: 35%">
+                 <label class="commonFontDetailForm">    
+                     #{pppMsg['ppp.planning.legalBasis']} 
+                 </label>
+                </td>
+                <td style="text-align: left">
+                    <p:inputText   id="txtLegalBasis" value="${institutionalPlanController.itsInstitutionalLegalBasis}" style="width: 90%"    maxlength="500" />
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 35%">
+                   <label class="commonFontDetailForm">  
+                       #{pppMsg['ppp.planning.mision']}
+                   </label>
+                </td>
+                <td style="text-align: left">
+                    <p:inputText   id="txtMission"  value="${institutionalPlanController.itsInstitutionalMission}" style="width: 90%"    maxlength="500" />
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 35%">
+                <label class="commonFontDetailForm">     
+                    #{pppMsg['ppp.planning.vision']}
+                </label>
+                </td>
+                <td style="text-align: left">
+                    <p:inputText   id="txtVision"  value="${institutionalPlanController.itsInstitutionalVision}" style="width: 90%"    maxlength="500" />
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 35%">
+                  <label class="commonFontDetailForm">   
+                      #{pppMsg['ppp.planning.diagnostic']}
+                  </label>
+                </td>
+                <td style="text-align: left">
+                    <p:inputText   id="txtDiagnostic"  value="${institutionalPlanController.itsInstitutionalDiag}" style="width: 90%"    maxlength="500" />
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 35%">
+                 <label class="commonFontDetailForm">    
+                     #{pppMsg['ppp.planning.generalObjective']}
+                 </label>
+                </td>
+                <td style="text-align: left">
+                    <p:inputText   id="txtGeneralObjective" value="${institutionalPlanController.itsInstitutionalGeneralObjective}" style="width: 90%"    maxlength="500" />
+                </td>
+            </tr>
+        </table>
+            </p:outputPanel>
+    </ui:composition>
+</html>

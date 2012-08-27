@@ -1,0 +1,96 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+    <ui:define name="body">
+        #{printErrorImportCeilingBudgetController.init()}
+        <div class="imgHeaderStyle" />
+        <div class="headerTitleStyle">
+            <h:outputLabel value="#{pppMsg['ppp.techo.printerrorceilingbudget']}"/>
+        </div>
+        <div class="divContentPage">
+            <h:form id="frmPrintErrorImportCeilingBudget">
+                <p:panel
+                    id="pnlPrintErrorImportCeilingBudget"
+                    header="#{pppMsg['ppp.techo.printerrorceilingbudget']}">
+                    <table >
+                        <tr>
+                            <td colspan="5">
+                                <p:messages id="msgs" showDetail="true" showSummary="false" autoUpdate="true"  />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="300" >
+                                <h:outputText value="#{pppMsg['ppp.techo.printerrorceilingbudget.title']}" /> 
+                            </td>
+                            <td width="80" >
+                                <h:outputText value="#{pppMsg['ppp.techo.printerrorceilingbudget.ano']}" /> 
+                            </td>
+                            <td width="240" >
+                                <p:inputText id="txtAnio" value="#{importCeilingBudgetController.currentOperationYear}" readonly="true" />
+                            </td>
+                            <td width="15" />
+                            <td width="140" >
+                                <h:outputText value="#{pppMsg['ppp.techo.printerrorceilingbudget.clave']}" /> 
+                            </td>
+                            <td width="240" >
+                                <p:inputText id="txtclave" value="#{importCeilingBudgetController.ceilingConfiguration.ceilingConfigName}" readonly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td />
+                            <td>
+                                <h:outputText value="#{pppMsg['ppp.techo.printerrorceilingbudget.descripcion']}" /> 
+                            </td>
+                            <td>
+                                <p:inputText size="50" id="txtdescripcion" value="#{importCeilingBudgetController.ceilingConfiguration.ceilingConfigDesc}" readonly="true" />
+                            </td>
+                            <td width="15" />
+                            <td>
+                                <h:outputText value="#{pppMsg['ppp.techo.printerrorceilingbudget.archivo']}" /> 
+                            </td>
+                            <td>                                
+                                <p:inputText id="txtarchivo" readonly="true" value="#{importCeilingBudgetController.filesSeparateComma}"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+
+                    <p:dataTable id="tblErrorImport" scrollable="true" scrollHeight="400" scrollRows="25"
+                                 var="techoPresupuestal"
+                                 value="#{printErrorImportCeilingBudgetController.fileInCellCeiling}"
+                                 rendered="true">
+
+                        <p:columns value="#{printErrorImportCeilingBudgetController.layout}" var="column" columnIndexVar="iIndexRow" style="width: 150px;"  >
+                            <f:facet name="header"  >
+                                <h:outputText value="#{column.budgetKeyName}" />
+                            </f:facet>
+                            <h:outputText value="#{techoPresupuestal[iIndexRow].dataElement}"/>
+                        </p:columns>
+                    </p:dataTable>
+
+                    <br/>
+                    <br/>
+                    <div class="tabular">
+                        <div class="tabular-row">
+                            <h:outputText value="#{printErrorImportCeilingBudgetController.footerColumnReport}" />
+                        </div>
+                        <div class="tabular-row">
+                            <h:outputText value="#{printErrorImportCeilingBudgetController.footerResponseReport}" />
+                        </div>
+                    </div>
+                </p:panel>                
+                <p:panel >
+                    <p:commandButton id="importExcel" ajax="true" actionListener="#{printErrorImportCeilingBudgetController.importToFileExcel()}" 
+                                     value="#{InfoMsg['ppp.techo.printerrorceilingbudget.importarexcel']}" style="width:140px;"
+                                     update="msgs" />
+                    <p:commandButton id ="btnCerrar" action="#{printErrorImportCeilingBudgetController.navigateToImportCeilingbudget()}"
+                                     ajax="true" value="#{InfoMsg['ppp.techo.cargatechopresupuestalTitle.btnCerrar']}" style="width:140px;" />
+                </p:panel>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

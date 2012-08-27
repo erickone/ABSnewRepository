@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+
+
+  <ui:define name="body">
+    #{draftProjectHeaderController.initSupporList()}
+    <div style="padding-top: 27px">
+      <table>
+        <tr>
+          <td>                        
+            <img src="#{request.contextPath}/styles/images/iconHeaderStyle.png" /> 
+          </td>
+          <td style="vertical-align: center">
+            <h:outputText value="#{pppMsg['ppp.programming.DraftProject.Header']}"  styleClass="headerTitleStyle" style="position: absolute; top: 135px"/>
+          </td>
+        </tr>
+      </table>
+    </div> 
+    <div class="divContentPage">
+      <table class="tableDetailForm">
+        <tr>
+          <td> 
+            <ui:include src="components/draftproject/draftProjectDetails.xhtml"/>
+          </td>
+        </tr>
+        <tr>
+          <td>  
+            <p:tabView activeIndex="#{draftProjectHeaderController.itsTabActiveIndex}" 
+                       id="tabDraftProjectDetails" dynamic="true" cache="false" >
+              <p:tab  title="#{pppMsg['ppp.progr.Classifier']}" 
+                      disabled="#{draftProjectHeaderController.itsDisabledTabClassif}">
+                <ui:include src="components/draftproject/classifier.xhtml"/>
+              </p:tab>
+              <p:tab disabled="#{draftProjectHeaderController.itsDisabledTab}"
+                     title="#{pppMsg['ppp.progr.VinculationPED']}" >
+                <ui:include src="components/draftproject/tabpedvinculation.xhtml"/>
+              </p:tab>
+              <p:tab  disabled="#{draftProjectHeaderController.itsDisabledTabDelivery}" 
+                      title="#{pppMsg['ppp.progr.Entregables']}" >
+                <ui:include src="components/draftproject/deliverables.xhtml"/>
+              </p:tab>
+              <p:tab disabled="#{draftProjectHeaderController.itsDisabledTab}" title="#{pppMsg['ppp.progr.Ubicacion']}">
+                <ui:include src="components/InvPreFile/invPreFileUbication.xhtml"/>
+              </p:tab>
+              <p:tab disabled="#{draftProjectHeaderController.itsDisabledTab}" title="#{pppMsg['ppp.progr.ResumenPresupuestal']}">
+                <ui:include src="components/draftproject/budgeting.xhtml" />
+              </p:tab>
+              <p:tab disabled="#{draftProjectHeaderController.itsDisabledTab}" title="#{pppMsg['ppp.progr.ValidacionSeplan']}">
+                <ui:include src="components/valSeplan/valSeplan.xhtml" />
+              </p:tab>                            
+              <p:tab disabled="#{draftProjectHeaderController.itsDisabledTab}" title="#{pppMsg['ppp.progr.MarcoLogico']}">                                
+                <ui:include src="components/draftproject/logicframe.xhtml"/>
+              </p:tab>
+              <p:tab title="#{pppMsg['ppp.progr.Binnacle']}">
+                <ui:include src="components/draftproject/DraftProjectBinnacle.xhtml"/>
+              </p:tab>
+              <p:tab title="#{pppMsg['ppp.progr.DraftProject.Firms']}" disabled="#{draftProjectHeaderController.itsDisabledTab}">
+                <ui:include src="components/draftproject/signatures.xhtml"/>
+              </p:tab>
+              <p:tab title="#{pppMsg['ppp.progr.DraftProject.ValSefin']}" disabled="#{draftProjectHeaderController.itsDisabledTab}">
+                <ui:include src="components/draftproject/valSefin.xhtml"/>
+              </p:tab>
+            </p:tabView> 
+          </td>
+        </tr>
+      </table>
+    </div> 
+
+  </ui:define>
+</ui:composition>

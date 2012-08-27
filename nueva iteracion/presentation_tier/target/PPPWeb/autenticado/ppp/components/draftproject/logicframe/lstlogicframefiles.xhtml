@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+        <p:panel id="panLogicFrameFiles">           
+            <p:dataTable id="grdLogicFrameFiles"
+                         var="logicFrameFiles"  
+                         value="#{logicFrameController.itsLogicFrameDataModel}"
+                         selectionMode="single"
+                         selection="#{logicFrameController.itsSelectedRow}"
+                         emptyMessage="#{InfoMsg['ppp.common.DataTable.NotFound']}">
+                <p:ajax event="rowSelect" listener="#{logicFrameController.onRowSelect}"   
+                        update=":tabDraftProjectDetails:logicFrameForm:panLogicFrame"  />  
+                <p:column style="max-width: 20%">
+                    <f:facet name="header" >
+                        <h:outputText  value="#{InfoMsg['ppp.progr.LstLogicFrameFile.TypeOfTree']}" />
+                    </f:facet>
+                    <h:outputText value="#{logicFrameFiles.itsTreeTypeDescription}" id="logicFrameTreeTypeColumn"  />
+                </p:column>
+                <p:column style="max-width: 20%">
+                    <f:facet name="header">
+                        <h:outputText value="#{InfoMsg['ppp.progr.LstLogicFrameFile.DocumentName']}" />
+                    </f:facet>
+                    <h:outputText value="#{logicFrameFiles.itsDocumentName}" id="logicFrameDocumentNameColumn" />
+                </p:column>   
+                <p:column style="max-width: 20%">
+                    <f:facet name="header">
+                        <h:outputText value="#{InfoMsg['ppp.progr.LstLogicFrameFile.User']}" />
+                    </f:facet>
+                    <h:outputText value="#{logicFrameFiles.itsUserName}" id="logicFrameUserColumn" />
+                </p:column>  
+                <p:column style="max-width: 20%">
+                    <f:facet name="header">
+                        <h:outputText value="#{InfoMsg['ppp.progr.LstLogicFrameFile.DocumentDetails']}" />
+                    </f:facet>
+                    <h:outputText value="#{logicFrameFiles.itsDocumentDetail}" id="logicFrameDocumentDetailColumn" />
+                </p:column>   
+            </p:dataTable>
+        </p:panel>
+
+    </ui:composition>
+</html>

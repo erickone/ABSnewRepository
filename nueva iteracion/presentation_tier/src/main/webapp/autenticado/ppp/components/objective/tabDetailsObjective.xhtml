@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+       
+        <table style="width: 100%; "  class="tableDetailForm">
+            <tr>
+                <td  class="tableColumnRight" >
+                    <label class="titlesInstitutional">
+                        #{pppMsg['ppp.planning.level']}
+                    </label>
+                </td>
+                <td  class="tableColumnLeft">
+                    <h:outputLabel id="lblObjectiveLevelDescription"  class="titlesInstitutional"  value="#{objectiveController.itsObjectiveLevelDescription}"  />
+                </td>
+            </tr>
+            <tr>
+                <td  class="tableColumnRight" >
+                    <label class="titlesInstitutional">
+                        #{pppMsg['ppp.planning.key']}
+                    </label>
+                </td>
+                <td  class="tableColumnLeft">
+                   <p:inputText   id="txtObjectiveKey" 
+                                   value="#{objectiveController.itsObjectiveKey}" 
+                                   style="width: 90%"    maxlength="20" />
+                </td>
+            </tr>
+            <tr>
+                <td  class="tableColumnRight" >
+                    <label class="commonFontDetailForm">
+                        #{pppMsg['ppp.planning.name']}
+                    </label>
+                </td>
+                <td  class="tableColumnLeft">
+                    <p:inputText   id="txtObjectiveName" 
+                                   value="#{objectiveController.itsObjectiveName}" style="width: 90%"    maxlength="500" />
+                </td>
+            </tr>
+            <tr>
+                <td  class="tableColumnRight" >
+                    <label class="commonFontDetailForm">
+                        #{pppMsg['ppp.planning.definition']}
+                    </label>
+                </td>
+                <td  class="tableColumnLeft">
+                    <p:inputTextarea maxlength="500"
+                                     autoResize="false"
+                                     value="#{objectiveController.itsObjectiveDefinition}"  id="txtObjectiveDefinition" style="width: 90%"  rows="5"  />
+                </td>
+
+            </tr>
+            <tr>
+                <td  class="tableColumnRight" >
+                    <label class="commonFontDetailForm">
+                        #{pppMsg['ppp.planning.priority']}
+                    </label>
+                </td>
+                <td  class="tableColumnLeft">
+                    <p:inputText id="txtObjectivePriority"  validatorMessage="#{pppMsg['ppp.progr.TableDetailsObjective.OnlyNumbers']}"
+                                 value="#{objectiveController.itsObjectivePriority}"  style="width: 90%" 
+                                 onkeypress=" return soloNumeros(event, this)">
+                         
+                    </p:inputText>
+                </td>
+
+            </tr>
+
+        </table> 
+
+    </ui:composition>
+</html>

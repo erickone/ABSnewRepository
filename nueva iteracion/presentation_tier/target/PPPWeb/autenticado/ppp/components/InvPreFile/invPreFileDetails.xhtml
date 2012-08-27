@@ -1,0 +1,286 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+        <script type="text/javascript" >
+            function showDialog() {
+                var i = document.getElementById('frmInversionPublica:cboPromotor_input').selectedIndex;
+                var myText = document.getElementById("frmInversionPublica:cboPromotor_input").options[i].text;
+                //alert("Show something: "+myText);
+                if(myText == 'Otro') {
+                    dlg.show();
+                }
+            }
+        </script>
+        <h:form id="frmInversionPublica">
+            <p:panel  id="pnlInvPublica" header="#{InfoMsg['ppp.progr.InversionPublicaHeader']}">
+                <table class="tableDetailForm" >
+                    <tr>
+                        <td colspan="6">
+                            <p:messages  id="msgMensajes"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnLeft">
+                            <p:panel id="pnlTipo" header="#{InfoMsg['ppp.progr.InversionPublicaTipo']}">
+                                <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                <p:selectOneRadio id="rdInvPubTypeOptions"
+                                                  value="#{invPreFileController.theirInvPreFileType}">
+                                    <f:selectItem itemLabel="#{InfoMsg['ppp.progr.InversionPublicaObra']}"
+                                                  itemValue="0"/>
+                                    <f:selectItem itemLabel="#{InfoMsg['ppp.progr.InversionPublicaAccion']}"
+                                                  itemValue="1"/>
+                                </p:selectOneRadio>
+                            </p:panel>
+                        </td>
+                        <td class="tableColumnLeft">
+                            <h:outputLabel value="#{InfoMsg['ppp.progr.InvPreFileDetail.No']}"/>
+                        </td>
+                        <td class="tableColumnLeft">
+                            <p:inputText id="txtNum" maxlength="8" readonly="true"
+                                         value="#{invPreFileController.theirInvPreFileNumber}"/>
+                           <!-- <p:tooltip for="txtNum" value="#{InfoMsg['ppp.progr.DraftToolTipShortName']}"/> -->
+                        </td>
+
+                        <td   class="tableColumnLeft">
+                            <p:panel id="pnlNivelDesagregación" header="#{InfoMsg['ppp.progr.InversionPublicaNivelDes']}">
+                                <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                <p:selectOneRadio id="rdDesagregacionOptions"
+                                                  value="${invPreFileController.theirInvPreFileDesagLevel}">
+                                    <f:selectItem itemLabel="#{InfoMsg['ppp.progr.InvPubDesagregacionPE']}"
+                                                  itemValue="0"/>
+                                    <f:selectItem itemLabel="#{InfoMsg['ppp.progr.InvPubDesagregacionProg']}"
+                                                  itemValue="1"/>
+                                    <f:selectItem itemLabel="#{InfoMsg['ppp.progr.InvPubDesagregacionFondo']}"
+                                                  itemValue="2"/>
+                                </p:selectOneRadio>
+                            </p:panel>
+                        </td>
+                        <td class="tableColumnRight">
+                            <h:outputLabel value="#{InfoMsg['ppp.progr.InversionPublicaPrioridad']}"/>
+                        </td>
+                        <td class="tableColumnLeft">
+                            <p:inputText id="txtPrioridad" maxlength="8" readonly="#{invPreFileController.isPriorityReadOnly}"
+                                         value="#{invPreFileController.theirInvPreFilePriority}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnRight">
+                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                            <h:outputLabel value="#{InfoMsg['ppp.progr.InvPreFileDetail.Name']}"/>
+                        </td>
+                        <td colspan="5">
+                            <p:inputText id="txtNombre" style="width: 99%"
+                                         value="#{invPreFileController.theirInvPreFileName}"   maxlength="255"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnRight">
+                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                            <h:outputLabel value="#{InfoMsg['ppp.progr.InvPreFileDetail.Description']}"/>
+                        </td>
+                        <td colspan="5">
+                            <p:inputText id="txtDescription" style="width: 99%"
+                                         value="#{invPreFileController.theirInvPreFileDescription}" maxlength="600"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnRight">
+                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                            <h:outputLabel value="#{InfoMsg['ppp.progr.InvPubDescBen']}"/>
+                        </td>
+                        <td colspan="5">
+                            <p:inputText id="txtDescBen" style="width: 99%"
+                                         value="#{invPreFileController.theirInvPreFileBenefitDesc}" maxlength="600"/>
+                        </td>
+                    </tr>
+                </table>
+
+                <p:panel id="pnlDependenciasOrg" header="#{InfoMsg['ppp.progr.InversionPublicaDepOrg']}" style="width: 90%">
+                    <table class="tableDetailForm"  >
+                        <tr>
+                            <td class="tableColumnRight">
+                                 <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                <h:outputLabel value="#{InfoMsg['ppp.progr.InversionPublicaUEG']}"/>
+                            </td>
+                            <td>
+                                <p:inputText id="txtUEG" style="width: 100%" maxlength="255" readonly="true"
+                                             value="#{invPreFileController.itsInvPreFileUEGFicha.composedDependenceName}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tableColumnRight">
+                               <!-- <h:outputText value="*" style="color: red; font-weight: bold"/> -->
+                                <h:outputLabel value="#{InfoMsg['ppp.progr.InversionPublicaUEG']}"/>
+                            </td>
+                            <td colspan="5">
+                                <p:selectManyMenu  id="cboUEG" style="width: 99%" 
+                                                   value="#{invPreFileController.theirInvPreFileUEGSelected}">
+                                    <f:selectItem itemValue="-1" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}"/>
+                                    <f:selectItems value="${invPreFileController.theirInvPreFileUEGList}"
+                                                   var = "specificUEG"
+                                                   itemLabel="#{specificUEG.composedDependenceName}"
+                                                   itemValue="#{specificUEG.dependenceId}"/>
+                                </p:selectManyMenu >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tableColumnRight">
+                                <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                <h:outputLabel value="#{InfoMsg['ppp.progr.InversionPublicaURE']}"/>
+                            </td>
+                            <td>
+                                <p:inputText id="txtURE" style="width: 100%" maxlength="255" readonly="true"
+                                             value="#{invPreFileController.theirInvPreFileURE}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tableColumnRight">  
+                                <!--<h:outputText value="*" style="color: red; font-weight: bold"/>-->
+                                <h:outputLabel value="#{InfoMsg['ppp.progr.InversionPublicaURN']}"/>
+                            </td>
+                            <td>
+                                <p:selectOneMenu id="cboURN" effect="fade"
+                                                 value="#{invPreFileController.theirInvPreFileURN}">
+                                    <f:selectItem itemValue="-1" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}"/>
+                                    <f:selectItems value="${invPreFileController.theirInvPreFileURNList}"
+                                                   var = "specificURN"
+                                                   itemLabel="#{specificURN.federalUrRegulatoryKey} #{specificURN.federalUrRegulatoryDescription}"
+                                                   itemValue="#{specificURN.federalUrRegulatoryId}"/>
+                                </p:selectOneMenu>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tableColumnRight">
+                                <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                <h:outputLabel value="#{InfoMsg['ppp.progr.InversionPublicaPromotor']}"/>
+                            </td>
+                            <td colspan="5">
+                                <p:selectOneMenu id="cboPromotor" effect="fade"
+                                                 value="${invPreFileController.theirInvPreFilePromoter}"
+                                                 >
+                                    <p:ajax process="cboPromotor" update="modalPromDialog" oncomplete="showDialog()"/> 
+                                    <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}"/>
+                                    <f:selectItems value="${invPreFileController.theirInvPreFilePromoterList}"
+                                                   var = "specificPromoter"
+                                                   itemLabel="#{specificPromoter.description}"
+                                                   itemValue="#{specificPromoter.idPromoter}"/>
+                                </p:selectOneMenu>
+                            </td>
+                        </tr>
+                    </table>
+                </p:panel>
+                <p:panel id="pnlVinculacionProg" header="#{InfoMsg['ppp.progr.InversionPublicaVinProg']}" style="width: 90%">
+                    <table class="tableDetailForm" >
+                        <tr>
+                            <td class="tableColumnRight" >
+                                <h:outputLabel value="#{InfoMsg['ppp.progr.InvPubNombreCorto']}"/>
+                            </td>
+                            <td>
+                                <p:inputText id="txtPcPy" style="width: 99%" readonly="true"
+                                             value="#{invPreFileController.theirInvPreFilePcPy}" maxlength="255"/>
+                            </td>
+                            <td  class="tableColumnRight">
+                                <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                <h:outputLabel value="#{InfoMsg['ppp.progr.InvPubComponente']}"/>
+                            </td>
+                            <td >
+                                <p:selectOneMenu panelStyle="width: 380px"  id="cboComponent" effect="fade" style="max-width: 250px"
+                                                 value="${invPreFileController.theirInvPreFileComponent}">
+                                    <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}"/>
+                                    <f:selectItems value="${invPreFileController.theirInvPreFileComponentList}"
+                                                   var = "specificComponent"
+                                                   itemLabel="#{specificComponent.compDesc}"
+                                                   itemValue="#{specificComponent.componentId}"/>
+                                </p:selectOneMenu>
+                            </td>
+                        </tr>
+                    </table>
+                </p:panel>
+                <table class="tableDetailForm">
+                    <tr>
+                        <td class="btnLayoutSave">
+                            <p:commandButton id="btnNewInvPub" ajax="true"
+                                             value="#{InfoMsg['ppp.progr.New']}"
+                                             update=":frmInversionPublica, :tabInversionPublicaDetails"
+                                             actionListener="#{invPreFileController.cleanView()}">
+                            </p:commandButton>
+
+                            </td>
+                            <td class="btnLayoutSave">
+                                <p:commandButton id="btnSaveInvPub" disabled="#{invPreFileController.isSaveButtonDisabled}"
+                                                 actionListener="#{invPreFileController.saveInvPreFile}"
+                                                 ajax="true"
+                                                 update=":frmInversionPublica, :tabInversionPublicaDetails "
+                                                    value="#{InfoMsg['ppp.progr.DraftProjectGuardar']}">
+                                </p:commandButton>
+
+                            </td>
+                            <td class="btnLayoutSave">
+                                <p:commandButton id="btnObservacionesInvPub"
+                                                 onclick="observation.show();"
+                                                 disabled="#{invPreFileController.btnObservations}"
+                                                 actionListener="#{observationController.init()}"
+                                                 update=":frmInversionPublica:grdObservations"
+                                                 value="#{InfoMsg['ppp.progr.Observ']}">
+                                </p:commandButton>
+                            </td>
+                            <td class="btnLayoutSave">
+                                <p:commandButton id="btnAtrasInvPub"  ajax="true"  
+                                                  action="#{backPreFichaController.navigationPage()}"
+                                                  actionListener="#{backPreFichaController.backFlangeProgramming()}"
+                                                  value="#{InfoMsg['ppp.progr.Atras']}">
+                                </p:commandButton>
+                            </td>
+                            <td>
+                                <h:outputLink value="#{invPreFileController.imprimirReporte}" id="reports"
+                                              disabled="#{invPreFileController.disableHRefReport}"
+                                              
+                                              target="blank" >#{InfoMsg['ppp.progr.InvPrefile.Signatures.printReport']}</h:outputLink>
+                            </td>
+                        </tr>
+                    </table>
+                </p:panel>
+            <p:dialog id="modalPromDialog" header="#{InfoMsg['ppp.progr.NewProm']}" widgetVar="dlg"
+                      maximizable="false" minimizable="false" closable="false"
+                      modal="true" position="center" resizable="false"
+                      height="120" width="370">
+                <table  class="tableDetailForm">
+                    <tr>
+                        <td class="tableColumnCenter">
+                            <label class="titlesInstitutional">
+                                <h:outputText value="#{InfoMsg['ppp.progr.NewPromDesc']}" />  
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnCenter">
+                            <p:inputText id="txtDescProm"
+                                         value="#{invPreFileController.newPromoter}"
+                                         size="50"
+                                         maxlength="150"
+                                         />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnCenter">
+                            <p:commandButton id="btnSaveProm" value="#{InfoMsg['common.save']}" 
+                                             ajax="true"
+                                             onclick="dlg.close()"
+                                             update="cboPromotor"
+                                             actionListener="#{invPreFileController.savePromoter()}"
+                                             style="width:86px"/>
+
+                            <p:commandButton id="btnDeleteCancel"  value="#{pppMsg['ppp.cancel']}" onclick="dlg.close()" />
+                        </td>               
+                    </tr>
+                </table>
+            </p:dialog>
+            <ui:include src="invPreFileObservations.xhtml"/>
+        </h:form>
+    </ui:composition>
+</html>

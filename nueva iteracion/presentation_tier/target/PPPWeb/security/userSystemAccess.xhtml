@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <p:outputPanel id="tabSystemAccess">
+            #{userSystemAccessController.initViewElements()}
+            <p:panel id="mainPanelAccess" style="width: 700px">
+                <table class="tableDetailForm2" width="100%" align="center">
+                    <tr>
+                        <td colspan="2">
+                            <table class="tableDetailForm2">
+                                <tr>
+                                    <td>
+                                        <h:outputLabel                                
+                                                value="#{InfoMsg['security.systemAcces.desc']}"/>
+                                    </td>
+                                    <td width="500px">
+                                        <p:inputText id="txtAccessDesc"
+                                                     style="width: 100%"
+                                                    value="${userSystemAccessController.accessDto.descripcion}">
+                                        </p:inputText>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:outputLabel                                
+                                                value="#{InfoMsg['security.systemAcces.clave']}"/>
+                                    </td>
+                                    <td>
+                                        <p:inputText id="txtAccessClave"
+                                                     style="width: 100%"
+                                                    value="${userSystemAccessController.accessDto.clave}"
+                                                    
+                                                    >
+                                            <f:validateRegex pattern="^([A-Za-z0-9]){1,30}"/>
+                                        </p:inputText>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:outputLabel                                
+                                                value="#{InfoMsg['security.systemAcces.password']}"/>
+                                    </td>
+                                    <td>
+                                        <p:password id="txtAccessContra"
+                                                     style="width: 100%"
+                                                    value="${userSystemAccessController.accessDto.contrasena}"
+                                                    validatorMessage="#{InfoMsg['security.systemAcces.msg.contra']}"> 
+                                            <f:validateRegex pattern="([A-Za-z0-9]*[^a-zA-Z_0-9]+[A-Za-z0-9]*){1,30}"/>
+                                        </p:password>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:outputLabel                                
+                                                value="#{InfoMsg['security.systemAcces.confirmation']}"/>
+                                    </td>
+                                    <td>
+                                        <p:password id="txtAccessConf"
+                                                     style="width: 100%"
+                                                    value="${userSystemAccessController.accessDto.confirmacion}">
+                                        </p:password>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:outputLabel                                
+                                                value="#{InfoMsg['security.systemAcces.claveFVirtual']}"/>
+                                    </td>
+                                    <td>
+                                        <p:inputText id="txtAccessClaveVir"
+                                                     style="width: 100%"
+                                                    value="${userSystemAccessController.accessDto.claveVirtual}"
+                                                    validatorMessage="#{InfoMsg['security.systemAcces.msg.claveVirtualAlfa']}">
+                                            <f:validateRegex pattern="^([A-Za-z0-9]){1,30}"/>
+                                        </p:inputText>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:outputLabel                                
+                                                value="#{InfoMsg['security.systemAcces.passFVirtual']}"/>
+                                    </td>
+                                    <td>
+                                        <p:password id="txtAccessContraVir"
+                                                     style="width: 100%"
+                                                    value="${userSystemAccessController.accessDto.contrasenaVirtual}"
+                                                    validatorMessage="#{InfoMsg['security.systemAcces.msg.contraVirtual']}">
+                                            <f:validateRegex pattern="([A-Za-z0-9]*[^a-zA-Z_0-9]+[A-Za-z0-9]*){1,30}"/>
+                                        </p:password>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:outputLabel                                
+                                                value="#{InfoMsg['security.systemAcces.confFVirtual']}"/>
+                                    </td>
+                                    <td>
+                                        <p:password id="txtAccessConfVir"                                                     
+                                                     style="width: 100%"
+                                                    value="${userSystemAccessController.accessDto.confirmacionVirtual}">
+                                        </p:password>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="10px"></td>
+                    </tr>
+                    <tr>
+                        <td>                              
+                            <p:selectBooleanCheckbox value="#{userSystemAccessController.accessDto.cuentaHabilitada}" />
+                            <h:outputLabel                               
+                                    value="#{InfoMsg['security.systemAcces.cuentaHabilitada']}"/>
+                        </td>
+                        <td>
+                            <p:selectBooleanCheckbox value="#{userSystemAccessController.accessDto.cambiarContraPrimera}" />
+                            <h:outputLabel                               
+                                    value="#{InfoMsg['security.systemAcces.changePass']}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                              
+                            <p:selectBooleanCheckbox value="#{userSystemAccessController.accessDto.contraExpira}">
+                                <p:ajax update="dateInit"/>  
+                            </p:selectBooleanCheckbox>
+                            <h:outputLabel                               
+                                    value="#{InfoMsg['security.systemAcces.expPass']}"/>
+                        </td>
+                        <td>
+                            <p:selectBooleanCheckbox value="#{userSystemAccessController.accessDto.puedeCambiarContra}" />
+                            <h:outputLabel                               
+                                    value="#{InfoMsg['security.systemAcces.userChangePass']}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="10px"></td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <p:calendar id="dateInit"
+                                        lang="es"
+                                        locale="es"                                                                    
+                                        navigator="true" 
+                                        readOnlyInputText="true"
+                                        pattern="dd/MM/yyyy"
+                                        maxlength="11" size="11"
+                                        disabled="${!userSystemAccessController.accessDto.contraExpira}"
+                                        value="${userSystemAccessController.accessDto.expDate}" showOn="button">
+                            </p:calendar>
+                        </td>
+                        <td align="center">
+                            <p:commandButton id="btnRegContra"
+                                             actionListener="#{userSystemAccessController.regContrasena()}"
+                                                value="#{pppMsg['security.systemAcces.btn.regenPass']}">
+                            </p:commandButton>                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="tableDetailForm2">
+                                <tr>
+                                    <td width="30px">
+                                        <p:inputText id="txtAccessIntPerm"
+                                                        style="width: 100%"
+                                                    value="${userSystemAccessController.accessDto.claveVirtual}">
+                                        </p:inputText>
+                                    </td>
+                                    <td width="200px">
+                                         <h:outputLabel                                
+                                                   value="#{InfoMsg['security.systemAcces.attemptsAllowed']}"/> 
+                                    </td>
+                                </tr>
+                            </table>                  
+                        </td>                        
+                    </tr>
+                </table>
+            </p:panel>            
+        </p:outputPanel>
+    </ui:composition>
+</html>

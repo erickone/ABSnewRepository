@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="autenticado/ppp/InstitutionalPlanHeader.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="autenticado/ppp/components/objective/tabDetailsObjective.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="index.jsp" x="499" y="168" zoom="true"/>
+        <Node id="autenticado/ppp/components/institutionalPlan/tabCreationDecree.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="login.xhtml" x="44" y="37" zoom="false"/>
+        <Node id="autenticado/ppp/programinmain.xhtml" x="650" y="750" zoom="true"/>
+        <Node id="templates/ui.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="autenticado/ppp/components/objective/tabSpecificObjectives.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="autenticado/ppp/objective.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="autenticado/ppp/components/objective/tabProblems.xhtml" x="1150" y="300" zoom="true"/>
+        <Node id="autenticado/ppp/components/objectiveLevel/listObjectiveLevels.xhtml" x="-27" y="117" zoom="true"/>
+        <Node id="autenticado/ppp/objectiveLevelDetails.xhtml" x="69" y="177" zoom="true"/>
+        <Node id="autenticado/options.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="autenticado/ppp/specificObjective.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="autenticado/ppp/components/objective/dialogObjective.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="autenticado/ppp/components/objective/tabStrategies.xhtml" x="400" y="750" zoom="true"/>
+        <Node id="autenticado/ppp/components/objectiveLevel/objectiveLevelDetails.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="autenticado/ppp/components/institutionalPlan/tabInstitutionalPlanMission.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="autenticado/ppp/components/institutionalPlan/dialogInstutionalPlan.xhtml" x="1650" y="150" zoom="true"/>
+        <Node id="autenticado/ppp/components/institutionalPlan/tabRulesOfProcedure.xhtml" x="150" y="900" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+
+
+    <ui:define name="body">
+        <h:form>
+
+            <h:outputText value="#{pppMsg['ppp.planning.specificObjList']}" />  
+            <p:orderList value="${objectiveController.listObjSpecific}" var="SpecObj" controlsLocation="none"  
+                         itemLabel="#{SpecObj.description}" itemValue="#{SpecObj.specificObjectiveId}">
+                 <p:ajax event="Click" update="listEstrats" listener="${objectiveController.listStrategy}"/>  
+            </p:orderList>
+            <h:outputText value="#{pppMsg['ppp.planning.strategiesList']}" />  
+            <p:orderList id = "listEstrats" value="${objectiveController.listStrategy}" var="strategies" controlsLocation="none"  
+                         itemLabel="#{strategies.description}" itemValue="#{strategies.strategyId}" />
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (C) 2012 Advance Business Systems S.A. de C.V. 
+ All rights reserved 
+ Filename:  Encuadre
+ Purpose:  FRM-PPP001-001-004 Relación de Programas con Unidad Ejecutora del 
+           Gasto (UEG),  y que esta definido por configuración, que es el nivel 
+           donde se realiza el encuadre, entre  la estructura de la Planeación 
+           Estratégica y la Unidad Ejecutora del Gasto.
+       
+ The copyright to the computer program(s) herein is the property
+ of Advance Business Systems S.A. de C.V. The programs may be 
+ used and/or copied only with written permission from Advance 
+ Business Systems S.A. de C.V. or in accordance with the terms 
+ and conditions stipulated in the agreement/contract under which
+ the program(s) have been supplied.
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+
+    <ui:define name="body">
+       #{depToObjLinkController.init()}
+       <div style="padding-top: 27px">
+            <table>
+                <tr>
+                    <td>                        
+                        <img src="#{request.contextPath}/styles/images/iconHeaderStyle.png" /> 
+                    </td>
+                    <td style="vertical-align: center">
+                        <h:outputText value="#{pppMsg['ppp.progr.Encuadre']}" styleClass="headerTitleStyle" style="position: absolute; top: 135px"/>
+                    </td>
+                </tr>
+            </table>
+        </div>  
+        <h:form id="Encuadreform">
+            <div class="divContentPage">
+                <label class="titlesInstitutional">
+                                <!--a href="../options.abs">#{pppMsg['ppp.planning.goToStart']}</a-->
+                            </label>
+                <p:panel  id="pnlNombre" header="#{InfoMsg['ppp.progr.Encuadre']}">
+                     <table class="tableDetailForm" >
+                         <tr>
+                            <td colspan="2">
+                                    <p:messages  id="msgMensajes"/>
+                            </td>
+                         </tr>
+                         <tr>
+                            <td class="tableColumnRight" style="width: 50%" >
+                                <h:outputLabel value="#{InfoMsg['ppp.progr.EncuadreNivel']}"/>
+                            </td>
+                            <td class="tableColumnLeft" >
+                                <h:outputLabel value="#{depToObjLinkController.itsEncuadreLevelDesc}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tableColumnRight" style="width: 50%" >
+                                <h:outputLabel value="#{InfoMsg['ppp.progr.EncuadreNombre']}"/>
+                            </td>
+                            <td class="tableColumnLeft" >
+                                <h:outputLabel value="#{depToObjLinkController.itsEncuadreName}"/>
+                            </td>
+                        </tr>
+                         <tr>
+                             <td colspan="2">
+                                 <p:dataTable id="fatherTable" var="father" value="#{depToObjLinkController.itsFatherDataModel}"   
+                                              selection="#{depToObjLinkController.selectedFather}" selectionMode="single" 
+                                              rowKey="#{father.idDependency}" paginator="true" rows="10">  
+
+                                     <p:ajax event="rowSelect" listener="#{depToObjLinkController.onRowSelect}" update=":Encuadreform"  />  
+                                     <p:ajax event="rowUnselect" listener="#{depToObjLinkController.onRowUnselect}" update=":Encuadreform"/>  
+        
+                                    <f:facet name="header">  
+                                        Unidad Responsable 
+                                    </f:facet>  
+
+                                    <p:column headerText="#{InfoMsg['ppp.progr.EncuadreUnidRespClave']}">  
+                                        #{father.clave}  
+                                    </p:column>  
+
+                                    <p:column headerText="#{InfoMsg['ppp.progr.EncuadreUnidRespNombreDep']}">  
+                                        #{father.nameDepend}  
+                                    </p:column>  
+                                </p:dataTable>
+                            </td>
+                         </tr>
+                         <tr>
+                             <td class="tableColumnCenter" colspan="2">
+                                 <br/>
+                                 <h:outputLabel value="#{InfoMsg['ppp.progr.EncuadreUEGs']}"/>
+                                
+                                 <p:pickList id="pickList" value="#{depToObjLinkController.itsChildsDualList}"  
+                                            var="child"  
+                                            itemLabel="#{child}"  
+                                            itemValue="#{child}" >
+                                    <f:facet name="sourceCaption">Por Encuadrar</f:facet>  
+                                    <f:facet name="targetCaption">Encuadrado</f:facet> 
+                                    <p:column style="width:10%">  
+                                        #{child.dependenceKey}  
+                                    </p:column>  
+
+                                    <p:column style="width:90%">  
+                                        #{child.dependenceDescription} 
+                                    </p:column> 
+                                 </p:pickList>
+                             </td>
+                         </tr>
+                         <tr>
+                             <td class="tableColumnCenter" colspan="2">
+                                 <p:commandButton id="btnSaveInvPub2"
+                                                 actionListener="#{depToObjLinkController.saveDepObjLink()}"
+                                                 ajax="true"
+                                                 update=":Encuadreform:msgMensajes"
+                                                    value="#{InfoMsg['ppp.progr.DraftProjectGuardar']}">
+                                </p:commandButton>
+                             </td>
+                         </tr>
+                     </table>
+                </p:panel>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

@@ -1,0 +1,307 @@
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
+
+    <script>
+        $('#calStartDate_input').siblings('button').attr('disabled', 'true');
+    </script> 
+
+    <ui:composition>
+        <h:form id="frmDraftProject">
+            <!--table class="tableDetailForm1" border="0">
+                <tr>
+                    <td colspan="7">
+                        <label class="titlesInstitutional">
+                            <a href="#{request.contextPath}/autenticado/ppp/programinmain.abs">#{pppMsg['ppp.progr.GotoProgramming']}</a>
+                        </label> 
+                    </td>
+                </tr>
+            </table-->
+            <p:panel  id="comboProgrammingPanel" header="#{InfoMsg['ppp.progr.DraftProjectlblHeader']}">
+                <table class="tableDetailForm1" border="0" width="100%">
+                    <tr>
+                        <td colspan="7">
+                            <p:messages  id="msgMensajes"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td/><td/><td/><td/> <td/>
+                        <td class="tableColumnRight">
+                            <h:outputLabel value="#{InfoMsg['ppp.progr.DraftProjectDetails.ActualStatus']}"/>
+                        </td>
+                        <td><b><h:outputText id="lblStatusDesc" value="#{draftProjectHeaderController.draftStatusDescription}"/></b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="7">
+                            <table class="tableDetailForm1" >
+                                <td class="tableColumnRight">
+                                    <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                    <h:outputLabel                                
+                                        value="#{InfoMsg['ppp.progr.DraftProjectlblShortName']}"/>
+                                </td>
+                                <td class="tableColumnLeft">
+                                    <p:inputText id="txtShortName"
+                                                 readonly="#{draftProjectHeaderController.isDisabledTxtShortName}"
+                                                 style="width: 95%; text-transform: uppercase" 
+                                                 value="${draftProjectHeaderController.draftShortName}"
+                                                 maxlength="30"
+                                                 label="#{InfoMsg['ppp.progr.DraftProjectlblShortName']}"
+                                                 required="true"
+                                                 validatorMessage="#{InfoMsg['ppp.progr.DraftProject.ShortNameRegExMessage']}">
+                                        <f:validateRegex pattern="([a-zA-Z0-9\-\/\s]{1,30})"/>
+                                    </p:inputText>
+                                </td>
+                                <td>
+                                    <h:outputText value="*" style="color: red; font-weight: bold"/> 
+                                </td>
+                                <td   class="tableColumnRight">                            
+                                    <p:selectOneRadio id="rdDraftOptions"
+                                                      value="${draftProjectHeaderController.draftType}" 
+                                                      required="true"
+                                                      label="#{InfoMsg['ppp.progr.DraftProjectlblTipo']}">
+                                        <p:ajax event="change" listener="${draftProjectHeaderController.tipoFicha()}" 
+                                                update="cboTipo" />
+                                        <f:selectItem itemLabel="#{InfoMsg['ppp.progr.DraftProjectlblProceso']}"
+                                                      itemValue="0"/>
+                                        <f:selectItem itemLabel="#{InfoMsg['ppp.progr.DraftProjectlblProyecto']}"
+                                                      itemValue="1"/>
+                                    </p:selectOneRadio>
+                                </td>
+                                <td class="tableColumnRight">
+                                    <h:outputLabel value="#{InfoMsg['ppp.progr.DraftProjectlblNumProyecto']}"/>
+                                </td>
+                                <td class="tableColumnLeft" colspan="2">
+                                    <p:inputText id="txtDraftNumber"
+                                                 style="width: 95%"
+                                                 value="${draftProjectHeaderController.draftNumber}"
+                                                 readonly="true"
+                                                 label="#{InfoMsg['ppp.progr.DraftProjectlblNumProyecto']}"
+                                                 required="true"/>
+                                </td>
+                                <td></td>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnRight">
+                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                            <h:outputLabel value="#{InfoMsg['ppp.progr.DraftProjectlblNomProyecto']}"/>
+                        </td>
+                        <td colspan="6">
+                            <p:inputText id="txtDraftName"
+                                         value="${draftProjectHeaderController.draftProjectName}"
+                                         size="90"
+                                         maxlength="255"
+                                         label="#{InfoMsg['ppp.progr.DraftProjectlblNomProyecto']}"
+                                         required="true"/>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="tableColumnRight">
+                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                            <h:outputLabel value="#{InfoMsg['ppp.progr.DraftProjectlblFechaIni']}"/>
+                        </td>
+                        <td>
+                            <p:calendar id="calStartDate" showOn="button" 
+                                        navigator="true" 
+                                        pattern="dd/MM/yyyy"
+                                        maxlength="11" size="11"
+                                        readOnlyInputText="true"
+                                        mindate="${draftProjectHeaderController.minDate}"
+                                        value="${draftProjectHeaderController.draftStartDate}"
+                                        label="#{InfoMsg['ppp.progr.DraftProjectlblFechaIni']}"
+                                        required="true"
+                                        >
+                                <p:ajax event="dateSelect" listener="#{draftProjectHeaderController.handleDateSelectStartDate}" update="txtDraftDuration" />  
+                            </p:calendar>
+
+                        </td>
+
+                        <td class="tableColumnRight">
+                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                            <h:outputLabel value="#{InfoMsg['ppp.progr.DraftProjectlblFechaFin']}"/>
+                        </td>
+                        <td>
+                            <p:calendar id="calEndDate" showOn="button"
+                                        navigator="true" 
+                                        pattern="dd/MM/yyyy"
+                                        maxlength="11" size="11" 
+                                        mindate="${draftProjectHeaderController.minDate}"
+                                        value="${draftProjectHeaderController.draftEndDate}"
+                                        label="#{InfoMsg['ppp.progr.DraftProjectlblFechaFin']}"
+                                        required="true">
+                                <p:ajax event="dateSelect" listener="#{draftProjectHeaderController.handleDateSelectEndDate}" update="txtDraftDuration" />  
+                            </p:calendar>
+                        </td>
+                        <td colspan="2">
+                            <table class="tableDetailForm1">
+                                <tr>
+                                    <td>
+                                        <h:outputLabel value="#{InfoMsg['ppp.progr.DraftProjectlblDuracion']}"/>
+                                    </td>
+                                    <td>
+                                        <p:inputText id="txtDraftDuration" 
+                                                     value="${draftProjectHeaderController.draftDurationInMonths}"
+                                                     size="5" 
+                                                     disabled="true" 
+                                                     label="#{InfoMsg['ppp.progr.DraftProjectlblDuracion']}"
+                                                     required="true"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnRight">
+                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                            <h:outputLabel value="#{InfoMsg['ppp.progr.DraftProjectlblTipo']}"/>
+                        </td>
+                        <td>
+                            <p:selectOneMenu id="cboTipo"
+                                             value="#{draftProjectHeaderController.draftTypeId}"
+                                             effect="fade">
+                                <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}"/>
+                                <f:selectItems value="${draftProjectHeaderController.itsCmbTypeList}"
+                                               var="specificDraftType"
+                                               itemLabel="#{specificDraftType.descriptionProjectType}"
+                                               itemValue="#{specificDraftType.draftProjectTypeId}"/>
+                            </p:selectOneMenu>
+                        </td>
+                        <td class="tableColumnRight" width="15%">
+                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                            <h:outputLabel value="#{InfoMsg['ppp.progr.DraftProjectlblEstado']}"/>
+                        </td>
+                        <td>
+                            <p:selectOneMenu id="cboEstado"
+                                             value="${draftProjectHeaderController.draftStateId}"
+                                             effect="fade">
+                                <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}"/>
+                                <f:selectItems value="${draftProjectHeaderController.mySupportList['DraftProjectState']}"
+                                               var="specificDraftProjectState"
+                                               itemLabel="#{specificDraftProjectState.draftProjectStateDescription}"
+                                               itemValue="#{specificDraftProjectState.draftProjectStateId}"/>
+                            </p:selectOneMenu>
+                        </td>
+                        <td class="tableColumnRight">
+                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                            <h:outputLabel value="#{InfoMsg['ppp.progr.DraftProjectlblAmbito']}" /> 
+                        </td>
+                        <td>
+                            #{ubicationPreFileController.initAmbiCbo()}
+                            <p:selectOneMenu  id="cboRegions"
+                                              value="#{ubicationPreFileController.itsSelectedAmbto}" 
+                                              >
+                                <f:selectItem itemValue="" itemLabel="#{pppMsg['ppp.progr.cmbSelecc']}" />
+                                <f:selectItems value="#{ubicationPreFileController.itsItemsAmbitoCbo}"
+                                               var="region"
+                                               itemLabel="#{region.regionalLevelClassifierDescription}"
+                                               itemValue="#{region.regionalLevelClassifierId}"/>
+                                <p:ajax  update="cboRegions"  listener="#{ubicationPreFileController.selectedListenerCboUbication()}" />
+                            </p:selectOneMenu>
+
+<!-- h:outputLabel value="${draftProjectHeaderController.draftScopeId}"/ -->                               
+                        </td>
+                        <td class="tableColumnRight">
+                            <table class="tableDetailForm1">
+                                <tr>
+                                    <td class="tableColumnRight"><h:outputText value="*" style="color: red; font-weight: bold"/></td>
+                                    <td class="tableColumnRight"><h:outputLabel value="#{pppMsg['ppp.progr.PobObjVulnerable']}"/></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnRight">
+                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                            <h:outputLabel value="#{InfoMsg['ppp.progr.DraftProjectlblProposito']}"/>
+                        </td>
+                        <td colspan="5">
+                            <p:inputText id="txtPurpose"
+                                         value="#{draftProjectHeaderController.draftPurpose}"
+                                         maxlength="500"
+                                         size="100"
+                                         label="#{InfoMsg['ppp.progr.DraftProjectlblProposito']}"
+                                         required="true"/>
+                        </td>
+                        <td rowspan="3" valign="top">
+                            <p:selectManyMenu value="#{draftProjectHeaderController.selectedVulGrops}" style="height:220px; width:200px" >  
+                                <f:selectItems value="#{draftProjectHeaderController.vulnerableGroup}"  
+                                               var="vulGroup" 
+                                               itemLabel="#{vulGroup.vulnerableGroupDescription}"  
+                                               itemValue="#{vulGroup.vulnerableGroupId}" />  
+                            </p:selectManyMenu> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnRight">
+                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                            <h:outputLabel value="#{InfoMsg['ppp.progr.DraftProjectlblDescripcion']}"/>
+                        </td>
+                        <td colspan="5">
+                            <p:inputTextarea id="txtDraftDescription"
+                                             value="${draftProjectHeaderController.draftDescription}"
+                                             rows="5"
+                                             cols="100"
+                                             maxlength="3000"
+                                             label="#{InfoMsg['ppp.progr.DraftProjectlblDescripcion']}"
+                                             required="true"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnRight">
+                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                            <h:outputLabel value="#{InfoMsg['ppp.progr.DraftProjectlblFundLegal']}"/>
+                        </td>
+                        <td colspan="5">
+                            <p:inputTextarea id="txtDraftLegalBase"
+                                             value="${draftProjectHeaderController.draftLegalBase}"
+                                             rows="5"
+                                             cols="100"
+                                             maxlength="3000"
+                                             label="#{InfoMsg['ppp.progr.DraftProjectlblFundLegal']}"
+                                             required="true"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5"  style="text-align: right">
+                            <table style="width: 20%">
+                                <tr>
+                                    <td class="btnLayoutSave">
+
+                                        <p:commandButton id="btnSaveDraftProject"  ajax="true"
+                                                         actionListener="#{draftProjectHeaderController.saveDraftProject()}"
+                                                         update=":frmDraftProject, :frmDraftProject:msgMensajes, :tabDraftProjectDetails
+                                                         txtDraftNumber, txtDraftDuration, btnInvPre, lblStatusDesc"
+                                                         value="#{InfoMsg['ppp.progr.DraftProjectGuardar']}">
+                                        </p:commandButton>
+
+                                    </td>
+                                    <td class="btnLayoutSave">
+
+                                        <p:commandButton id="btnInvPre"  style="width:130px"
+                                                         disabled="#{draftProjectHeaderController.isNewButtonDisabled}"
+                                                         action="#{draftProjectHeaderController.navigateInvPre()}"
+                                                         actionListener="#{invPreFileController.addInvPreFile()}"
+                                                         update=":frmDraftProject:comboProgrammingPanel"
+                                                         value="#{InfoMsg['ppp.progr.DraftProjectDetail.NewPreFile']}">
+                                        </p:commandButton>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </p:panel> 
+        </h:form> 
+
+    </ui:composition> 
+</html>

@@ -1,0 +1,158 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+
+        <p:dialog id="detailsRegionalCatalog" 
+                  header="#{InfoMsg['ppp.programming.RegionalCatalogDialogMainTitle']}" 
+                  widgetVar="dlg" 
+                  modal="true" 
+                  maximizable="false" 
+                  minimizable="false"
+                  resizable="false"
+                  position="center" 
+                  closable="false"
+                  height="300" 
+                  width="850"> 
+
+            <table style="tableDetailForm">
+                <tr>
+                    <td>
+                        <p:messages autoUpdate="true" id="msgs"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h:outputText 
+                            id="lblHeader"
+                            value="#{regionalCatalogController.theirComposedHeaderName}"/>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>
+                        <h:outputText value="#{InfoMsg['ppp.programming.RegionalCatalog.key']}"/>
+                    </td>
+                    <td>
+                        <h:outputText value="#{InfoMsg['ppp.programming.RegionalCatalog.Description']}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:inputText
+                            id="txtClave"
+                            maxlength="10"
+                            size="10"
+                            value="#{regionalCatalogController.theirKey}"/>
+                    </td>
+                    <td>
+                        <p:inputText
+                            id="txtDescripcion"
+                            maxlength="250"
+                            size="100"
+                            value="#{regionalCatalogController.theirDescription}"/>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>
+                        <h:outputText value="#{InfoMsg['ppp.programming.RegionalCatalog.ZipCode']}"/>
+                    </td>
+                    <td/>
+                </tr>
+                <tr>
+                    <td>
+                        <p:inputText
+                            id="txtCodPostal"
+                            maxlength="5"
+                            size="25"
+                            disabled="#{regionalCatalogController.isLevelZipCodeDisabled}"
+                            value="#{regionalCatalogController.theirZipCode}"/>
+                    </td>
+                    <td>
+                        <p:selectBooleanCheckbox
+                            id="chkFronterizo"
+                            disabled="#{regionalCatalogController.isLevelFrontierDisbled}"
+                            value="#{regionalCatalogController.theirFronterizo}"/>
+                        <h:outputText value="#{InfoMsg['ppp.programming.RegionalCatalog.Frontier']}"/>
+                    </td>
+                    <td/><td/>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>
+                        <h:outputText value="#{InfoMsg['ppp.programming.RegionalCatalog.InegiKey']}"/>
+                    </td>
+                    <td>
+                        <h:outputText value="#{InfoMsg['ppp.programming.RegionalCatalog.NumberOfMen']}"/>
+                    </td>
+                    <td>
+                        <h:outputText value="#{InfoMsg['ppp.programming.RegionalCatalog.NumberOfWomen']}"/>
+                    </td>
+                    <td>
+                        <h:outputText value="#{InfoMsg['ppp.programming.RegionalCatalog.InegiYear']}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:inputText
+                            id="txtClaveInegi"                
+                            maxlength="8"
+                            size="10"
+                            value="#{regionalCatalogController.theirInegiKey}"/>
+                    </td>
+                    <td>
+                        <p:inputText
+                            id="txtNumHombres"
+                            maxlength="20"
+                            size="30"
+                            disabled="#{regionalCatalogController.isLevelGenreDisabled}"
+                            value="#{regionalCatalogController.theirNumberOfMen}"/>
+                    </td>
+                    <td>
+                        <p:inputText
+                            id="txtNumMujeres"
+                            maxlength="20"
+                            size="30"
+                            disabled="#{regionalCatalogController.isLevelGenreDisabled}"
+                            value="#{regionalCatalogController.theirNumberOfWomen}"/>
+                    </td>
+                    <td>
+                        <p:inputText
+                            id="txtAnioInegi"
+                            disabled="true"
+                            maxlength="4"
+                            size="20"
+                            value="#{regionalCatalogController.theirInegiYear}"/>
+                    </td>
+                </tr>
+              <tr></tr><tr></tr>
+                <tr>
+                    <td>
+                        <p:commandButton
+                            id="btnGuardarCatReg"
+                            value="Guardar"
+                            disabled="#{regionalCatalogController.isSaveButtonDisabled}"
+                            actionListener="#{regionalCatalogController.saveOrUpdateRegionalCatalog()}"
+                            update="frmRegionalCatalogAdmin:tvRegions"/>
+                    </td>
+                    <td>
+                        <p:commandButton
+                            id="btnCerrarCatReg"
+                            value="Cerrar"
+                            ajax="false"
+                            actionListener="#{regionalCatalogController.initRegionalCatalog()}"
+                            onclick="dlg.close()"
+                            />
+                    </td>
+                </tr>
+            </table>
+        </p:dialog>
+    </ui:composition>
+</html>

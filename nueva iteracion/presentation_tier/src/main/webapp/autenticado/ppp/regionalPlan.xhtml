@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml"
+                >
+
+    <ui:define name="body">
+        <div style="padding-top: 27px">
+            <table>
+                <tr>
+                    <td>                        
+                        <img src="#{request.contextPath}/styles/images/iconHeaderStyle.png" /> 
+                    </td>
+                    <td style="vertical-align: center">
+                        <h:outputText value="#{pppMsg['ppp.progr.RegionHeader']}"  styleClass="headerTitleStyle" style="position: absolute; top: 135px"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="divContentPage">
+            <h:form id="formDetails">  
+                <label class="titlesInstitutional">
+                    <!--a href="../options.abs">#{pppMsg['ppp.planning.goToStart']}</a-->
+                </label>
+                <table class="tableDetailForm">
+
+                    <tr>
+                        <td>
+                            <ui:include src="components/regionalPlan/regionalPlanDetails.xhtml"/>
+                        </td> 
+                    </tr> 
+                    <tr>
+                        <td>
+                            <ui:include src="components/regionalPlan/lstRegionalPlans.xhtml"/>
+                        </td>
+                    </tr>
+                </table>  
+
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition> 

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.InformixDialect</property>
+       <property name="hibernate.show_sql" >true</property>
+       <!--  <property name="hibernate.hbm2ddl.auto">create</property>
+        
+        <property name="hibernate.connection.pool_size">50</property>-->
+        <property name="hibernate.connection.pool_size">50</property>
+       <!--Mappings Module Security -->
+
+        <mapping class="com.abs.siif.security.entities.UserEntity" />
+        <mapping class="com.abs.siif.security.entities.ProfileEntity" />
+        <mapping class="com.abs.siif.security.entities.ViewEntity" />
+        <mapping class="com.abs.siif.security.entities.ViewItemEntity" />
+        <mapping class="com.abs.siif.security.entities.ViewUserModuleEntity" />
+
+      <!--Mapping Module Common -->
+        <mapping class="com.abs.siif.common.entities.DocumentTypeEntity" />
+        <mapping class="com.abs.siif.common.entities.ProcessEntity" />
+        <mapping class="com.abs.siif.common.entities.SubProcessEntity" />
+        
+      <!--Mappings Module PPP (Planning) -->
+        <mapping class="com.abs.siif.planning.entities.ObjectiveEntity" />
+        <mapping class="com.abs.siif.planning.entities.ObjectiveLevelEntity" />
+        <mapping class="com.abs.siif.planning.entities.DependenceEntity"/>
+        <mapping class="com.abs.siif.planning.entities.DependenceLevelEntity" />
+        <mapping class="com.abs.siif.planning.entities.InstitutionalPlanEntity" />
+        <mapping class="com.abs.siif.planning.entities.InstitutionalPlanObjectiveEntity" />
+        <mapping class="com.abs.siif.planning.entities.ProblemEntity" />
+        <mapping class="com.abs.siif.planning.entities.SpecificObjectiveEntity" />
+        <mapping class="com.abs.siif.planning.entities.StrategyEntity" />
+        <mapping class="com.abs.siif.planning.entities.FunctionalClassifierEntity" />
+        <mapping class="com.abs.siif.planning.entities.FunctionalLevelClassifier" />
+        <mapping class="com.abs.siif.planning.entities.RegionalLevelClassifierEntity" />
+        <mapping class="com.abs.siif.planning.entities.RegionalClassifierEntity" />
+        <mapping class="com.abs.siif.planning.entities.RegionalPlanEntity" />
+        <mapping class="com.abs.siif.planning.entities.AdministrativeClassifierTypeEntity"/>
+        
+ 
+        <mapping class="com.abs.siif.planning.entities.ObjectiveIndicatorEntity" />
+
+        <!--Mappings Module PPP (Programming) -->
+        <mapping class="com.abs.siif.programming.entities.ActivityEntity" />
+        <mapping class="com.abs.siif.programming.entities.ComponentEntity" />
+        <mapping class="com.abs.siif.programming.entities.DeliveryEntity" />
+        <mapping class="com.abs.siif.programming.entities.DraftProjectEntity" />
+        <mapping class="com.abs.siif.programming.entities.DraftProjectStatusEntity" />
+        <mapping class="com.abs.siif.programming.entities.DraftProjectStatusConfigEntity" />
+        <mapping class="com.abs.siif.programming.entities.DraftProjectStatusChangeEntity" />
+        <mapping class="com.abs.siif.programming.entities.DraftProjectTypeEntity" />
+        <mapping class="com.abs.siif.programming.entities.MensualActivityEntity" />
+        <mapping class="com.abs.siif.programming.entities.MensualComponentEntity" />
+        <mapping class="com.abs.siif.programming.entities.ProgrammingEntity" />
+        <mapping class="com.abs.siif.programming.entities.ProgrammingLevelEntity" />
+        <mapping class="com.abs.siif.programming.entities.UnitMeasureEntity" />
+        <mapping class="com.abs.siif.programming.entities.DraftProjectBinnacleEntity" />
+        <mapping class="com.abs.siif.programming.entities.SizingEntity" />
+        <mapping class="com.abs.siif.programming.entities.DraftProjRegionalClassifierEntity" />
+        <mapping class="com.abs.siif.programming.entities.ClassifierEntity" />
+        <mapping class="com.abs.siif.programming.entities.PEDVinculationEntity" />
+
+        <mapping class="com.abs.siif.programming.entities.InvPreFileEntity" />
+        <mapping class="com.abs.siif.programming.entities.PromoterEntity" />
+        <mapping class="com.abs.siif.programming.entities.ObservationEntity" />
+        <mapping class="com.abs.siif.programming.entities.InvPreFileDetailEntity" />
+        <mapping class="com.abs.siif.programming.entities.InvPreFileRegionalClassifierEntity" />
+        <mapping class="com.abs.siif.programming.entities.InputEntity" />
+        <mapping class="com.abs.siif.programming.entities.UnitMeasureBenefAndGoalEntity" />
+        <mapping class="com.abs.siif.programming.entities.UnitMeasureGoalEntity" />
+
+        <mapping class="com.abs.siif.budget.entities.FederalDependenceEntity" />
+        <mapping class="com.abs.siif.budget.entities.PreInvRequestEntity" />
+
+        <mapping class="com.abs.siif.programming.entities.InvestmentLineEntity" />
+        <mapping class="com.abs.siif.programming.entities.MacroBuildEntity" />
+        <mapping class="com.abs.siif.programming.entities.VulnerableGroupEntity" />
+        <mapping class="com.abs.siif.programming.entities.GeneralConceptEntity" />
+        <mapping class="com.abs.siif.programming.entities.BuildingConceptEntity" />
+        <mapping class="com.abs.siif.programming.entities.ActionGBEntity" />
+        <mapping class="com.abs.siif.programming.entities.BenefAndGoalsEntity" />
+        <mapping class="com.abs.siif.programming.entities.UnitMeasureBenefAndGoalEntity" />
+        <mapping class="com.abs.siif.programming.entities.UnitMeasureGoalEntity" />
+        <mapping class="com.abs.siif.programming.entities.PhysicalAndFinancialProgramEntity" />
+        <mapping class="com.abs.siif.programming.entities.InputPhysicalAndFinEntity" />
+        <mapping class="com.abs.siif.programming.entities.PhysicalProgrammedAdvanceEntity" />
+        <mapping class="com.abs.siif.programming.entities.ValidationEntity" />
+        <mapping class="com.abs.siif.programming.entities.LogicFrameEntity" />
+        <mapping class="com.abs.siif.programming.entities.DraftProjectStateEntity" />  
+        <mapping class="com.abs.siif.programming.entities.RegionalPlansOfPEDEntity" />
+        <mapping class="com.abs.siif.programming.entities.FederalURRegulatoryEntity" />
+        <mapping class="com.abs.siif.programming.entities.SignaturesEntity" />
+        <mapping class="com.abs.siif.programming.entities.SignatureTypeEntity" />
+        
+        <!--Mappings Module PPP (Budget) -->
+        <mapping class="com.abs.siif.budget.entities.ObjectExpenseLevelEntity" />
+        <mapping class="com.abs.siif.budget.entities.ObjectExpenseEntity" />
+        <mapping class="com.abs.siif.budget.entities.DestinationEntity" />
+        <mapping class="com.abs.siif.budget.entities.BudgetKeyDefinitionEntity" />
+        <mapping class="com.abs.siif.budget.entities.BudgetKeyDefinitionStatusEntity" />
+        <mapping class="com.abs.siif.budget.entities.BudgetKeyEntity" />
+        <mapping class="com.abs.siif.budget.entities.MensualBudgetKeyEntity" />
+        <mapping class="com.abs.siif.budget.entities.BudgetKeyStatusEntity" />
+        <mapping class="com.abs.siif.budget.entities.FinancingSourceEntity" />
+        <mapping class="com.abs.siif.budget.entities.MensualBudgetKeyEntity" />
+        <mapping class="com.abs.siif.budget.entities.BudgetKeyDetailsEntity" />
+        <mapping class="com.abs.siif.budget.entities.BudgetingCeilingEntity" />
+        <mapping class="com.abs.siif.budget.entities.BudgetKeyConfigurationEntity"  />
+        <mapping class="com.abs.siif.budget.entities.BudgetKeyItemEntity" />
+        <mapping class="com.abs.siif.budget.entities.CeilingConfigurationEntity" />
+        <mapping class="com.abs.siif.budget.entities.CeillingBudgetEntity" />
+
+        <!-- entidades de uso comun-->
+        <mapping class="com.abs.siif.common.entities.ColectiveEntity"/>
+        <mapping class="com.abs.siif.common.entities.ColectiveTypeEntity"/>
+        <mapping class="com.abs.siif.common.entities.StatusColectiveEntity"/>
+        <mapping class="com.abs.siif.common.entities.EmployeeEntity"/>
+        
+        <!-- Catalogos-->
+        <mapping class="com.abs.siif.catalog.entities.TypeConfigCatalogEntities" />
+        <mapping class="com.abs.siif.catalog.entities.ConfigLevelGenericEntities" />
+        
+    </session-factory>
+</hibernate-configuration>

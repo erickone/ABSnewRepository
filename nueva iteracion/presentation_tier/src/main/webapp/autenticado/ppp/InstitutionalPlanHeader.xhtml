@@ -1,0 +1,105 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+
+    <ui:define name="body">
+         <div style="padding-top: 27px">
+            <table>
+                <tr>
+                    <td>                        
+                        <img src="#{request.contextPath}/styles/images/iconHeaderStyle.png" /> 
+                    </td>
+                    <td style="vertical-align: center">
+                        <h:outputText value="#{pppMsg['ppp.planning.instplanHeader']}"  styleClass="headerTitleStyle" style="position: absolute; top: 135px"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="divContentPage">
+            <h:form id="form" enctype="multipart/form-data">
+                #{institutionalPlanHeaderController.init()}
+                <table style="width: 95%">
+                    <tr>
+                        <td colspan="3">
+                            <label class="titlesInstitutional">
+                                <!--a href="../options.abs">#{pppMsg['ppp.planning.goToStart']}</a-->
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 25%">
+                            <label class="titlesInstitutional">
+                                #{pppMsg['ppp.planning.cboDependence']}
+                            </label>
+                        </td>
+                        <td style="text-align: left;width: 25%">
+                            <p:selectOneMenu effect="fade" value="${institutionalPlanHeaderController.ADependeceId}">
+                                <f:selectItems value="${institutionalPlanHeaderController.listOfDependences}" var="dep"
+                                               itemLabel="${dep.dependenceDescription}"
+                                               itemValue="${dep.dependenceId}"/>
+                                <f:ajax listener="#{institutionalPlanHeaderController.populateInstitutionalPlanTable}" 
+                                        render=":form:msgDelete
+                                                :form:tbCreationDecree:objPanel
+                                                :form:tbCreationDecree:panCreation
+                                                :form:tbCreationDecree:panMission
+                                                :form:tbCreationDecree:panProcedure
+                                                :form:tbCreationDecree:tagobjectives"
+                                                />
+                            </p:selectOneMenu>
+                        </td>
+                        <td style="text-align: right;width: 50%">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p:messages id="msgDelete" showDetail="true" showSummary="false"  />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <p:messages id="msgName" showDetail="true" showSummary="false" autoUpdate="true"  />
+                            <p:tabView id="tbCreationDecree"  activeIndex="0" dynamic="true" cache="false" >
+                                <p:tab title="#{pppMsg['ppp.planning.tabCreationDecree']}" > 
+                                    <ui:include src="components/institutionalPlan/tabCreationDecree.xhtml" />
+                                </p:tab>
+                                <p:tab title="#{pppMsg['ppp.planning.tabRulesOfProcedure']}"  id="tbRulesOfProcedure"> 
+                                    <ui:include src="components/institutionalPlan/tabRulesOfProcedure.xhtml" />
+                                </p:tab>
+                                <p:tab title="#{pppMsg['ppp.planning.tabPlanMission']}" id="tbInstitutionalPlanMission" > 
+                                    <ui:include src="components/institutionalPlan/tabInstitutionalPlanMission.xhtml" />
+                                </p:tab>
+                                <p:tab title="#{pppMsg['ppp.planning.tabObjetives']}" > 
+                                    <ui:include src="components/institutionalPlan/tabObjectives.xhtml" />
+                                </p:tab>
+                            </p:tabView>
+                            <table style="width: 100%">
+                                <tr align="right">
+                                    <td>
+                                        <table>
+                                            <td>
+                                                <td>
+                                                    <div>
+                                                        <p:commandButton value="#{pppMsg['ppp.save']}" disabled="" update=":form:tbCreationDecree" 
+                                                                         actionListener="${institutionalPlanHeaderController.SaveOrUpdateAnInstitutionalPlan}"/>                     
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                    </div>
+                                                </td>
+                                            </td>
+                                        </table>  
+                                    </td>                  
+                                </tr>
+                            </table>  
+                            </td>
+                    </tr>                
+                </table>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

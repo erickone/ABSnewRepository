@@ -1,0 +1,134 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+      #{classifierDirectDraftProjectController.init()}
+        <h:form id="frmClassifier">
+            <p:messages id="msgMensajes" autoUpdate="true"/>
+            <p:panel id="pnlDraftProject" >
+                <p:panel id="pnlClasificador" header="#{InfoMsg['ppp.progr.Classifier.pnlClasifAdmHeader']}">
+                    <div class="divTablePED">
+                        <div class="divLabelPED">
+                            <h:outputText value="#{InfoMsg['ppp.progr.Classifier.Administrative.BudgetUnit']}" />
+                        </div>
+
+                        <div class="divInputTextPED">
+                            <p:selectOneMenu  style="width: 515px" styleClass="divTextsizePED" id="cboBugdetUnit" value="#{ClassifierController.itsBudgetUnitId}" >
+                                <f:selectItems value="#{classifierDirectDraftProjectController.listOfBudgeUnit}"
+                                               var="budgetUnits" itemLabel="#{budgetUnits.clave} #{budgetUnits.nameDepend}" itemValue="#{budgetUnits.idDependency}"/>
+                                <f:ajax render="cboResponsibleUnit cboExpenditureImplementationUnit" listener="#{classifierDirectDraftProjectController.loadResponsibleUnits()}"/>
+                            </p:selectOneMenu>
+
+                        </div>
+                        <div class="divLabelPED">
+                            <h:outputText value="#{InfoMsg['ppp.progr.Classifier.Administrative.ResponsibleUnit']}" />
+                        </div>
+
+                        <div class="divInputTextPED">
+                            <p:selectOneMenu  style="width: 515px" styleClass="divTextsizePED" id="cboResponsibleUnit" value="#{classifierDirectDraftProjectController.itsResponsibleUnitId}" >
+                                <f:selectItems value="#{classifierDirectDraftProjectController.itsListOfResponsibleUnit}"
+                                               var="responsibleUnits" itemLabel="#{responsibleUnits.itsNodeTooltip} #{responsibleUnits.itsNodeText}" itemValue="#{responsibleUnits.itsObjectiveId}"/>
+                                <p:ajax update="cboExpenditureImplementationUnit" listener="#{classifierDirectDraftProjectController.loadExpenditureImplementationUnit()}"/>
+                            </p:selectOneMenu>
+
+                        </div>
+                        <div class="divLabelPED">
+                            <h:outputText value="#{InfoMsg['ppp.progr.Classifier.Administrative.ExpenditureImplementationUnit']}" />
+                        </div>
+
+                        <div class="divInputTextPED">
+                            <p:selectOneMenu style="width: 515px" styleClass="divTextsizePED" id="cboExpenditureImplementationUnit" value="#{classifierDirectDraftProjectController.itsExpenditureImplementationUnitId}" >
+                                <f:selectItems value="#{classifierDirectDraftProjectController.listOfExpenditureImplementationUnit}"
+                                               var="UEGUnits" itemLabel="#{UEGUnits.clave} #{UEGUnits.nameDepend}" itemValue="#{UEGUnits.idDependency}"/>
+                            </p:selectOneMenu>
+
+                        </div>
+
+                        <div class="divLabelPED">
+                            <h:outputText value="#{InfoMsg['ppp.progr.Classifier.Administrative.Branch']}" />
+                        </div>
+
+                        <div class="divInputTextClassifier">
+                            <p:selectOneMenu  style="width: 200px" styleClass="divTextsizePED" id="cboBranch" value="#{classifierDirectDraftProjectController.itsBranchId}" >
+                                <f:selectItems value="#{classifierDirectDraftProjectController.rootNodesAdminObjectives}"
+                                               var="branchUnits" itemLabel="#{branchUnits.clave} #{branchUnits.nameDepend}" itemValue="#{branchUnits.idDependency}"/>
+                                <p:ajax update="cboSector cboBugdetUnit cboResponsibleUnit cboExpenditureImplementationUnit" listener="#{classifierDirectDraftProjectController.loadSectors()}"/>
+                            </p:selectOneMenu>
+
+                        </div>
+                        <div class="divLabelClassifier">
+                            <h:outputText value="#{InfoMsg['ppp.progr.Classifier.Administrative.Sector']}" />
+                        </div>
+
+                        <div class="divInputTextClassifier">
+                            <p:selectOneMenu  style="width: 200px" styleClass="divTextsizePED" id="cboSector" value="#{classifierDirectDraftProjectController.itsSectorId}" >
+                                <f:selectItems value="#{classifierDirectDraftProjectController.listOfSectorObjectives}"
+                                               var="sectorUnits" itemLabel="#{sectorUnits.clave} #{sectorUnits.nameDepend}" itemValue="#{sectorUnits.idDependency}"/>
+                                <p:ajax update="cboBugdetUnit cboResponsibleUnit cboExpenditureImplementationUnit" listener="#{classifierDirectDraftProjectController.loadBudgetUnits()}"/>
+                            </p:selectOneMenu>
+
+                        </div>
+                    </div>
+                </p:panel>
+                <p:panel id="pnlClasificacionFuncional" header="#{InfoMsg['ppp.progr.Classifier.pnlClasifFuncHeader']}">
+                    <div class="divTablePED">
+                        <div class="divLabelPED">
+                            <h:outputText value="#{InfoMsg['ppp.progr.Classifier.Functional.Finality']}" />
+                        </div>
+
+                        <div class="divInputTextPED">
+                            <p:selectOneMenu 
+                                style="width: 400px" styleClass="divTextsizePED" id="cboFinality" value="#{classifierDirectDraftProjectController.itsFinalityId}" >
+                                 <f:selectItem itemLabel="- Seleccionar Finalidad -" itemValue="" />
+                                <f:selectItems value="#{classifierDirectDraftProjectController.itsListOfFinalities}"
+                                               var="Finality" itemLabel="#{Finality.itsNodeTooltip} #{Finality.itsNodeText}" itemValue="#{Finality.itsObjectiveId}"/>
+                                <p:ajax update="cboFunction cboSubfunction" listener="#{classifierDirectDraftProjectController.loadFunctions()}"/>
+                            </p:selectOneMenu>
+
+                        </div>
+                        <div class="divLabelPED">
+                            <h:outputText value="#{InfoMsg['ppp.progr.Classifier.Functional.Function']}" />
+                        </div>
+
+                        <div class="divInputTextPED">
+                            <p:selectOneMenu  
+                                style="width: 400px" styleClass="divTextsizePED" id="cboFunction" value="#{classifierDirectDraftProjectController.itsFunctionId}" >
+                               <f:selectItem itemLabel="- Seleccionar Funcion -" itemValue="" />
+                                <f:selectItems value="#{classifierDirectDraftProjectController.itsListOfFunctions}"
+                                               var="Functions" itemLabel="#{Functions.itsNodeTooltip} #{Functions.itsNodeText}" itemValue="#{Functions.itsObjectiveId}"/>
+                                <p:ajax update="cboFunction cboSubfunction" listener="#{classifierDirectDraftProjectController.loadSubFunction()}"/>
+                            </p:selectOneMenu>
+
+                        </div>
+                        <div class="divLabelPED">
+                            <h:outputText value="#{InfoMsg['ppp.progr.Classifier.Functional.Subfunction']}" />
+                        </div>
+
+                        <div class="divInputTextPED">
+                            <p:selectOneMenu  style="width: 400px"
+                                             
+                                              styleClass="divTextsizePED"
+                                              id="cboSubfunction"
+                                              value="#{classifierDirectDraftProjectController.itsSubFunctionId}"
+                                              label="#{InfoMsg['ppp.progr.Classifier.Functional.Subfunction']}">
+                                <f:selectItem itemLabel="- Seleccionar SubFuncion -" itemValue="" />
+                                <f:selectItems value="#{classifierDirectDraftProjectController.itsListOfSubFunctions}"
+                                               var="subFunctions" itemLabel="#{subFunctions.itsNodeTooltip} #{subFunctions.itsNodeText}" itemValue="#{subFunctions.itsObjectiveId}"/>
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                </p:panel>
+                    <!--<p:commandButton id="btnSaveClassif" ajax="true" disabled="#{draftProjectHeaderController.itsDisabledTab}"
+                                     actionListener="#{ClassifierController.saveClassif()}"
+                            value="#{InfoMsg['ppp.progr.DraftProjectGuardar']}">
+                        
+                    </p:commandButton>-->
+            </p:panel>
+        </h:form>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+
+
+
+        <table style="width: 100%">
+            <tr>
+                <td class="tableDetailsObjectiveStrategyPlanColumnRight">
+                    <label class="commonFontDetailForm">
+                        #{pppMsg['ppp.planning.specificObj']}
+                    </label>
+                </td>
+                <td class="tableDetailsObjectiveStrategyPlanColumnLeft">
+                    <p:selectOneMenu id="cboSpecificObjectives" style="width: 150px" panelStyle="max-width: 600px"
+                                     value="#{objectiveController.itsSelectedSpecificObjectiveIdForStrategy}">
+                        <f:selectItem itemValue="" itemLabel="(Seleccionar)" />
+                        <f:selectItems value="#{objectiveController.itsSpecificObjectives}"
+                                       var="specificObjective"
+                                       itemLabel="#{specificObjective.itsDescription}"
+                                       itemValue="#{specificObjective.itsGenericItemId}"
+                                       />
+                        <p:ajax listener="#{objectiveController.populateStrategies}" 
+                                update=":formTreeview:tbDetails:grdStrategies
+                                :formTreeview:tbDetails:btnSaveStrategy 
+                                :formTreeview:tbDetails:btnCancelStrategy                                                 
+                                :formTreeview:tbDetails:btnNewStrategy
+                                :formTreeview:tbDetails:txtStrategyDescription" 
+                                /> 
+                    </p:selectOneMenu>
+                </td>
+            </tr>
+            <tr>
+                <td class="tableDetailsObjectiveStrategyPlanColSpan" colspan="2">
+                    <label class="commonFontDetailForm">
+                        #{pppMsg['ppp.planning.strategy']}
+                    </label>
+                </td> 
+            </tr>
+            <tr>
+                <td class="tableDetailsObjectiveStrategyPlanColSpan" colspan="2">
+                    <p:inputTextarea id="txtStrategyDescription"   style="width: 100%;"  
+                                     value="#{objectiveController.itsStrategyDescription}" 
+                                     disabled="#{objectiveController.itsButtonSaveStrategyIsDisabled}"
+                                     >
+                    </p:inputTextarea>
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+
+                    <table>
+                        <tr>
+                            <td >
+                                <p:commandButton id="btnSaveStrategy" value="#{pppMsg['ppp.save']}"
+                                                 update=":formTreeview:tbDetails:txtStrategyDescription 
+                                                 :formTreeview:tbDetails:btnSaveStrategy 
+                                                 :formTreeview:tbDetails:btnCancelStrategy                                                 
+                                                 :formTreeview:tbDetails:btnNewStrategy
+                                                 :formTreeview:tbDetails:grdStrategies"
+                                                 actionListener="#{objectiveController.saveStrategy()}"
+                                                 disabled="#{objectiveController.itsButtonSaveStrategyIsDisabled}"/>
+                            </td>
+                            <td >
+                                <p:commandButton id="btnCancelStrategy" value="#{pppMsg['ppp.cancel']}" 
+                                                 update=":formTreeview:tbDetails:txtStrategyDescription 
+                                                 :formTreeview:tbDetails:btnSaveStrategy 
+                                                 :formTreeview:tbDetails:btnCancelStrategy                                                 
+                                                 :formTreeview:tbDetails:btnNewStrategy"
+                                                 disabled="#{objectiveController.itsButtonSaveStrategyIsDisabled}"
+                                                 actionListener="#{objectiveController.cancelStrategy()}"/>
+                            </td>
+                            <td >
+                                <p:commandButton id="btnNewStrategy" value="#{pppMsg['ppp.new']}" 
+                                                 update=":formTreeview:tbDetails:txtStrategyDescription 
+                                                 :formTreeview:tbDetails:btnSaveStrategy 
+                                                 :formTreeview:tbDetails:btnCancelStrategy                                                 
+                                                 :formTreeview:tbDetails:btnNewStrategy
+                                                 " 
+                                                 disabled="#{objectiveController.itsButtonNewStrategyIsDisabled}"
+                                                 actionListener="#{objectiveController.prepareNewStrategyData()}"/>
+
+                            </td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"> 
+                    <p:dataTable  id="grdStrategies" var="strategy"  style="width: 100%" emptyMessage="#{pppMsg['ppp.planning.emptyMessage']}"
+                                  paginator="true" rows="5"    
+                                  value="#{objectiveController.itsStrategiesBySpecificObjective}"
+                                  >  
+                        <p:column style="width: 100%" filterBy="#{strategy.itsDescription}"  sortBy="#{strategy.itsDescription}"
+                                  filterMatchMode="contains">  
+
+                            <h:outputText  style="width: 100%" value="#{strategy.itsDescription}"  />  
+                        </p:column>       
+                        <p:column>
+                            <p:commandButton id="btnSelectedStrategy"   
+                                             update=":formTreeview:tbDetails:txtStrategyDescription 
+                                             :formTreeview:tbDetails:btnSaveStrategy 
+                                             :formTreeview:tbDetails:btnCancelStrategy                                                 
+                                             :formTreeview:tbDetails:btnNewStrategy"
+                                             icon="ui-common-icon-edit" >
+                                <f:setPropertyActionListener value="#{strategy}" target="#{objectiveController.itsSelectedStrategy}"                                          
+                                                             /> 
+
+                            </p:commandButton>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton id="btnDeleteStrategy"    
+                                             update=":formTreeview:tbDetails"
+                                             icon="ui-common-icon-delete" >
+                                <f:setPropertyActionListener value="#{strategy.itsId}" 
+                                                             target="#{objectiveController.itsSelectedStrategyIdForDelete}"
+                                                             />
+
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+
+                </td>
+            </tr>
+        </table>
+        <p:blockUI block=":formTreeview:tbDetails" trigger="btnNewStrategy btnCancelStrategy btnSaveStrategy" />
+    </ui:composition>
+</html>

@@ -1,0 +1,103 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      template="${pageContext.request.contexPath}/templates/ui.xhtml">
+
+    <ui:composition>
+        #{logicFrameController.init()}        
+        <h:form id="logicFrameForm" enctype="multipart/form-data" prependId="false" >
+            <p:messages id="msgLogicFrame" showDetail="true" showSummary="false" autoUpdate="true"  />
+            <p:panel id="panLogicFrame" header="#{InfoMsg['ppp.progr.LogicFrame.LogicalFramework']}">
+                <div class="divTablePED">
+                    <div class="divLogicFrame">
+                        <table width="75%">
+                            <tr>
+                                <td>
+                                    <p:selectOneRadio style="width: 100%" id="optionTree" value="#{logicFrameController.itsTreekey}" >  
+                                        <f:selectItem itemLabel="#{InfoMsg['ppp.progr.LogicFrame.Item.ProblemTree']}" itemValue="0" />  
+                                        <f:selectItem itemLabel="#{InfoMsg['ppp.progr.LogicFrame.Item.ObjectiveTree']}" itemValue="1" /> 
+                                        <f:selectItem itemLabel="#{InfoMsg['ppp.progr.LogicFrame.Item.Others']}" itemValue="2" /> 
+                                    </p:selectOneRadio>
+                                </td>
+                                <td>
+                                    <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                </td>
+                            </tr>
+                        </table>     
+                    </div>
+                    <div class="divSpace"/>
+                    <div class="divSpace"/>
+                    <div class="divLabelPED">
+                        <h:outputText value="#{InfoMsg['ppp.progr.LogicFrame.Name']}" />
+                    </div>
+                    <div class="divInputTextPED" >
+                        <p:inputText style="width: 50%" id="documentName" value="#{logicFrameController.itsDocumentName}" />
+                    </div>
+                    <div class="divLabelPED">
+                        <h:outputText value="#{InfoMsg['ppp.progr.LogicFrame.Append']}" />
+                    </div>
+                    <div class="divLoadFileLogicFrame">
+                        <p:fileUpload
+                            id="fupldLogicFrame"
+                            fileUploadListener="#{logicFrameController.processFileUpload}"
+                            uploadLabel="#{InfoMsg['ppp.progr.Requirements.Upload.UploadLabel']}"
+                            cancelLabel="#{InfoMsg['ppp.progr.Requirements.Upload.CancelLabel']}"
+                            label="#{InfoMsg['ppp.progr.Requirements.Upload.Label']}"
+                            mode="advanced"
+                            auto="true"
+                            sizeLimit="1000000000"
+                            />
+                    </div>
+                    <div class="divSpace"/>
+                    <div class="divLogicFrame">
+                        <div class="divLogicFrameButtons">
+                            <p:commandButton style="width: 95%" id="NewDocument" value="#{InfoMsg['ppp.progr.New']}"  
+                                             update="panLogicFrame"
+                                             actionListener="#{logicFrameController.cleanFields()}"/>
+                        </div>
+                        <div class="divLogicFrameButtons">
+                            <p:commandButton style="width: 95%" id="addDocument" value="#{InfoMsg['ppp.save']}" 
+                                             disabled="#{logicFrameController.btnSrvSave}"
+                                             update=":tabDraftProjectDetails:logicFrameForm:panLogicFrameFiles,panLogicFrame"
+                                             actionListener="#{logicFrameController.saveDocument()}"/>
+                        </div>
+                        <div class="divLogicFrameButtons">
+                            <p:commandButton style="width: 95%" id="deleteDocument" value="#{InfoMsg['ppp.delete']}"
+                                             onclick="confirmation.show()" type="button" />
+                        </div>
+                        <div class="divLogicFrameButtons">
+
+                            <p:commandButton 
+                                disabled="#{logicFrameController.itsDownloadEnabled}"
+                                style="width: 95%"
+                                id="downloadDocument"
+                                value="#{InfoMsg['ppp.progr.LogicFrame.Download']}"
+                                title="#{InfoMsg['ppp.progr.LogicFrame.Download']}"
+                                image="ui-icon-arrowthick-1-s"
+                                ajax="false">
+                                <p:fileDownload value="#{logicFrameController.fileStreamedContent}" />
+                            </p:commandButton>
+                        </div>
+                        <div class="divLogicFrameButtons">
+                            <p:commandButton style="width: 95%" id="closeDocument" value="Cerrar" />
+                        </div>
+                    </div>
+                </div>
+            </p:panel>
+            <ui:include src="logicframe/lstlogicframefiles.xhtml"/>
+
+            <p:confirmDialog id="confirmDialog" message="#{InfoMsg['ppp.progr.Delete.Message']}"  
+                             header="#{InfoMsg['ppp.progr.MarcoLogico']}" severity="alert" widgetVar="confirmation">  
+
+                <p:commandButton id="confirm" value="Si" update=":tabDraftProjectDetails:logicFrameForm:panLogicFrameFiles,panLogicFrame" oncomplete="confirmation.hide()"  
+                                 actionListener="#{logicFrameController.deleteDocument}" />  
+                <p:commandButton id="decline" value="#{InfoMsg['ppp.progr.Btn.No']}" onclick="confirmation.hide()" type="button" />   
+
+            </p:confirmDialog>  
+        </h:form>
+
+    </ui:composition>
+</html>

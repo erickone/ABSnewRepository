@@ -1,0 +1,91 @@
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+        <p:dataTable id="grdBudgetingSummary"  
+                     value="#{budgetingSummaryController.theirBudgetingSummaryDtoDataModel}" 
+                     var="budgetingSummary" 
+                     selection="#{budgetingSummaryController.selectedRow}" 
+                     selectionMode="single"
+                     emptyMessage="#{InfoMsg['ppp.common.DataTable.NotFound']}">
+            
+            <p:ajax event="rowSelect" listener="#{budgetingSummaryController.onRowSelect}" 
+                    update=":tabDraftProjectDetails:budgetingForm:grdBudgetingSummary:presupuestar" />  
+            
+            <f:facet name="header">
+                <h:outputText value="#{InfoMsg['ppp.budgeting.budgetingkeys']}" />
+            </f:facet>
+            
+            <p:column style="width: 60%">
+                <f:facet name="header" >
+                    <h:outputText  value="#{InfoMsg['ppp.budgeting.summary.spending.chapter']}" />
+                </f:facet>
+                <h:outputText id="budgetingSummarySpendingChapter" value="#{budgetingSummary.itsBudgetingSummaryDescription}" />
+            </p:column>
+            <p:column style="width: 10%;text-align: center">
+                <f:facet name="header">
+                    <h:outputText value="#{InfoMsg['ppp.budgeting.summary.chapter']}" />
+                </f:facet>
+                <h:outputText style="text-align: center" id="budgetingSummaryChapter" value="#{budgetingSummary.itsBudgetingSummaryChapter}" />
+            </p:column>   
+            <p:column style="width: 10%; text-align: right" >
+                <f:facet name="header">
+                    <h:outputText value="#{InfoMsg['ppp.budgeting.summary.initial.asignation']}" />
+                </f:facet>
+                <h:outputText id="budgetingInitialAsignation"  value="#{budgetingSummary.itsBudgetingSummaryInitial}"/>
+            </p:column>   
+            <p:column style="width: 10%; text-align: right">
+                <f:facet name="header">
+                    <h:outputText  value="#{InfoMsg['ppp.budgeting.summary.additional.budget']}" />
+                </f:facet>
+                <h:outputText id="budgetingSummaryAdditionalBudget" value="#{budgetingSummary.itsBudgetingSummaryAditional}"/>
+            </p:column>  
+            <p:column style="width: 10%; text-align: right">
+                <f:facet name="header">
+                    <h:outputText value="#{InfoMsg['ppp.budgeting.summary.addition']}" />
+                </f:facet>
+                <h:outputText id="budgetingSummaryAddition" value="#{budgetingSummary.itsBudgetingSummarySum}"/>
+            </p:column>   
+            
+            <f:facet name="footer"> 
+                <p:summaryRow>  
+                    <p:column>
+                        <p:commandButton style="width: 50%"  value="#{InfoMsg['ppp.budgeting.makeBudget']}" id="presupuestar"
+                                         disabled="#{budgetingSummaryController.itsComboDependenceCheck}"
+                                          actionListener="#{budgetingController.initBudgeting()}" 
+                                          update=":tabDraftProjectDetails:budgetingForm:panBudgetingKeys 
+                                          :tabDraftProjectDetails:budgetingForm:panMonths 
+                                          :tabDraftProjectDetails:budgetingForm:panObjectExpense 
+                                          :tabDraftProjectDetails:budgetingForm:panKeyBudget
+                                          :tabDraftProjectDetails:budgetingForm:panSummaryTotals
+                                          :tabDraftProjectDetails:budgetingForm:panBudgetingTotals
+                                          :tabDraftProjectDetails:budgetingForm:panBasicPartities
+                                          "
+                                          oncomplete="dlg.show()">                 
+                        </p:commandButton>
+                        <!--p:commandButton value="#{InfoMsg['ppp.progr.LstBudgetingSummary.BackToChapters']}" 
+                                         actionListener="#{budgetingSummaryController.initListOfComponents()}" 
+                                         update="grdBudgetingSummary" /-->
+                    </p:column>
+                    <p:column style="text-align: right">  
+                    #{InfoMsg['ppp.budgetingSummary.Total']}  
+                    </p:column>  
+
+                    <p:column style="text-align: right">  
+                    #{budgetingSummaryController.myInitialTotalStringFormat}
+                    </p:column>  
+                    <p:column style="text-align: right">
+                     #{budgetingSummaryController.myAditionalTotalStringFormat}
+                    </p:column>
+                    <p:column style="text-align: right">
+                     #{budgetingSummaryController.mySumTotalStringFormat}
+                    </p:column>
+                </p:summaryRow>  
+            </f:facet>
+        </p:dataTable>
+    </ui:composition>
+</html>

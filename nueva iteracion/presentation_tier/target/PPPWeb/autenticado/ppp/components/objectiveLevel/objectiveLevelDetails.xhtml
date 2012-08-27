@@ -1,0 +1,79 @@
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+        <p:outputPanel id="pnlObjectiveLevelDetails"> 
+            <table style="width: 100%" class="tableDetailForm">
+                <tr>
+                    <td class="commonFontDetailForm" style="width: 10%;text-align: right">
+                        #{pppMsg['ppp.planning.year']}
+                    </td>
+                    <td style="width: 20%;text-align: left">
+                        <h:outputText id="txtYear" value="#{objectiveLevelController.optionsController.year}"/>
+                    </td>
+                    <td class="commonFontDetailForm" style="width: 10%;text-align: right">
+                        #{pppMsg['ppp.planning.level']}
+                    </td>
+                    <td style="width: 20%;text-align: left">
+                        <p:inputMask id="txtNivel" value="#{objectiveLevelController.itsCurrentObjectiveLevel.objectiveLevel}"
+                                     mask="?99"    disabled="#{objectiveLevelController.itsEditInputsDisabled}" readonly="true"
+                                     >
+                             
+                        </p:inputMask> 
+                        
+
+                    </td>
+                    <td class="commonFontDetailForm" style="width: 15%;text-align: right">
+                        #{pppMsg['ppp.planning.keyLevel']}
+                    </td>
+                    <td style="width: 30%;text-align: left">
+                        <p:inputText value="#{objectiveLevelController.itsCurrentObjectiveLevel.objectiveLevelKey}"   
+                                     disabled="#{objectiveLevelController.itsEditInputsDisabled}"> 
+                        </p:inputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" class="commonFontDetailForm" style="width: 5%;text-align: right"> 
+                        #{pppMsg['ppp.planning.description']}
+                    </td>
+                    <td colspan="5" style="width: 95%;text-align: left">
+                        <p:inputTextarea id="txtDescription" 
+                                         maxlength="50"
+                                         style="width: 100%" disabled="#{objectiveLevelController.itsInputsDisabled}" 
+                                         value="#{objectiveLevelController.itsCurrentObjectiveLevel.objectiveLevelDescription}" />
+                    </td>
+                </tr>
+                <tr>
+
+                    <td class="commonFontDetailForm" style="width: 15%;text-align: right">
+                        <p:selectBooleanCheckbox  value="#{objectiveLevelController.itsCurrentObjectiveLevel.objectiveLevelHasIndicator}"
+                                                  disabled="#{objectiveLevelController.itsInputsDisabled}"  />
+                    </td>
+                    <td style="width: 15%;text-align: left" >
+                        Indicadores de impacto
+                    </td>
+
+                    <td class="commonFontDetailForm" style="width: 15%;text-align: right">
+                        <p:selectBooleanCheckbox  disabled="#{objectiveLevelController.itsInputsDisabledUEG}"  
+                                                  value="#{objectiveLevelController.itsCurrentObjectiveLevel.objectiveLevelShowBudgetKey}" />
+                    </td>
+                    <td style="width: 15%;text-align: left" >
+                        Encuadre UEG
+                    </td>
+                    <td colspan="3" style="width: 35%;text-align: right">
+                        <p:commandButton value="#{pppMsg['ppp.save']}" disabled="#{objectiveLevelController.itsInputsDisabled}"
+                                         update=":formDetails:grdObjectives :formDetails:pnlObjectiveLevelDetails"
+                                         actionListener="#{objectiveLevelController.persistObjectiveLevel}"/>
+                    </td>
+                    <td style="width: 5%">
+                        <p:commandButton value="#{pppMsg['ppp.cancel']}" update=":formDetails:pnlObjectiveLevelDetails"    disabled="#{objectiveLevelController.itsInputsDisabled}" actionListener="#{objectiveLevelController.cancelPersistObjectiveLevel}"    />
+                    </td>
+                </tr>
+            </table>
+        </p:outputPanel>
+    </ui:composition>
+</html>

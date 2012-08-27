@@ -1,0 +1,633 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>       
+        <h:form id="progFisFin">
+            <script type="text/javascript" src="#{request.contextPath}/resources/js/validateInput.js"></script>
+            ${physicalFinancialProgController.init()}                       
+            <p:messages id="msgMensajes"/>        
+            <p:panel id="progFisFinP1">                         
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                            <p:outputPanel id="customPanel">  
+                                <p:selectOneRadio id="options" layout="custom" value="${physicalFinancialProgController.processType}">  
+                                    <f:selectItem itemLabel="#{InfoMsg['ppp.progr.physicalFinancialProg.nueva']}" itemValue="1" />                                            
+                                    <f:selectItem itemLabel="#{InfoMsg['ppp.progr.physicalFinancialProg.enProceso']}" itemValue="2" />
+                                    <f:ajax listener="${physicalFinancialProgController.selectOption()}" event="change"
+                                            execute="options" render="pnlAportaciones calStartDate calEndDate" />
+                                </p:selectOneRadio>
+                                <h:panelGrid columns="2">  
+                                    <p:radioButton id="opt1" for="options" itemIndex="0"/>  
+                                    <h:outputLabel for="opt1" value="#{InfoMsg['ppp.progr.physicalFinancialProg.nueva']}" />                                          
+                                    <p:radioButton id="opt2" for="options" itemIndex="1"/>  
+                                    <h:outputLabel for="opt2" value="#{InfoMsg['ppp.progr.physicalFinancialProg.enProceso']}" /> 
+                                </h:panelGrid>
+                            </p:outputPanel>  
+                        </td>
+                        <td align="center">                           
+                            <p:panel id="pnlDates" header="#{InfoMsg['ppp.progr.physicalFinancialProg.datesHeader']}">
+                                <table width="80%">
+                                    <tr>                                        
+                                        <td>
+                                            <h:outputText value="#{InfoMsg['ppp.progr.physicalFinancialProg.msgError']}" style="visibility:${physicalFinancialProgController.visibilityMsj};font-size:smaller;color:red"/>                                            
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                            <h:outputText value="#{InfoMsg['ppp.progr.physicalFinancialProg.fechaInicio']}"/>                                     
+                                            <p:calendar id="calStartDate" showOn="button" 
+                                                        navigator="true" 
+                                                        pattern="dd/MM/yyyy"
+                                                        maxlength="11" size="11"
+                                                        readOnlyInputText="true"
+                                                        disabled="${physicalFinancialProgController.enabledCalendars}"
+                                                        mindate="${physicalFinancialProgController.minDateStartDate}"
+                                                        maxdate="${physicalFinancialProgController.maxDateStartDate}"
+                                                        value="${physicalFinancialProgController.physicalFinancialStartDate}">
+                                                 <p:ajax event="dateSelect" listener="#{physicalFinancialProgController.handleDateSelectStartDate}"
+                                                         update="pnlDuracion,pnlAportaciones,msgMensajes,pnlAvanceFisico" />  
+                                            </p:calendar> 
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                                            <h:outputText value="#{InfoMsg['ppp.progr.physicalFinancialProg.fechaFin']}" />
+                                            <p:calendar id="calEndDate" showOn="button" 
+                                                        navigator="true"                                              
+                                                        pattern="dd/MM/yyyy"
+                                                        maxlength="11" size="11"
+                                                        readOnlyInputText="true"
+                                                        disabled="${physicalFinancialProgController.enabledCalendars}"
+                                                        mindate="${physicalFinancialProgController.minDateEndDate}"
+                                                        maxdate="${physicalFinancialProgController.maxDateEndDate}"
+                                                        value="${physicalFinancialProgController.physicalFinancialEndDate}">
+                                                 <p:ajax event="dateSelect" listener="#{physicalFinancialProgController.handleDateSelectEndDate}"
+                                                         update="pnlDuracion,pnlAportaciones,msgMensajes,pnlAvanceFisico" />  
+                                            </p:calendar>  
+                                        </td>
+                                    </tr>                                  
+                                </table>
+                        </p:panel>                             
+                        </td>             
+                        <td align="center">
+                            <table  width="80%">
+                                <tr>
+                                    <td></td>
+                                    <td align="center">
+                                        <p:panel id="pnlDuracion" >
+                                            <h:outputText value="#{InfoMsg['ppp.progr.physicalFinancialProg.duracion']}" />
+                                            <p:inputText id="txtDuracion"  readonly="true" 
+                                                         value="${physicalFinancialProgController.duracionTime}" size="3"/>
+                                            <h:outputText value="#{InfoMsg['ppp.progr.physicalFinancialProg.meses']}" />
+                                            <p:selectOneRadio id="duracion" disabled="true" value="${physicalFinancialProgController.duracion}">  
+                                                <f:selectItem itemLabel="#{InfoMsg['ppp.progr.physicalFinancialProg.duracionAnual']}" itemValue="1" />  
+                                                <f:selectItem itemLabel="#{InfoMsg['ppp.progr.physicalFinancialProg.duracionMultianual']}" itemValue="2" /> 
+                                            </p:selectOneRadio>                                                                                 
+                                        </p:panel>                                                
+                                    </td>
+                                    <td>     
+                                    </td>                                    
+                                </tr>
+                            </table>        
+                        </td>                              
+                    </tr>                                                        
+                </table>                        
+            </p:panel>               
+            <p:panel  id="pnlAportaciones"  header="#{InfoMsg['ppp.progr.physicalFinancialProg.pnlAportacionesHeader']}">
+                <table cellpanding="1" align="center">
+                    <tr>                              
+                        <td align="right" >                            
+                            <h:outputText value="#{pppMsg['ppp.progr.physicalFinancialProg.avance']}" />
+                        </td>
+                        <th class="cellColorgray" style="border:solid black">
+                            <h:outputText value="#{pppMsg['ppp.progr.physicalFinancialProg.alaFechaHeader']}" />
+                        </th>
+                        <th class="cellColorgray" style="border:solid black">
+                            <h:outputText value="#{physicalFinancialProgController.getToExecHeader()}" />  
+                        </th>
+                        <th class="cellColorgray" style="border:solid black">
+                            <h:outputText value="#{pppMsg['ppp.progr.physicalFinancialProg.porEjecutarProxAños']}" />
+                        </th>
+                        <th class="cellColorgray" style="border:solid black">
+                            <h:outputText value="#{pppMsg['ppp.progr.physicalFinancialProg.totalHeader']}" />
+                        </th>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                            <h:outputText value="#{pppMsg['ppp.progr.physicalFinancialProg.fisico']}" />
+                        </td>
+                        <td align="center">
+                            <p:inputText id="txtAlaFechaFisico" 
+                                         value="${physicalFinancialProgController.physicalCurrent}" 
+                                         readonly="${physicalFinancialProgController.enabledCurrent}"
+                                         onkeypress=" return soloNumeros(event, this)"
+                                         style="text-align: left">                                
+                                <p:ajax event="blur" update="txtTotalFisico,msgMensajes" 
+                                        listener="${physicalFinancialProgController.calcTotalPhysicAdvanced()}"/>  
+                            </p:inputText>
+                        </td>
+                        <td align="center">
+                            <p:inputText id="txtEjecutarFisico"
+                                         value="${physicalFinancialProgController.physicalToExecute}"
+                                         onkeypress=" return soloNumeros(event, this)"
+                                         style="text-align: left">
+                                <p:ajax event="blur" update="txtTotalFisico,msgMensajes"
+                                        listener="${physicalFinancialProgController.calcTotalPhysicAdvanced()}"/>  
+                            </p:inputText>
+                        </td>
+                        <td align="center">
+                            <p:inputText id="txtEjecutarProxAñosFisico"
+                                         value="${physicalFinancialProgController.physicalToExcuteNextYears}"
+                                         size="35" readonly="${physicalFinancialProgController.enabledToExecuteNextYears}"
+                                         onkeypress=" return soloNumeros(event, this)"
+                                         style="text-align: left">
+                                <p:ajax event="blur" update="txtTotalFisico,msgMensajes"
+                                        listener="${physicalFinancialProgController.calcTotalPhysicAdvanced()}"/>  
+                            </p:inputText>
+                        </td>
+                        <td align="center">
+                            <p:inputText id="txtTotalFisico"  readonly="true" 
+                                         value="${physicalFinancialProgController.physicalTotal}"
+                                         style="text-align: left">                                
+                            </p:inputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                            <h:outputText value="#{pppMsg['ppp.progr.physicalFinancialProg.financiero']}" />
+                        </td>
+                        <td align="center">
+                            <p:inputText id="txtAlaFechaFinanciero" 
+                                         value="${physicalFinancialProgController.financialCurrent}"
+                                         readonly="${physicalFinancialProgController.enabledCurrent}"
+                                         onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                         style="text-align: right">                                
+                                <p:ajax event="blur" update="txtTotalFinanciero,msgMensajes"
+                                        listener="${physicalFinancialProgController.calcTotalFinancialAdvanced()}"/>  
+                            </p:inputText>
+                        </td>
+                        <td align="center">
+                            <p:inputText id="txtEjecutarFinanciero"
+                                         value="${physicalFinancialProgController.financialToExecute}"
+                                         onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                         style="text-align: right">
+                                <p:ajax event="blur" update="txtTotalFinanciero,msgMensajes"
+                                        listener="${physicalFinancialProgController.calcTotalFinancialAdvanced()}"/>  
+                            </p:inputText>
+                        </td>
+                        <td align="center">
+                            <p:inputText id="txtEjecutarProxAñosFinanciero" size="35"
+                                         value="${physicalFinancialProgController.financialToExcuteNextYears}"                                        
+                                         readonly="${physicalFinancialProgController.enabledToExecuteNextYears}"
+                                         onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                         style="text-align: right">
+                                 <p:ajax event="blur" update="txtTotalFinanciero,msgMensajes"
+                                         listener="${physicalFinancialProgController.calcTotalFinancialAdvanced()}"/>  
+                            </p:inputText>
+                        </td>
+                        <td align="center">
+                            <p:inputText id="txtTotalFinanciero"  readonly="true" 
+                                         value="${physicalFinancialProgController.financialTotal}"
+                                         style="text-align: right"/> 
+                        </td>
+                    </tr>
+                </table>
+            </p:panel>
+            <p:panel  id="pnlAvanceFisico"  header="#{physicalFinancialProgController.getPhysicalAdvancedHeader()}">
+                <table cellspacing="1" align="center" width="60%" >
+                    <tr>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Ene']}" /></th>
+                        <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Feb']}" /></th>
+                        <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Mar']}" /></th>
+                        <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Abr']}" /></th>
+                        <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.May']}" /></th>
+                        <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Jun']}" /></th>
+                        <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Jul']}" /></th>
+                        <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Ago']}" /></th>
+                        <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Sep']}" /></th>
+                        <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Oct']}" /></th>
+                        <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Nov']}" /></th>
+                        <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Dic']}" /></th>
+                        <th class="cellColorgray"><h:outputText value="#{pppMsg['ppp.progr.propositoMes.Total']}" /></th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputText value="*" style="color: red; font-weight: bold"/>
+                            <h:outputText value="#{pppMsg['ppp.progr.physicalFinancialProg.porcent']}" />
+                        </td> 
+                        <td>
+                            <p:inputText id="txtEne1" onkeypress=" return soloNumeros(event, this)"
+                                         value="${physicalFinancialProgController.physicalAdvan['ENE']}" 
+                                         size="6" readonly="${physicalFinancialProgController.disableEne}">
+                                <p:ajax event="blur" update="txtTotal1,txtEne1,msgMensajes"
+                                        listener="${physicalFinancialProgController.calcTotalPhysicalAdvan()}"/>  
+                            </p:inputText>                                
+                        </td>
+                        <td>
+                            <p:inputText id="txtFeb1"  onkeypress=" return soloNumeros(event, this)"
+                                         value="${physicalFinancialProgController.physicalAdvan['FEB']}" 
+                                         size="6" readonly="${physicalFinancialProgController.disableFeb}">                                        
+                                <p:ajax event="blur" update="txtTotal1,txtFeb1,msgMensajes"
+                                        listener="${physicalFinancialProgController.calcTotalPhysicalAdvan()}"/>  
+                            </p:inputText>                                   
+                        </td>
+                        <td>
+                            <p:inputText id="txtMar1"  onkeypress=" return soloNumeros(event, this)"
+                                         value="${physicalFinancialProgController.physicalAdvan['MAR']}"
+                                         size="6" readonly="${physicalFinancialProgController.disableMar}">                                        
+                                <p:ajax event="blur" update="txtTotal1,txtMar1,msgMensajes"
+                                        listener="${physicalFinancialProgController.calcTotalPhysicalAdvan()}"/>  
+                            </p:inputText>                                   
+                        </td>
+                        <td>
+                            <p:inputText id="txtAbr1" onkeypress=" return soloNumeros(event, this)"
+                                         value="${physicalFinancialProgController.physicalAdvan['ABR']}" 
+                                         size="6" readonly="${physicalFinancialProgController.disableAbr}">
+                                <p:ajax event="blur" update="txtTotal1 txtAbr1 msgMensajes"
+                                        listener="${physicalFinancialProgController.calcTotalPhysicalAdvan()}"/>  
+                            </p:inputText>
+                        </td>
+                        <td>
+                            <p:inputText id="txtMay1" size="6" readonly="${physicalFinancialProgController.disableMay}"
+                                         value="${physicalFinancialProgController.physicalAdvan['MAY']}"
+                                         onkeypress=" return soloNumeros(event, this)">
+                                <p:ajax event="blur" update="txtTotal1,txtMay1,msgMensajes"
+                                        listener="${physicalFinancialProgController.calcTotalPhysicalAdvan()}"/>  
+                            </p:inputText>
+                        </td>
+                        <td>
+                            <p:inputText id="txtJun1" size="6" readonly="${physicalFinancialProgController.disableJun}"
+                                         value="${physicalFinancialProgController.physicalAdvan['JUN']}"
+                                         onkeypress=" return soloNumeros(event, this)">
+                                <p:ajax event="blur" update="txtTotal1,txtJun1,msgMensajes"
+                                        listener="${physicalFinancialProgController.calcTotalPhysicalAdvan()}"/>  
+                            </p:inputText>
+                        </td>
+                        <td>
+                            <p:inputText id="txtJul1" size="6" readonly="${physicalFinancialProgController.disableJul}"
+                                         value="${physicalFinancialProgController.physicalAdvan['JUL']}"
+                                         onkeypress=" return soloNumeros(event, this)">
+                                <p:ajax event="blur" update="txtTotal1,txtJul1,msgMensajes"
+                                        listener="${physicalFinancialProgController.calcTotalPhysicalAdvan()}"/>                                          
+                            </p:inputText>
+                        </td>
+                        <td>
+                            <p:inputText id="txtAgo1" readonly="${physicalFinancialProgController.disableAgo}"
+                                         value="${physicalFinancialProgController.physicalAdvan['AGO']}" 
+                                         size="6" onkeypress=" return soloNumeros(event, this)">
+                                <p:ajax event="blur" update="txtTotal1,txtAgo1,msgMensajes"
+                                        listener="${physicalFinancialProgController.calcTotalPhysicalAdvan()}"/>  
+                            </p:inputText>
+                        </td>
+                        <td>
+                            <p:inputText id="txtSep1" readonly="${physicalFinancialProgController.disableSep}"
+                                         value="${physicalFinancialProgController.physicalAdvan['SEP']}" 
+                                         size="6" onkeypress=" return soloNumeros(event, this)">
+                                <p:ajax event="blur" update="txtTotal1,txtSep1,msgMensajes"
+                                        listener="${physicalFinancialProgController.calcTotalPhysicalAdvan()}"/>  
+                            </p:inputText>                                   
+                        </td>
+                        <td>
+                            <p:inputText id="txtOct1" readonly="${physicalFinancialProgController.disableOct}"
+                                         value="${physicalFinancialProgController.physicalAdvan['OCT']}" 
+                                         size="6" onkeypress=" return soloNumeros(event, this)">
+                                <p:ajax event="blur" update="txtTotal1,txtOct1,msgMensajes"
+                                        listener="${physicalFinancialProgController.calcTotalPhysicalAdvan()}"/>  
+                            </p:inputText>
+                        </td>
+                        <td>
+                            <p:inputText id="txtNov1"  readonly="${physicalFinancialProgController.disableNov}"
+                                         value="${physicalFinancialProgController.physicalAdvan['NOV']}" 
+                                         size="6" onkeypress=" return soloNumeros(event, this)">
+                                <p:ajax event="blur" update="txtTotal1,txtNov1,msgMensajes"
+                                        listener="${physicalFinancialProgController.calcTotalPhysicalAdvan()}"/>  
+                            </p:inputText>
+                        </td>
+                        <td>
+                            <p:inputText id="txtDic1" readonly="${physicalFinancialProgController.disableDic}"
+                                         value="${physicalFinancialProgController.physicalAdvan['DIC']}" 
+                                         size="6" onkeypress=" return soloNumeros(event, this)">
+                                <p:ajax event="blur" update="txtTotal1,txtDic1,msgMensajes"
+                                        listener="${physicalFinancialProgController.calcTotalPhysicalAdvan()}"/>  
+                            </p:inputText>
+                        </td>
+                        <td>
+                            <p:inputText id="txtTotal1" size="6" readonly="true"
+                                         value="${physicalFinancialProgController.physicalAdvan['TOTAL']}"/>                                 
+                        </td>
+                    </tr>
+                </table>                              
+            </p:panel>
+            <p:panel  id="pnlAvanceFinanciero"  header="#{physicalFinancialProgController.getFinancialAdvancedHeader()}">
+                <table>                           
+                    <tr>
+                        <td>
+                            <p:dataTable id="grdAvanceFinanciero2" var="adv" sortBy="#{adv.key}" sortOrder="ascending"
+                                        emptyMessage="#{InfoMsg['ppp.common.DataTable.NotFound']}"
+                                        value="#{physicalFinancialProgController.financialAdvProg}"                            
+                                        paginator="false" style="word-wrap:break-word;word-break:break-all">
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText
+                                            value="#{InfoMsg['ppp.progr.physicalFinancialProg.clavePresupuestal']}" />
+                                    </f:facet>
+                                    <h:outputText  value="#{adv.key}"  style="font-size: smaller"/>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText
+                                            value="#{InfoMsg['ppp.progr.physicalFinancialProg.fteFto']}" />
+                                    </f:facet>
+                                    <h:outputText  value="#{adv.financingSource}" style="font-size: smaller" />
+                                </p:column>                                 
+                                <p:column style="text-align: right">
+                                    <f:facet name="header">
+                                        <h:outputText
+                                            value="#{InfoMsg['ppp.progr.physicalFinancialProg.AnualAmount']}" />
+                                    </f:facet>
+                                    <h:outputText  value="#{adv.originalAmount}" style="font-size: smaller" >
+                                        <f:convertNumber pattern="###,###,###" />
+                                    </h:outputText>
+                                </p:column>
+                                
+                                <p:column style="text-align: right">
+                                    <f:facet name="header">
+                                        <h:outputText value="Diferencia" />
+                                    </f:facet>
+                                    <h:outputText  value="#{adv.diff}" id="txtDiff" style="font-size: smaller">
+                                        <f:convertNumber pattern="###,###,###" />
+                                    </h:outputText>
+                                </p:column>
+                                
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{pppMsg['ppp.progr.propositoMes.Ene']}"/>                                            
+                                       
+                                    </f:facet>
+                                    <p:inputText id="advanFinan_ENE1" maxlength="10" size="5"
+                                                 title="#{adv.mensualBudgetKeyValue['ENE']}"
+                                                 value="#{adv.mensualBudgetKeyValue['ENE']}"
+                                                 onkeypress=" return soloNumeros(event, this)"
+                                                 style="text-align: right" onkeyup="format(this)">
+                                         <p:ajax event="blur" update="totalCve, totalEne, totalCves, txtDiff" 
+                                                 listener="${physicalFinancialProgController.calculateCveTotals()}"/> 
+                                    </p:inputText>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText
+                                            value="#{pppMsg['ppp.progr.propositoMes.Feb']}"/>
+                                    </f:facet>
+                                    <p:inputText id="advanFinan_FEB" onkeypress=" return soloNumeros(event, this)"
+                                                 value="#{adv.mensualBudgetKeyValue['FEB']}" onkeyup="format(this)"
+                                                 maxlength="10" size="5" style="text-align: right"
+                                                 title="#{adv.mensualBudgetKeyValue['FEB']}">
+                                        <p:ajax event="blur" update="totalCve, totalFeb, totalCves, txtDiff"
+                                                 listener="${physicalFinancialProgController.calculateCveTotals()}"/> 
+                                    </p:inputText>                                                                                                 
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText
+                                            value="#{pppMsg['ppp.progr.propositoMes.Mar']}" />
+                                    </f:facet>
+                                    <p:inputText id="advanFinan_MAR" onkeypress=" return soloNumeros(event, this)"
+                                                 value="#{adv.mensualBudgetKeyValue['MAR']}" onkeyup="format(this)"
+                                                 maxlength="10" size="5" style="text-align: right" 
+                                                 title="#{adv.mensualBudgetKeyValue['MAR']}">
+                                        <p:ajax event="blur" update="totalCve, totalMar, totalCves, txtDiff"
+                                                 listener="${physicalFinancialProgController.calculateCveTotals()}"/> 
+                                    </p:inputText>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText
+                                            value="#{pppMsg['ppp.progr.propositoMes.Abr']}" />
+                                    </f:facet>
+                                    <p:inputText id="advanFinan_ABR" onkeypress=" return soloNumeros(event, this)"
+                                                 value="#{adv.mensualBudgetKeyValue['ABR']}" onkeyup="format(this)"
+                                                maxlength="10" size="5" style="text-align: right" 
+                                                 title="#{adv.mensualBudgetKeyValue['ABR']}">  
+                                        <p:ajax event="blur" update="totalCve, totalAbr, totalCves, txtDiff"
+                                                 listener="${physicalFinancialProgController.calculateCveTotals()}"/> 
+                                    </p:inputText>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText
+                                            value="#{pppMsg['ppp.progr.propositoMes.May']}" />
+                                    </f:facet>
+                                    <p:inputText id="advanFinan_MAY" onkeypress=" return soloNumeros(event, this)"
+                                                 value="#{adv.mensualBudgetKeyValue['MAY']}" onkeyup="format(this)"
+                                                 maxlength="10" size="5" style="text-align: right" 
+                                                 title="#{adv.mensualBudgetKeyValue['MAY']}">
+                                        <p:ajax event="blur" update="totalCve, totalMay, totalCves, txtDiff"
+                                                 listener="${physicalFinancialProgController.calculateCveTotals()}"/> 
+                                    </p:inputText>
+
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText
+                                            value="#{pppMsg['ppp.progr.propositoMes.Jun']}" />
+                                    </f:facet>
+                                    <p:inputText id="advanFinan_JUN" onkeypress=" return soloNumeros(event, this)"
+                                                 value="#{adv.mensualBudgetKeyValue['JUN']}" onkeyup="format(this)"
+                                                 maxlength="10" size="5" style="text-align: right" 
+                                                 title="#{adv.mensualBudgetKeyValue['JUN']}">
+                                        <p:ajax event="blur" update="totalCve, totalJun, totalCves, txtDiff"
+                                                 listener="${physicalFinancialProgController.calculateCveTotals()}"/> 
+                                    </p:inputText>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText
+                                            value="#{pppMsg['ppp.progr.propositoMes.Jul']}" />
+                                    </f:facet>
+                                    <p:inputText id="advanFinan_JUL" onkeypress=" return soloNumeros(event, this)"
+                                                 value="#{adv.mensualBudgetKeyValue['JUL']}" onkeyup="format(this)"
+                                                maxlength="10" size="5" style="text-align: right" 
+                                                 title="#{adv.mensualBudgetKeyValue['JUL']}">
+                                        <p:ajax event="blur" update="totalCve, totalJul, totalCves, txtDiff"
+                                                 listener="${physicalFinancialProgController.calculateCveTotals()}"/> 
+                                    </p:inputText>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText
+                                            value="#{pppMsg['ppp.progr.propositoMes.Ago']}" />
+                                    </f:facet>
+                                    <p:inputText id="advanFinan_AGO" onkeypress=" return soloNumeros(event, this)"
+                                                 value="#{adv.mensualBudgetKeyValue['AGO']}" onkeyup="format(this)"
+                                                 maxlength="10" size="5" style="text-align: right" 
+                                                 title="#{adv.mensualBudgetKeyValue['AGO']}">
+                                        <p:ajax event="blur" update="totalCve, totalAgo, totalCves, txtDiff"
+                                                 listener="${physicalFinancialProgController.calculateCveTotals()}"/> 
+                                    </p:inputText>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText
+                                            value="#{pppMsg['ppp.progr.propositoMes.Sep']}" />
+                                    </f:facet>
+                                    <p:inputText id="advanFinan_SEP" onkeypress=" return soloNumeros(event, this)"
+                                                 value="#{adv.mensualBudgetKeyValue['SEP']}" onkeyup="format(this)"
+                                                 maxlength="10" size="5" style="text-align: right" 
+                                                 title="#{adv.mensualBudgetKeyValue['SEP']}">  
+                                        <p:ajax event="blur" update="totalCve, totalSep, totalCves, txtDiff"
+                                                 listener="${physicalFinancialProgController.calculateCveTotals()}"/> 
+                                    </p:inputText>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText
+                                            value="#{pppMsg['ppp.progr.propositoMes.Oct']}" />
+                                    </f:facet>
+                                    <p:inputText id="advanFinan_OCT" onkeypress=" return soloNumeros(event, this)"
+                                                 value="#{adv.mensualBudgetKeyValue['OCT']}" onkeyup="format(this)"
+                                                 maxlength="10" size="5" style="text-align: right" 
+                                                 title="#{adv.mensualBudgetKeyValue['OCT']}">   
+                                        <p:ajax event="blur" update="totalCve, totalOct, totalCves, txtDiff"
+                                                 listener="${physicalFinancialProgController.calculateCveTotals()}"/> 
+                                    </p:inputText>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText
+                                            value="#{pppMsg['ppp.progr.propositoMes.Nov']}" />
+                                    </f:facet>
+                                    <p:inputText id="advanFinan_NOV" onkeypress=" return soloNumeros(event, this)"
+                                                 value="#{adv.mensualBudgetKeyValue['NOV']}" onkeyup="format(this)"
+                                                 maxlength="10" size="5" style="text-align: right" 
+                                                 title="#{adv.mensualBudgetKeyValue['NOV']}">  
+                                        <p:ajax event="blur" update="totalCve, totalNov, totalCves, txtDiff"
+                                                 listener="${physicalFinancialProgController.calculateCveTotals()}"/> 
+                                    </p:inputText>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText
+                                            value="#{pppMsg['ppp.progr.propositoMes.Dic']}" />
+                                    </f:facet>
+                                    <p:inputText id="advanFinan_DIC" onkeypress=" return soloNumeros(event, this)"
+                                                 value="#{adv.mensualBudgetKeyValue['DIC']}" size="5"
+                                                 maxlength="10" style="text-align: right" onkeyup="format(this)"
+                                                 title="#{adv.mensualBudgetKeyValue['DIC']}">
+                                        <p:ajax event="blur" update="totalCve, totalDic,totalCves, txtDiff"
+                                                 listener="${physicalFinancialProgController.calculateCveTotals()}"/> 
+                                    </p:inputText>
+                                </p:column>
+                                <p:column style="text-align: right">
+                                    <f:facet name="header">
+                                        <h:outputText
+                                            value="#{pppMsg['ppp.progr.physicalFinancialProg.CveTotal']}" /> 
+                                    </f:facet>
+                                    <h:outputText id="totalCve" value="#{adv.totalCve}" style="font-size: smaller" >
+                                         <f:convertNumber pattern="###,###,###" />
+                                    </h:outputText>
+                                </p:column>
+                                <f:facet name="footer">
+                                    <table>
+                                        <tr>
+                                            <td width="585px" style="text-align: right">
+                                                <h:outputText style="color: white" id="totalHeaders" value="#{pppMsg['ppp.progr.physicalFinancialProg.totalHeader']}:"/>  
+                                            </td>
+                                            <td width="59px" style="text-align: center">
+                                                <h:outputText style="color: white; font-size: smaller" id="totalEne" value="#{physicalFinancialProgController.totalMonths['ENE']}">
+                                                     <f:convertNumber pattern="###,###,###" />
+                                                </h:outputText>
+                                            </td>
+                                            <td width="59px" style="text-align: center">
+                                                <h:outputText style="color: white; font-size: smaller" id="totalFeb" value="#{physicalFinancialProgController.totalMonths['FEB']}">
+                                                     <f:convertNumber pattern="###,###,###" />
+                                                </h:outputText>
+                                            </td>
+                                            <td width="59px" style="text-align: center">
+                                                <h:outputText style="color: white; font-size: smaller" id="totalMar" value="#{physicalFinancialProgController.totalMonths['MAR']}">
+                                                     <f:convertNumber pattern="###,###,###" />
+                                                </h:outputText>
+                                            </td>
+                                            <td width="59px" style="text-align: center">
+                                                <h:outputText style="color: white; font-size: smaller" id="totalAbr" value="#{physicalFinancialProgController.totalMonths['ABR']}">
+                                                     <f:convertNumber pattern="###,###,###" />
+                                                </h:outputText>
+                                            </td>
+                                            <td width="59px" style="text-align: center">
+                                                <h:outputText style="color: white; font-size: smaller" id="totalMay" value="#{physicalFinancialProgController.totalMonths['MAY']}">
+                                                     <f:convertNumber pattern="###,###,###" />
+                                                </h:outputText>
+                                            </td>
+                                            <td width="59px" style="text-align: center">
+                                                <h:outputText style="color: white; font-size: smaller" id="totalJun" value="#{physicalFinancialProgController.totalMonths['JUN']}">
+                                                     <f:convertNumber pattern="###,###,###" />
+                                                </h:outputText>
+                                            </td>
+                                            <td width="59px" style="text-align: center">
+                                                <h:outputText style="color: white; font-size: smaller" id="totalJul" value="#{physicalFinancialProgController.totalMonths['JUL']}">
+                                                     <f:convertNumber pattern="###,###,###" />
+                                                </h:outputText>
+                                            </td>
+                                            <td width="59px" style="text-align: center">
+                                                <h:outputText style="color: white; font-size: smaller" id="totalAgo" value="#{physicalFinancialProgController.totalMonths['AGO']}">
+                                                     <f:convertNumber pattern="###,###,###" />
+                                                </h:outputText>
+                                            </td>
+                                            <td width="59px" style="text-align: center">
+                                                <h:outputText style="color: white; font-size: smaller" id="totalSep" value="#{physicalFinancialProgController.totalMonths['SEP']}">
+                                                     <f:convertNumber pattern="###,###,###" />
+                                                </h:outputText>
+                                            </td>
+                                            <td width="59px" style="text-align: center">
+                                                <h:outputText style="color: white; font-size: smaller" id="totalOct" value="#{physicalFinancialProgController.totalMonths['OCT']}">
+                                                     <f:convertNumber pattern="###,###,###" />
+                                                </h:outputText>
+                                            </td>
+                                            <td width="59px" style="text-align: center">
+                                                <h:outputText style="color: white; font-size: smaller" id="totalNov" value="#{physicalFinancialProgController.totalMonths['NOV']}">
+                                                     <f:convertNumber pattern="###,###,###" />
+                                                </h:outputText>
+                                            </td>
+                                            <td width="59px" style="text-align: center">
+                                                <h:outputText style="color: white; font-size: smaller" id="totalDic" value="#{physicalFinancialProgController.totalMonths['DIC']}">
+                                                     <f:convertNumber pattern="###,###,###" />
+                                                </h:outputText>
+                                            </td>
+                                            <td width="68px" style="text-align: right; word-wrap: break-word; word-break: break-all">
+                                                <h:outputText style="color: white; font-size: smaller" id="totalCves" value="#{physicalFinancialProgController.totalMonths['TOTAL']}">
+                                                     <f:convertNumber pattern="###,###,###" />
+                                                </h:outputText>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </f:facet>   
+                            </p:dataTable>
+                        </td>
+                    </tr>
+                </table> 
+            </p:panel>            
+            <div align="right">
+                <p:commandButton id="btnSaveFinancialProgram"  
+                                 update="pnlAvanceFinanciero msgMensajes"
+                                 actionListener="#{physicalFinancialProgController.saveFinancialAdv(true)}"
+                                 value="#{pppMsg['ppp.progr.propositoSalvar']}"                                 
+                                 onmouseover="this.focus();">
+                </p:commandButton>
+            </div>
+            <!-->testing<-->              
+        </h:form>   
+    </ui:composition>
+</html>

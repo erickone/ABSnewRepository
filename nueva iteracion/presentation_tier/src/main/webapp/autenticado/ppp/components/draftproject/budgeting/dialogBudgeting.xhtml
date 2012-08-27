@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/validateInput.js"></script>
+        <p:dialog id="dlgBudgetDetails" header="#{InfoMsg['ppp.budgeting.titlescheduling']}" 
+                  widgetVar="dlg" modal="true" 
+                  maximizable="false" minimizable="false"  
+                  closable="false"
+                  minHeight="200" minWidth="400" position="center" 
+                  resizable="false" 
+                  height="500" width="900" rendered="true" dynamic="true"> 
+            <p:messages id="msgBudgeting" showDetail="true" showSummary="false" autoUpdate="true"  />
+            
+            <p:ajax event="close" update=":tabDraftProjectDetails:budgetingForm:grdBudgetingSummary" listener="#{budgetingSummaryController.initListOfComponents()}"/>  
+            
+            <p:panel id="panKeyBudget" header="#{InfoMsg['ppp.budgeting.budgetingkey']}" >
+                <div class="divTablePED">
+                    <div class="divTextBudgetingKey">
+                        <p:inputText readonly="true" value="#{budgetingController.itsProgrammaticKey}" style="width: 95%" id="budgetingKey" />       
+                    </div>
+                    <div class="divButtonUnistsCosting">
+                        <p:commandButton disabled="true" id="unitsCosting" value="#{InfoMsg['ppp.budgeting.unitscosting']}"/>
+                    </div>
+                </div>
+            </p:panel>
+            <p:panel id="panObjectExpense" header="#{InfoMsg['ppp.budgeting.objectexpense']}" >
+                <div class="divTablePED">
+                    <div class="divTextObjectExpense">
+                        <p:selectOneMenu style="max-width: 600px; width: 100%" 
+                                         value="#{budgetingController.itsSelectedObjectExpense}" id="inputObjectExpense" >
+                            <f:selectItem itemLabel="#{InfoMsg['ppp.budgeting.SelectAExpenseObject']}" itemValue="0"/>
+                            <f:selectItems value="#{budgetingController.itsListOfFrammingObjectExpense}" var="Obj"
+                                           itemLabel="#{Obj.objectExpenseKey} #{Obj.objectExpenseDescription}" 
+                                           itemValue="#{Obj.objectExpenseId}"/>
+                            <p:ajax listener="#{budgetingController.chargeOfCombos}" 
+                                    update="destinyExpense,financingSourceMenu,
+                                    :tabDraftProjectDetails:budgetingForm:panBasicPartities" />
+                        </p:selectOneMenu>    
+                    </div>
+                    <div class="divLabelObjectExpense">
+                        <h:outputText value="#{InfoMsg['ppp.budgeting.destiny']}"/>
+                    </div>
+                    <div class="divTextObjectComboExpense">
+                        <p:selectOneMenu style="max-width: 150px; width: 100%" 
+                                         value="#{budgetingController.itsSelectedDestinationId}" 
+                                         id="destinyExpense"  >
+                            <f:selectItem itemLabel="#{InfoMsg['ppp.budgeting.SelectADestination']}" itemValue="-1"/>
+                            <f:selectItems value="#{budgetingController.itsListOfDestinations}" 
+                                           var="destiny"
+                                           itemLabel="#{destiny.destinyObjectEpenseRUBUDestiny} #{destiny.destinyObjectEpenseRUBUDestinyDesc}"
+                                           itemValue="#{destiny.destinyObjectEpenseRUBUDestiny}" />
+                            <p:ajax listener="#{budgetingController.budgetingCeilingAmount()}" 
+                                    update="budgetingCeiling availableCeiling 
+                                    :tabDraftProjectDetails:budgetingForm:panBasicPartities" />
+                        </p:selectOneMenu>   
+                    </div>           
+                </div>
+            </p:panel>
+            <p:panel id="panSourceOfFunding" header="#{InfoMsg['ppp.progr.DialogBudgeting.SourceOfFunding']}" >
+                <div class="divTablePED">
+                    <div class="divLabelBudgeting" >
+                        <h:outputText style="width: 100%" value="#{InfoMsg['ppp.progr.DialogBudgeting.SourceOfFunding']}"/>
+                    </div>  
+                    <div class="divTextBudgeting">
+                        <p:selectOneMenu style="max-width: 700px; width: 100%" panelStyle="width: 380px"
+                                         value="#{budgetingController.itsSelectedFinancingSourceId}" 
+                                         id="financingSourceMenu" >
+                            <f:selectItem itemLabel="#{InfoMsg['ppp.budgeting.SelectAFinancingSource']}" itemValue="0"/>
+                            <f:selectItems value="#{budgetingController.itsListOfFinancingSourceDto}" 
+                                           var="fin"
+                                           itemLabel="#{fin.financingSourceKey}  #{fin.financingSourceDesc}"
+                                           itemValue="#{fin.financingSourceId}" />
+                            <p:ajax listener ="#{budgetingController.financingCeilingAmount()}"
+                                    update ="finSourceCeiling, finSourceavailableCeiling"/>
+                        </p:selectOneMenu>
+                    </div>          
+                </div>
+                <div class="divTablePED">
+                    <div class="divLabelBudgeting">
+                        <h:outputText value="#{InfoMsg['ppp.budgeting.FinSourceCeiling']}" />
+                    </div>
+                    <div class="divTextBudgeting">
+                        <p:inputText style="width: 95%; text-align: right" id="finSourceCeiling" 
+                                     value="#{budgetingController.itsMyFinCeilingToShow}" 
+                                     onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"/>
+                    </div>
+                    <div class="divLabelBudgeting">
+                        <h:outputText  value="#{InfoMsg['ppp.budgeting.FinSourceAvailableCeiling']}" />
+                    </div>
+                    <div class="divTextBudgeting">
+                        <p:inputText style="width: 100%; text-align: right" id="finSourceavailableCeiling" 
+                                     value="#{budgetingController.itsMyFinAvailableToShow}"
+                                     onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"/>
+                    </div>
+                </div>
+            </p:panel>
+            <p:panel id="panAditionalBudgeting" header="#{InfoMsg['ppp.budgeting.aditionalBudgeting']}" >
+                <div class="divTablePED">                                       
+                    <div class="divCheckButton">
+                        <p:selectBooleanCheckbox value="#{budgetingController.isAditionalBudgeting}" id="aditionalBudgeting" >
+                            <p:ajax oncomplete="confirmationBudget.show()" update="confirmBudgetingDialog, budgetingCantity"
+                                    listener="#{budgetingController.prepareTheMessage()}" />
+                        </p:selectBooleanCheckbox>
+                        <h:outputText value="#{InfoMsg['ppp.progr.DialogBudgeting.PAditional']}" />
+                    </div>
+                </div>
+                <div class="divTablePED">
+                    <div class="divLabelBudgeting" >
+                        <h:outputText style="width: 100%" value="#{InfoMsg['ppp.budgeting.Justification']}" />
+                    </div>
+                    <div class="divTextBudgetingJustification">
+                        <p:inputText readonly="#{budgetingController.itsJustificationTextBoxReadOnly}" style="width: 100%" id="justificationText" 
+                                     value="#{budgetingController.itsMyJustification}" disabled="#{!budgetingController.isAditionalBudgeting}" />
+                    </div>                    
+                </div>
+                <div class="divTablePED">
+                    <div class="divLabelBudgeting" >
+                        <h:outputText value="#{InfoMsg['ppp.budgeting.BudgetingAditionalAnnual']}"/>
+                    </div> 
+                    <div class="divTextBudgeting">                        
+                        <p:inputText style="width: 95%; text-align: right" 
+                                     value="#{budgetingController.itsSummatoryAdititionalQuantityAux}" 
+                                     disabled="#{!budgetingController.isAditionalBudgeting}"
+                                     onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)">
+                        </p:inputText>
+                    </div>
+                </div>
+            </p:panel>            
+            <p:panel id="panBasicPartities" header="#{InfoMsg['ppp.budgeting.Budget']}" >
+                <p:messages id="msgBudgeting2" showDetail="true" showSummary="false" autoUpdate="true"  />
+                <div class="divTablePED">
+                    <div class="divLabelBudgeting">
+                        <h:outputText value="#{InfoMsg['ppp.budgeting.Basic.roof']}"/>
+                    </div>
+                    <div class="divTextBudgeting">
+                        <p:inputText style="width: 95%;text-align: right"  readonly="true" id="basicCeiling" 
+                                     value="#{budgetingController.itsMyBasicCeiling}"/>
+                    </div>
+                    <div class="divLabelBudgeting">
+                        <h:outputText value="#{InfoMsg['ppp.budgeting.BasicAssign']}"/>
+                    </div>
+                    <div class="divTextBudgeting">
+                        <p:inputText style="width: 95%;text-align: right"  readonly="true" 
+                                     id="basicAssign" value="#{budgetingController.itsMyBasicCeilingUsed}"/>
+                    </div>
+                </div>
+                <div class="divTablePED">
+                    <div class="divLabelBudgeting">
+                        <h:outputText value="#{InfoMsg['ppp.budgeting.BasicAvailable']}"/>
+                    </div>                  
+                    <div class="divTextBudgeting">
+                        <p:inputText style="width: 95%;text-align: right"  readonly="true" 
+                                     id="basicAvailable" value="#{budgetingController.itsMyBasicAvailable}"/>
+                    </div>
+
+                    <div class="divLabelBudgeting">
+                        <h:outputText value="#{InfoMsg['ppp.budgeting.BudgetingCeiling']}" />
+                    </div>
+                    <div class="divTextBudgeting">
+                        <p:inputText readonly="true" style="width: 95%;text-align: right" 
+                                     id="budgetingCeiling" value="#{budgetingController.itsMyCeilingToshow}"/>
+                    </div>
+                </div>
+                <div class="divTablePED">
+                    <div class="divLabelBudgeting">
+                        <h:outputText  value="#{InfoMsg['ppp.budgeting.AvailableCeiling']}" />
+                    </div>
+                    <div class="divTextBudgeting">
+                        <p:inputText readonly="true" style="width: 95%;text-align: right" 
+                                     id="availableCeiling" value="#{budgetingController.itsMyCeilingAvailableToShow}" />
+                    </div>
+                    <div class="divLabelBudgeting" >
+                        <h:outputText value="#{InfoMsg['ppp.budgeting.BudgetingAnnual']}"/>
+                    </div> 
+                    <div class="divTextBudgeting">
+                        <p:inputText style="width: 95%; text-align: right" disabled="#{budgetingController.isAditionalBudgeting}"
+                                     value="#{budgetingController.itsSummatoryCantity}" 
+                                     id="budgetingCantity" 
+                                     converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" 
+                                     onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)"
+                                     >
+                           
+                        </p:inputText> 
+                    </div>
+                </div>
+            </p:panel>
+            <p:panel id="panMonths">
+                <div class="divTablePED"> 
+                    <div class="divMonths">
+                        <div class="divTablePED">
+                            <div class="divLabelWithBorder">
+                                <h:outputText value="#{InfoMsg['common.month.january']}"/> 
+                            </div>
+                            <div class="divInputTextMonths">
+                                <p:inputText style="width: 90%;text-align: right" 
+                                             value="#{budgetingController.itsMonthlyAmounts['ENE']}"
+                                             title="${budgetingController.itsMonthlyAmounts['ENE']}"
+                                             disabled="#{budgetingController.isAditionalBudgeting}"
+                                             id="jan" converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" 
+                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)">
+                                   
+                                    <p:ajax event="blur" update=":tabDraftProjectDetails:budgetingForm:panObjectExpense" 
+                                            listener="#{budgetingController.totalOfSummatory}"/>
+                                </p:inputText>
+                            </div>
+                            <div class="divLabelWithBorder">
+                                <h:outputText value="#{InfoMsg['common.month.febraury']}"/> 
+                            </div>
+                            <div class="divInputTextMonths">
+                                <p:inputText style="width: 90%;text-align: right" 
+                                             value="#{budgetingController.itsMonthlyAmounts['FEB']}"
+                                             title="${budgetingController.itsMonthlyAmounts['FEB']}"
+                                             disabled="#{budgetingController.isAditionalBudgeting}"
+                                             id="feb" converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}"
+                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)">
+                                  
+                                    <p:ajax event="blur" update=":tabDraftProjectDetails:budgetingForm:panObjectExpense" 
+                                            listener="#{budgetingController.totalOfSummatory}"/>
+                                </p:inputText>
+                            </div>
+                            <div class="divLabelWithBorder">
+                                <h:outputText value="#{InfoMsg['common.month.march']}"/> 
+                            </div>
+                            <div class="divInputTextMonths">
+                                <p:inputText style="width: 90%;text-align: right" 
+                                             value="#{budgetingController.itsMonthlyAmounts['MAR']}"
+                                             title="${budgetingController.itsMonthlyAmounts['MAR']}"
+                                             disabled="#{budgetingController.isAditionalBudgeting}"
+                                             id="march" converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" 
+                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)">
+                                  
+                                    <p:ajax event="blur" update=":tabDraftProjectDetails:budgetingForm:panObjectExpense" 
+                                            listener="#{budgetingController.totalOfSummatory}"/>
+                                </p:inputText>
+                            </div>
+                            <div class="divLabelWithBorder">
+                                <h:outputText value="#{InfoMsg['common.month.april']}"/> 
+                            </div>
+                            <div class="divInputTextMonths">
+                                <p:inputText style="width: 90%;text-align: right"
+                                             value="#{budgetingController.itsMonthlyAmounts['ABR']}"
+                                             title="${budgetingController.itsMonthlyAmounts['ABR']}"
+                                             disabled="#{budgetingController.isAditionalBudgeting}"
+                                             id="april" converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" 
+                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)">
+                                   
+                                    <p:ajax event="blur" update=":tabDraftProjectDetails:budgetingForm:panObjectExpense" 
+                                            listener="#{budgetingController.totalOfSummatory}"/>
+                                </p:inputText>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divMonthsWithBorder">
+                        <div class="divTablePED">
+                            <div class="divLabelWithBorder">
+                                <h:outputText value="#{InfoMsg['common.month.May']}"/> 
+                            </div>
+                            <div class="divInputTextMonths">
+                                <p:inputText style="width: 90%;text-align: right"
+                                             value="#{budgetingController.itsMonthlyAmounts['MAY']}"
+                                             title="${budgetingController.itsMonthlyAmounts['MAY']}"
+                                             disabled="#{budgetingController.isAditionalBudgeting}"
+                                             id="may" converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" 
+                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)">
+                                  
+                                    <p:ajax event="blur" update=":tabDraftProjectDetails:budgetingForm:panObjectExpense" 
+                                            listener="#{budgetingController.totalOfSummatory}"/>
+                                </p:inputText>
+                            </div>
+                            <div class="divLabelWithBorder">
+                                <h:outputText value="#{InfoMsg['common.month.june']}"/> 
+                            </div>
+                            <div class="divInputTextMonths">
+                                <p:inputText style="width: 90%;text-align: right" 
+                                             value="#{budgetingController.itsMonthlyAmounts['JUN']}"
+                                             title="${budgetingController.itsMonthlyAmounts['JUN']}"
+                                             disabled="#{budgetingController.isAditionalBudgeting}"
+                                             id="june" converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" 
+                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)">
+                                  
+                                    <p:ajax event="blur" update=":tabDraftProjectDetails:budgetingForm:panObjectExpense" 
+                                            listener="#{budgetingController.totalOfSummatory}"/>
+                                </p:inputText>
+                            </div>
+                            <div class="divLabelWithBorder">
+                                <h:outputText value="#{InfoMsg['common.month.july']}"/> 
+                            </div>
+                            <div class="divInputTextMonths">
+                                <p:inputText style="width: 90%;text-align: right" 
+                                             value="#{budgetingController.itsMonthlyAmounts['JUL']}"
+                                             title="${budgetingController.itsMonthlyAmounts['JUL']}"
+                                             disabled="#{budgetingController.isAditionalBudgeting}"
+                                             id="july" converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" 
+                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)">
+                                   
+                                    <p:ajax event="blur" update=":tabDraftProjectDetails:budgetingForm:panObjectExpense" 
+                                            listener="#{budgetingController.totalOfSummatory}"/>
+                                </p:inputText>
+                            </div>
+                            <div class="divLabelWithBorder">
+                                <h:outputText value="#{InfoMsg['common.month.august']}"/> 
+                            </div>
+                            <div class="divInputTextMonths">
+                                <p:inputText style="width: 90%;text-align: right" 
+                                             value="#{budgetingController.itsMonthlyAmounts['AGO']}"
+                                             title="${budgetingController.itsMonthlyAmounts['AGO']}"
+                                             disabled="#{budgetingController.isAditionalBudgeting}"
+                                             id="august" converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" 
+                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)">
+                                   
+                                    <p:ajax event="blur" update=":tabDraftProjectDetails:budgetingForm:panObjectExpense" 
+                                            listener="#{budgetingController.totalOfSummatory}"/>
+                                </p:inputText>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divMonthsWithBorder">
+                        <div class="divTablePED">
+                            <div class="divLabelWithBorder">
+                                <h:outputText value="#{InfoMsg['common.month.september']}"/> 
+                            </div>
+                            <div class="divInputTextMonths">
+                                <p:inputText style="width: 90%;text-align: right" 
+                                             value="#{budgetingController.itsMonthlyAmounts['SEP']}"
+                                             title="${budgetingController.itsMonthlyAmounts['SEP']}"
+                                             disabled="#{budgetingController.isAditionalBudgeting}"
+                                             id="sept" converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" 
+                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)">
+                                   
+                                    <p:ajax event="blur" update=":tabDraftProjectDetails:budgetingForm:panObjectExpense" 
+                                            listener="#{budgetingController.totalOfSummatory}"/>
+                                </p:inputText>
+                            </div>
+                            <div class="divLabelWithBorder">
+                                <h:outputText value="#{InfoMsg['common.month.october']}"/> 
+                            </div>
+                            <div class="divInputTextMonths">
+                                <p:inputText style="width: 90%;text-align: right" 
+                                             value="#{budgetingController.itsMonthlyAmounts['OCT']}"
+                                             title="${budgetingController.itsMonthlyAmounts['OCT']}"
+                                             disabled="#{budgetingController.isAditionalBudgeting}"
+                                             id="oct" converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" 
+                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)">
+                                   
+                                    <p:ajax event="blur" update=":tabDraftProjectDetails:budgetingForm:panObjectExpense" 
+                                            listener="#{budgetingController.totalOfSummatory}"/>
+                                </p:inputText>
+                            </div>
+                            <div class="divLabelWithBorder">
+                                <h:outputText value="#{InfoMsg['common.month.november']}"/> 
+                            </div>
+                            <div class="divInputTextMonths">
+                                <p:inputText style="width: 90%;text-align: right"
+                                             value="#{budgetingController.itsMonthlyAmounts['NOV']}"
+                                             title="${budgetingController.itsMonthlyAmounts['NOV']}"
+                                             disabled="#{budgetingController.isAditionalBudgeting}"
+                                             id="nov" converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" 
+                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)">
+                                  
+                                    <p:ajax event="blur" update=":tabDraftProjectDetails:budgetingForm:panObjectExpense" 
+                                            listener="#{budgetingController.totalOfSummatory}"/>
+                                </p:inputText>
+                            </div>
+                            <div class="divLabelWithBorder">
+                                <h:outputText value="#{InfoMsg['common.month.december']}"/> 
+                            </div>
+                            <div class="divInputTextMonths">                                
+                                <p:inputText style="width: 90%;text-align: right"
+                                             value="#{budgetingController.itsMonthlyAmounts['DIC']}"
+                                             title="${budgetingController.itsMonthlyAmounts['DIC']}"
+                                             disabled="#{budgetingController.isAditionalBudgeting}"
+                                             id="dec" converterMessage="#{InfoMsg['ppp.budgeting.conversion.error']}" 
+                                             onkeypress=" return soloNumeros(event, this)" onkeyup="format(this)">
+                                  
+                                    <p:ajax event="blur" update=":tabDraftProjectDetails:budgetingForm:panObjectExpense" 
+                                            listener="#{budgetingController.totalOfSummatory}"/>
+                                </p:inputText>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="divButtonsObjectExpense">
+                        <p:separator style="width: 99%" />
+
+                        <p:commandButton style="width: 14%" id="objectExpenseButtonSave" 
+                                         onmouseover="this.focus()"
+                                         actionListener="#{budgetingController.saveBudgetingKey()}" 
+                                         disabled="#{budgetingController.btnSrvSave}"
+                                         value="#{InfoMsg['common.save']}" 
+                                         update=":tabDraftProjectDetails:budgetingForm:panBudgetingKeys, 
+                                         :tabDraftProjectDetails:budgetingForm:panMonths, 
+                                         :tabDraftProjectDetails:budgetingForm:panObjectExpense, 
+                                         :tabDraftProjectDetails:budgetingForm:panKeyBudget,
+                                         :tabDraftProjectDetails:budgetingForm:panAditionalBudgeting,
+                                         :tabDraftProjectDetails:budgetingForm:panSourceOfFunding,
+                                         :tabDraftProjectDetails:budgetingForm:panBasicPartities,
+                                         :tabDraftProjectDetails:budgetingForm:TextBudgetingTotalTokenofScheduling,
+                                         :tabDraftProjectDetails:budgetingForm:TextBudgetingTotalToken" />
+
+                        <p:commandButton style="width: 14%" id="objectExpenseButtonModif" 
+                                         onmouseover="this.focus()"
+                                         actionListener="#{budgetingController.modifyBudgetingKey()}"
+                                         disabled="#{budgetingController.btnSrvSave}"
+                                         value="#{InfoMsg['common.modif']}"
+                                         update=":tabDraftProjectDetails:budgetingForm:panBudgetingKeys, 
+                                         :tabDraftProjectDetails:budgetingForm:panMonths, 
+                                         :tabDraftProjectDetails:budgetingForm:panObjectExpense, 
+                                         :tabDraftProjectDetails:budgetingForm:panKeyBudget,
+                                         :tabDraftProjectDetails:budgetingForm:panAditionalBudgeting,
+                                         :tabDraftProjectDetails:budgetingForm:panSourceOfFunding,
+                                         :tabDraftProjectDetails:budgetingForm:panBasicPartities,
+                                         :tabDraftProjectDetails:budgetingForm:TextBudgetingTotalTokenofScheduling,
+                                         :tabDraftProjectDetails:budgetingForm:TextBudgetingTotalToken" />
+                        
+                        <p:commandButton style="width: 14%" id="objectExpenseButtonDelete" 
+                                         onmouseover="this.focus()"
+                                         actionListener="#{budgetingController.deleteBudgetingKey()}"
+                                         disabled="#{budgetingController.btnSrvSave}"
+                                         value="#{InfoMsg['common.delete']}" 
+                                         update=":tabDraftProjectDetails:budgetingForm:panBudgetingKeys, 
+                                         :tabDraftProjectDetails:budgetingForm:panMonths, 
+                                         :tabDraftProjectDetails:budgetingForm:panObjectExpense, 
+                                         :tabDraftProjectDetails:budgetingForm:panKeyBudget,
+                                         :tabDraftProjectDetails:budgetingForm:panAditionalBudgeting,
+                                         :tabDraftProjectDetails:budgetingForm:panSourceOfFunding,
+                                         :tabDraftProjectDetails:budgetingForm:panBasicPartities,
+                                         :tabDraftProjectDetails:budgetingForm:TextBudgetingTotalTokenofScheduling,
+                                         :tabDraftProjectDetails:budgetingForm:TextBudgetingTotalToken"  />
+
+                        <p:commandButton style="width: 14%" id="objectExpenseButtonEvenMonths" 
+                                         onmouseover="this.focus()"
+                                         value="#{InfoMsg['ppp.budgeting.evenmonths']}"
+                                         update=":tabDraftProjectDetails:budgetingForm:panMonths,
+                                         :tabDraftProjectDetails:budgetingForm:panBasicPartities"
+                                         actionListener="#{budgetingController.evenMonths()}" />
+
+                        <p:commandButton style="width: 14%" id="objectExpenseButtonAnnual" 
+                                         onmouseover="this.focus()"
+                                         update=":tabDraftProjectDetails:budgetingForm:panMonths"
+                                         actionListener="#{budgetingController.anualMonths()}"
+                                         value="#{InfoMsg['ppp.budgeting.anual']}"/>
+
+                        <p:commandButton  style="width: 14%" id="objectExpenseButtonNew" 
+                                          onmouseover="this.focus()"
+                                          value="#{InfoMsg['common.new']}"
+                                          update=":tabDraftProjectDetails:budgetingForm:panBudgetingKeys, 
+                                          :tabDraftProjectDetails:budgetingForm:panMonths, 
+                                          :tabDraftProjectDetails:budgetingForm:panObjectExpense, 
+                                          :tabDraftProjectDetails:budgetingForm:panKeyBudget,
+                                          :tabDraftProjectDetails:budgetingForm:panBasicPartities,
+                                          :tabDraftProjectDetails:budgetingForm:panAditionalBudgeting,
+                                          :tabDraftProjectDetails:budgetingForm:panSourceOfFunding" 
+                                          actionListener="#{budgetingController.initBudgeting()}" />
+
+                        <p:commandButton style="width: 14%" id="objectExpenseButtonClose"  
+                                         onmouseover="this.focus()"
+                                         update=":tabDraftProjectDetails:budgetingForm:inputBudgetingSummaryUEG
+                                         :tabDraftProjectDetails:budgetingForm:grdBudgetingSummary, 
+                                         :tabDraftProjectDetails:budgetingForm:panSummaryTotals, 
+                                         :tabDraftProjectDetails:budgetingForm:panSummaryTotalsByUEG"
+                                         onclick="dlg.hide()" value="#{InfoMsg['common.close']}" />
+                    </div>
+                </div>
+            </p:panel>
+             <p:panel  id="comboReportPanel" header="#{InfoMsg['ppp.progr.presupPorFicha.report.header']}">
+                <div>
+                    <!--<h:outputText id="rep" value="#{budgetingSummaryController.imprimirReporte}"/>
+                    <br/>-->
+                    <h:outputLink value="#{budgetingSummaryController.imprimirReporte}" id="reports"
+                                    target="blank" >#{InfoMsg['ppp.progr.InvPrefile.Signatures.printReport']}</h:outputLink>
+                </div>
+            </p:panel>
+            <ui:include src="lstbudgetingKeys.xhtml"/>
+            <p:panel id="panBudgetingTotals">
+                <div class="divTablePED">
+                    <div class="divLabelBudgetingTotalsOfScheduling">
+                        <h:outputLabel value="#{InfoMsg['ppp.budgeting.TotalPerChapter']}"/>
+                    </div>
+                    <div class="divTextBudgetingTotalTokenofScheduling">
+                          <p:inputText style="width: 99%; text-align: right" 
+                                     readonly="true"
+                                     value="#{budgetingController.itsTotalPerChapterString}"
+                                     id="TextBudgetingTotalToken"/>
+                    </div>
+
+                    <div class="divLabelBudgetingTotalsOfScheduling">
+                        <h:outputLabel value="#{InfoMsg['ppp.budgeting.TotalPerKey']}" />
+                    </div>
+                    <div class="divTextBudgetingTotalTokenofScheduling">
+                        <p:inputText style="width: 99%; text-align: right"
+                                     value="#{budgetingController.mySumTotalStringFormat}"
+                                     readonly="true" id="TextBudgetingTotalTokenofScheduling"/>
+                    </div>
+
+                </div>
+            </p:panel>      
+        </p:dialog>
+        <p:confirmDialog id="confirmBudgetingDialog" message="#{budgetingController.itsTheMessageBox}"  
+                         header="#{InfoMsg['ppp.budgeting.Justification.Message.Header']}" severity="alert" widgetVar="confirmationBudget">  
+
+            <p:commandButton id="accept" value="#{InfoMsg['ppp.progr.Btn.Yes']}" 
+                             update=":tabDraftProjectDetails:budgetingForm:panBudgetingKeys, 
+                             :tabDraftProjectDetails:budgetingForm:panMonths, 
+                             :tabDraftProjectDetails:budgetingForm:panObjectExpense, 
+                             :tabDraftProjectDetails:budgetingForm:panKeyBudget,
+                             :tabDraftProjectDetails:budgetingForm:panAditionalBudgeting,
+                             :tabDraftProjectDetails:budgetingForm:panSourceOfFunding"
+                             oncomplete="confirmationBudget.hide()"  
+                             actionListener="#{budgetingController.selectActionToDo()}" />  
+            <p:commandButton id="notAccept" value="#{InfoMsg['ppp.progr.Btn.No']}" 
+                             actionListener="#{budgetingController.disableAditional()}"
+                             oncomplete="confirmationBudget.hide()" 
+                             update=":tabDraftProjectDetails:budgetingForm:panAditionalBudgeting,
+                             :tabDraftProjectDetails:budgetingForm:panBasicPartities"/>   
+        </p:confirmDialog>  
+    </ui:composition>
+</html>

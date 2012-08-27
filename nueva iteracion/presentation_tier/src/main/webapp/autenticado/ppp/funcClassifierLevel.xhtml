@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (C) 2012 Advanced Business Systems S.A. de C.V. 
+ All rights reserved 
+ Filename:  funcClassifierLevel
+ Purpose:  Catalogo de niveles de clasificacion funcional.
+       
+ The copyright to the computer program(s) herein is the property
+ of Advanced Business Systems S.A. de C.V. The programs may be 
+ used and/or copied only with written permission from Advanced 
+ Business Systems S.A. de C.V. or in accordance with the terms 
+ and conditions stipulated in the agreement/contract under which
+ the program(s) have been supplied.
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+    <ui:define name="body">
+        #{functionalClassifierLevelController.init()}
+        <div style="padding-top: 10px">
+            <table>
+                <tr>
+                    <td>                        
+                        <img src="#{request.contextPath}/styles/images/iconHeaderStyle.png" style="position: absolute; top: 130px"/> 
+                    </td>
+                    <td style="vertical-align: center">
+                        <h:outputText value="#{pppMsg['ppp.planning.funClassifierLevel']}"  styleClass="headerTitleStyle" style="position: absolute; top: 135px"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="divContentPage">
+         <h:form id="formDetails">
+                <label class="titlesInstitutional">
+                                <!--a href="../options.abs">#{pppMsg['ppp.planning.goToStart']}</a-->
+                </label>
+                <table style="width: 80%">
+                    <tr>
+                        <td>
+                            <p:messages id="message" autoUpdate="true" />
+                        
+                         </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center">
+                            <div class="divDetailsForm">
+                                <ui:include src="components/funcClassifierLevel/funcClassifierLevelDetails.xhtml" />
+                          
+                                </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center">
+                            <ui:include src="components/funcClassifierLevel/listFunctionalClassifierLevels.xhtml" />
+                        </td>
+                    </tr>
+                     
+                </table>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

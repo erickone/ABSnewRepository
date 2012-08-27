@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (C) 2012 Advanced Business Systems S.A. de C.V. 
+ All rights reserved 
+ Filename:  invPreFileObservations
+ Purpose:  Dialog to add a new observation for a InvPreFile.
+       
+ The copyright to the computer program(s) herein is the property
+ of Advanced Business Systems S.A. de C.V. The programs may be 
+ used and/or copied only with written permission from Advanced 
+ Business Systems S.A. de C.V. or in accordance with the terms 
+ and conditions stipulated in the agreement/contract under which
+ the program(s) have been supplied.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <ui:composition>
+                <p:dialog id="modalObservationAddDialog" header="#{InfoMsg['ppp.progr.Observation.Header']}" widgetVar="observation"
+                            maximizable="false" minimizable="false" closable="false"
+                            modal="true">
+                        <table  id="ObservationTable" border="0">
+                            <tr>
+                                <p:messages id="messageObs" showDetail="true" showSummary="false" autoUpdate="true"  />
+                            </tr>
+                            <tr>
+                                <td>
+                                   <h:outputLabel value="#{InfoMsg['ppp.progr.Observation.User']}"/>
+                                </td>
+                                <td>
+                                    <p:inputText id="txtUsuario" readonly="true" 
+                                                 value="#{observationController.itsCurrentObservation.composedUserName}"   />
+                                </td>
+                                <td>
+                                   <h:outputLabel value="#{InfoMsg['ppp.progr.Observation.UEG']}"/>
+                                </td>
+                                <td>
+                                    <p:inputText id="txtUegObs" readonly="true"
+                                                 value="#{observationController.itsCurrentObservation.composedDependenceName}"   />
+                                </td>
+                                <td>
+                                   <h:outputLabel value="#{InfoMsg['ppp.progr.Observation.Date']}"/>
+                                </td>
+                                <td>
+                                    <p:inputText id="txtFecha" readonly="true"
+                                                 value="#{observationController.itsCurrentObservation.dateWithFormat}"   />
+                                </td>
+                                <td>
+                                   <h:outputLabel value="#{InfoMsg['ppp.progr.Observation.Profile']}"/>
+                                </td>
+                                <td>
+                                    <p:inputText id="txtPerfil" readonly="true"
+                                                 value="#{observationController.itsCurrentObservation.userdesc}"   />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                     <h:outputLabel value="#{pppMsg['ppp.progr.Observation.Header']}"/>
+                                </td>
+                                <td colspan="7">
+                                    <p:inputTextarea id="txtObservations" maxlength="2000"  style="width: 100%"
+                                                     readonly="#{observationController.itsInputsDisabled}"
+                                                     value="#{observationController.itsCurrentObservation.comentario}"   />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="8" class="tableColumnCenter">
+                                    <p:commandButton  id="btnNewObs"
+                                            actionListener="${observationController.prepareNewObservation()}"
+                                            value="#{pppMsg['common.new']}"
+                                            update=":frmInversionPublica:txtUsuario, 
+                                            txtUegObs, txtFecha, txtPerfil, txtObservations, 
+                                            btnSaveObs, grdObservations">
+
+                                    </p:commandButton>
+                                    <p:commandButton  id="btnSaveObs"
+                                            actionListener="${observationController.saveObservation()}"
+                                            update=":frmInversionPublica:messageObs,
+                                            grdObservations, txtObservations, btnSaveObs"
+                                            value="#{pppMsg['common.save']}"
+                                            disabled="#{observationController.itsSaveDisabled}" >
+
+                                    </p:commandButton>
+                                    <p:commandButton  id="btnDeleteObs"
+                                            actionListener="${observationController.deleteObservation()}"
+                                            update=":frmInversionPublica:txtUsuario, 
+                                            txtUegObs, txtFecha, txtPerfil, txtObservations,
+                                            messageObs, grdObservations"
+                                            value="#{pppMsg['common.delete']}" >
+
+                                    </p:commandButton>
+                                    <p:commandButton   id="btnCloseObserv"
+                                            value="#{pppMsg['common.close']}"
+                                            actionListener="${observationController.clearData()}"
+                                            onclick="observation.hide()">
+                                    </p:commandButton>
+                                </td>
+                            </tr>
+                        </table>
+                        <p:dataTable id="grdObservations"  var="Observ" rowKey="#{Observ.idprefichaobservacion}"
+                                     value="#{observationController.itsFatherDataModel}"
+                                     paginator="true" rows="10"  
+                                     selection="#{observationController.selectedFather}" selectionMode="single"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15"
+                                     emptyMessage="#{pppMsg['ppp.common.DataTable.NotFound']}"
+                                     resizableColumns="true"  rendered="true">
+
+                                <p:ajax event="rowSelect" 
+                                        update=":frmInversionPublica:txtUsuario,
+                                        :frmInversionPublica:txtUegObs, 
+                                        :frmInversionPublica:txtFecha, 
+                                        :frmInversionPublica:txtPerfil, 
+                                        :frmInversionPublica:txtObservations,
+                                        :frmInversionPublica:btnSaveObs"
+                                        listener="#{observationController.onRowSelect}" />
+                                <f:facet name="header">
+                                    #{pppMsg['ppp.progr.Observation.Header']}
+                                </f:facet>
+
+                                <p:column sortBy="#{Observ.composedUserName}" filterBy="#{Observ.composedUserName}"
+                                          filterMatchMode="contains">
+                                    <f:facet name="header" >
+                                        <h:outputText value="#{pppMsg['ppp.progr.Observation.User']}" />
+                                    </f:facet>
+                                    <h:outputText value="#{Observ.composedUserName}" />
+                                </p:column>
+                                
+                                <p:column sortBy="#{Observ.composedDependenceName}" filterBy="#{Observ.composedDependenceName}"
+                                          filterMatchMode="contains">
+                                    <f:facet name="header" >
+                                        <h:outputText value="#{pppMsg['ppp.progr.Observation.UEG']}" />
+                                    </f:facet>
+                                    <h:outputText value="#{Observ.composedDependenceName}" />
+                                </p:column>
+                                
+                                <p:column sortBy="#{Observ.userdesc}" filterBy="#{Observ.userdesc}"
+                                          filterMatchMode="contains">
+                                    <f:facet name="header" >
+                                        <h:outputText value="#{pppMsg['ppp.progr.Observation.Profile']}" />
+                                    </f:facet>
+                                    <h:outputText value="#{Observ.userdesc}" />
+                                </p:column>
+                                
+                                <p:column sortBy="#{Observ.comentario}" filterBy="#{Observ.comentario}"
+                                          filterMatchMode="contains">
+                                    <f:facet name="header" >
+                                        <h:outputText value="#{pppMsg['ppp.progr.Observation.Header']}" />
+                                    </f:facet>
+                                    <h:outputText value="#{Observ.comentario}" />
+                                </p:column>
+                                
+                                <p:column sortBy="#{Observ.dateWithFormat}" filterBy="#{Observ.dateWithFormat}"
+                                          filterMatchMode="contains">
+                                    <f:facet name="header" >
+                                        <h:outputText value="#{pppMsg['ppp.progr.Observation.Date']}" />
+                                    </f:facet>
+                                    <h:outputText value="#{Observ.dateWithFormat}" />
+                                </p:column>
+
+                        </p:dataTable>
+                    </p:dialog>
+ </ui:composition>
+</html>

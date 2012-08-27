@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (C) 2012 Advanced Business Systems S.A. de C.V. 
+ All rights reserved 
+ Filename:  reportByUP
+ Purpose:  [ short Description  ]
+       
+ The copyright to the computer program(s) herein is the property
+ of Advanced Business Systems S.A. de C.V. The programs may be 
+ used and/or copied only with written permission from Advanced 
+ Business Systems S.A. de C.V. or in accordance with the terms 
+ and conditions stipulated in the agreement/contract under which
+ the program(s) have been supplied.
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+
+    <ui:define name="body">
+        <div style="padding-top: 27px">
+            <table>
+                <tr>
+                    <td>                        
+                        <img src="#{request.contextPath}/styles/images/iconHeaderStyle.png" /> 
+                    </td>
+                    <td style="vertical-align: center">
+                        <h:outputText value="#{InfoMsg['ppp.progr.techppptalVsObjGasto.report.header']}"  styleClass="headerTitleStyle" style="position: absolute; top: 135px"/>
+                    </td>
+                </tr>
+            </table>
+        </div> 
+         <h:form id="Programingform">
+            <div class="divContentPage">
+                <label class="titlesInstitutional">
+                                <!--a href="../options.abs">#{pppMsg['ppp.planning.goToStart']}</a-->
+                            </label>
+                <p:panel  id="comboProgrammingPanel" header="#{InfoMsg['ppp.progr.techppptalVsObjGasto.report.header']}">
+                    <div class="divTableProgramming">
+                        <div class="divProgrammingLabel">
+                            <h:outputText value="#{pppMsg['ppp.progr.InvPreFileSearch.BudgetUnit']}"/>
+                        </div>
+                        <div class="divInputTextProgramming">
+                            <p:selectOneMenu 
+                                    id="cboUnidadPresupuestal"
+                                    value="#{reportByUPController.uniPresupuestalId}">
+                                    <f:selectItem 
+                                        itemLabel="#{InfoMsg['ppp.progr.comboSelectedItem']}"
+                                        itemValue="" />
+                                    <f:selectItems
+                                        var="dependences"
+                                        value="#{reportByUPController.listOfBudgetDependences}"
+                                        itemLabel="#{dependences.composedDependenceName}"
+                                        itemValue="#{dependences.dependenceId}"/>
+                                    <f:ajax render="reports"
+                                            listener="#{reportByUPController.changeReport()}"/>
+                                </p:selectOneMenu>
+                        </div>
+                        <br/><br/><br/><br/>
+                         <div class="divInputTextProgramming">
+                             <!--<h:outputText id="rep" value="#{reportByUPController.imprimirReporte}"/>
+                             <br/>-->
+                        <h:outputLink value="#{reportByUPController.imprimirReporte}" id="reports"
+                                              target="blank" >#{InfoMsg['ppp.progr.InvPrefile.Signatures.printReport']}</h:outputLink>
+                         </div>
+                    </div>
+                </p:panel>
+            </div>
+         </h:form>
+    </ui:define> 
+</ui:composition>

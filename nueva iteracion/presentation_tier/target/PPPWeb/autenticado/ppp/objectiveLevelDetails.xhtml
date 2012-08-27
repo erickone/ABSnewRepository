@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="${pageContext.request.contexPath}/templates/ui.xhtml">
+    <ui:define name="body">
+         <div style="padding-top: 27px">
+            <table>
+                <tr>
+                    <td>                        
+                        <img src="#{request.contextPath}/styles/images/iconHeaderStyle.png" /> 
+                    </td>
+                    <td style="vertical-align: center">
+                        <h:outputText value="#{pppMsg['ppp.planning.objDetailsHeader']}"  styleClass="headerTitleStyle" style="position: absolute; top: 135px"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="divContentPage">
+            <h:form id="formDetails">
+                <label class="titlesInstitutional">
+                                <!--a href="../options.abs">#{pppMsg['ppp.planning.goToStart']}</a-->
+                </label>
+                <table style="width: 80%">
+                    <tr>
+                        <td>
+                            <p:messages id="message" autoUpdate="true" />
+                        
+                         </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center">
+                            <div class="divDetailsForm">
+                                <ui:include src="components/objectiveLevel/objectiveLevelDetails.xhtml" />
+                          
+                                </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center">
+                            <ui:include src="components/objectiveLevel/listObjectiveLevels.xhtml" />
+                        </td>
+                    </tr>
+                     
+                </table>
+                <p:blockUI block=":formDetails:pnlObjectiveLevelDetails" />
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

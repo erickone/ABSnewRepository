@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+    
+    <!--Context Parameters-->
+    <context-param>
+		<!--Path to upload/dowload files -->
+        <param-name>uploadDirectory</param-name>
+		<!-- must be the same paramter as Primefaces filter -->
+        <param-value>/siif/test/</param-value>
+    </context-param>
+ 
+    <context-param>
+		<!--Path for resourcebundle-->
+        <param-name>pathResourceBundle</param-name>
+		<!-- must be the same paramter as Primefaces filter -->
+        <param-value>
+            com.abs.siif.ppp.resources.msgExcepUI,
+            com.abs.siif.dao.nativequeries.hierarchicalstructures,
+            com.abs.siif.ppp.resources.msgUI,
+            com.abs.siif.dao.nativequeries.queries,
+            com.abs.siif.ppp.resources.maxMinComponent
+        </param-value>
+    </context-param>
+ 
+    <context-param>
+        <!--Path for SIIF locale-->
+        <param-name>defaultLocale</param-name>
+        <param-value>es_MX</param-value>
+    </context-param>
+
+   
+    <!--Context web & Security filter-->
+    <filter>
+        <filter-name>SecurityFilter</filter-name>
+        <filter-class>com.abs.siif.servlet.webFilters.SiffSecurityFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>SecurityFilter</filter-name>
+        <url-pattern>*.abs</url-pattern>
+    </filter-mapping>
+
+    <!--Support UTF-8 -->
+    <filter>
+        <filter-name>charsetFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>	
+    </filter>
+    
+    <!--Context web & Security filter-->
+    <filter>
+        <filter-name>UTF8Filter</filter-name>
+        <filter-class>com.abs.siif.servlet.webFilters.UTF8Filter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>UTF8Filter</filter-name>
+        <url-pattern>*.abs</url-pattern>
+    </filter-mapping>
+    
+    
+    <!--Primefaces -->
+    <filter>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <filter-class>
+            org.primefaces.webapp.filter.FileUploadFilter
+        </filter-class>
+
+        <init-param>
+            <param-name>uploadDirectory</param-name>
+            <param-value>/siif/test</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>thresholdSize</param-name>
+            <param-value>10000</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+
+     <!--start  south-street  excite-bike  redmond  sam  cupertino  smoothness  ui-lightness-->
+    
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>start</param-value>
+    </context-param>
+    
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>com.abs.siif.servlet.ContextSIIFListener</listener-class>
+    </listener>
+          
+    <!--Spring-->      
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/application-context.xml</param-value>
+    </context-param>
+    
+
+    <display-name>PPPWeb</display-name>
+    
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    
+    
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param>
+    
+    <!-- Definir este parámetro es más cómodo y más visual que usar el <ui:remove> de Facelets. -->
+    <context-param>
+        <description>Do not render comments in facelets (xhtml) pages. Default is false.</description>
+        <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+         <!-- Parametros para uso de Captcha -->
+    <context-param>
+        <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+        <param-value>6LcxaNMSAAAAAF_YVhSOzIZWB785XBprhVK5_CLi</param-value>
+    </context-param>
+ 
+    <context-param>
+        <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+        <param-value>6LcxaNMSAAAAAJY1ZbABoFxGpLqGcVFoJAxSKGet</param-value>
+    </context-param>
+
+     <!-- Paginas de bienvenida -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+     <!-- JSF mapping -->
+    <servlet>
+        <servlet-name>Context SIIF</servlet-name>
+        <servlet-class>com.abs.siif.servlet.ServletInitContext</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+     
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+     
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.abs</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Kaptcha</servlet-name>
+        <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+        <init-param>
+            <param-name>kaptcha.textproducer.char.length</param-name>
+            <param-value>7</param-value>
+        </init-param>
+        <init-param>
+            <param-name>kaptcha.border</param-name>
+            <param-value>no</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Kaptcha</servlet-name>
+        <url-pattern>/kaptcha.jpg</url-pattern>
+    </servlet-mapping>
+       
+    
+    
+</web-app>
