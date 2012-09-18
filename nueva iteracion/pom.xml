@@ -9,8 +9,8 @@
     <name>SIIF</name>
   
     <properties>
-        <spring.version>3.1.1.RELEASE</spring.version>
-        <junit.version>4.10</junit.version>
+        <!--spring.version>3.1.1.RELEASE</spring.version>
+        <junit.version>4.10</junit.version-->
     </properties>
   
     <modules>
