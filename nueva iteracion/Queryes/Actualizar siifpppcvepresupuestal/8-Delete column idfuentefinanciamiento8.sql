@@ -1,0 +1,1 @@
+alter table siifpppcvepresupuestal drop idfuentefinanciamiento;

@@ -1,0 +1,38 @@
+Pasos a ejecutar el cambio en prefichas y carga de datos de calendarizacion
+
+1.- Columna Clave Destino en la tabla de Calendarizacion:
+
+Alter table siifpppenccalendario ADD clavedestino  VARCHAR(10);
+
+2.- Cambio de estructura de la tablas de Pre-Fichas para agregar las columna de Monto Adicionla y la nueva tabla del mensualizado.
+
+Alter table siifpppdetcvepreficha ADD montoadicional DECIMAL(15,2) DEFAULT 0.0;
+
+create table 'informix'.siifpppcvemensualpptalpreficha (
+    idcvemensualpptalpreficha SERIAL not null,
+    mes VARCHAR(36),
+    montooriginal DECIMAL(15,2),
+    iddetcvepreficha INT not null,
+    PRIMARY KEY(idcvemensualpptalpreficha)
+                ENABLED
+);
+
+alter table 'informix'.siifpppcvemensualpptalpreficha add constraint foreign key 
+                (iddetcvepreficha)
+                references 'informix'.siifpppdetcvepreficha
+                (iddetcvepreficha) 
+                constraint fk_siifpppcvemensualpptalpreficha_siifpppdetcvepreficha;
+
+3.- Ejecutar los script para agregar la fuente de financiamiento para Pre-Fichas por los script:
+
+ALTER TABLE informix.siifpppdetcvepreficha ADD idfuentefinanciamiento INTEGER;
+ALTER TABLE informix.siifpppdetcvepreficha
+                ADD CONSTRAINT ( FOREIGN KEY(idfuentefinanciamiento)
+                REFERENCES informix.siifpppfuefinanciamiento(idfuentefinanciamiento) CONSTRAINT "informix".fk_siifpppdetcvepreficha_siifpppfuefinanciamiento
+                ENABLED );
+				
+4.- Carga de datos actuales referentes a prefichas hacia las tablas nuevas a travez del proceso de l script:
+    ProcedureMontos.sql.
+5.- Ejecutar el proceso de carga de los datos de calendarizacion con el script CargaCalendarizacion.sql
+
+

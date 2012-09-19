@@ -1,0 +1,25 @@
+Pasos para eliminar los registros repetidos en la clave presupuestal
+
+1.- Ejecutar el Procedure "1-Procedure1.sql"
+	Actualiza uno de los registros que contienen la misma "clave" actualizando el "MontoAdicional" en el registro en el que es igual a 0 de la tabla "siifpppcvepresupuestal".
+
+
+2.- Ejecutar el script "2-Delete cvepresupuestal2.sql"
+	Elimina el registro de la misma clave que no se actualizo al ejecutar el procedimiento anterior de la tabla "siifpppcvepresupuestal" y sus tablas relacionadas.
+
+3.- Ejecutar el script "3-Delete cvepresupuestal3.sql"
+	Elimina uno de los registros que contienen la misma "clave" y que el "MontoAdicional" y "MontoOriginal" son igual a 0 de la tabla "siifpppcvepresupuestal" y sus tablas relacionadas.
+
+4.- Ejecutar el Procedure "4-Procedure4.sql"
+	Es la contraparte del paso 1 para actualizar el otro registro que contienen la misma "clave" actualizando el "MontoAdicional" en el registro en el que es igual a 0 de la tabla "siifpppcvepresupuestal".
+
+5.- Ejecutar el script "5-Delete cvepresupuestal5.sql"
+	Elimina el registro de la misma clave que no se actualizo al ejecutar el procedimiento anterior de la tabla "siifpppcvepresupuestal" y sus tablas relacionadas.
+
+6.- Ejecutar el script "6-Delete cvepresupuestal6.sql"
+	Es la contraparte del paso 3  para eliminar el otro registro que contienen la misma "clave" y que el "MontoAdicional" y "MontoOriginal" son igual a 0 de la tabla "siifpppcvepresupuestal" y sus tablas relacionadas.
+
+7.- Ejecutar el script "7-Comprobación"
+	Al ejecutar el script verificamos que "no" traiga datos de lo contrario es necesario revisar cuales son los registros que se estan repitiendo para que se les realicen los pasos anteriores.
+
+8.- Ejecutar el script "8-Delete column idfuentefinanciamiento8.sql"
