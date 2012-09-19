@@ -1,0 +1,2502 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <script src="index_files/tigris.txt" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css"
+      href="index_files/netbeans.css">
+    <title>LAB-1111: Java Generics</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <meta name="SourceCastVersion" content="2.6.2.4.10">
+    <meta name="keywords" content="NetBeans, IDE, Platform, free, open
+      source, developer">
+    <link rel="stylesheet" href="index_files/netbeans_002.css">
+    <meta name="author" content="Sang Shin">
+    <style type="text/css">
+#search {height:100%;}
+#topmodule {align:right;}
+  </style>
+    <script language="JavaScript" type="text/javascript">
+<!--
+function get_sc_login() {
+  var sclogin = "guest";
+  return (sclogin);
+}
+var username=get_sc_login();
+//-->
+  </script>
+    <meta content="LAB-1111: Java Generics" name="description">
+  </head>
+  <body onload="loginfocus()" class="composite">
+    <!-- begin TopTabs --><!-- end TopTabs --><!-- start NavCol --><!-- end NavCol --><!-- Servlet-Specific template --><!-- Show servlet name if it is a servlet -->
+    <br>
+    <div style="text-align: center;">@Copyright notice: This content is
+      meant to be used only for paying
+      subscriber's personal
+      consumption. Sharing with others in any shape or form is
+      strictly
+      prohibited&nbsp;
+      unless a special licensing arrangement has been made with <a
+        href="mailto:support@javapassion.com">JPassion.com</a>.<br>
+      <br>
+    </div>
+    <br>
+    <h1 style="text-align: center;">Java Generics<br>
+    </h1>
+    <div class="articledate" style="margin-left: 0px; text-align:
+      center;"><a
+        href="http://www.javapassion.com/SangShinSchedule.html#Bio">Sang
+        Shin</a>,&nbsp;<a href="http://www.javapassion.com/">www.javapassion.com</a>,
+      <a href="http://groups.google.com/group/jpassion_advanced_java">class
+        forum</a><a href="http://www.javapassion.com/"></a><br>
+      <br>
+      <img alt="" src="index_files/sangshin2009.jpg" style="width: 88px;
+        height: 101px;"><br>
+    </div>
+    <p style="margin-left: 40px;">Java 2 Platform, Standard Edition
+      (J2SE
+      platform) 5.0 introduces
+      several extensions to the Java programming language. One of these
+      is
+      the introduction of generics. Generics allow you to abstract over
+      types. The most common examples are container types, such as those
+      in
+      the collection hierarchy. Before the release of the J2SE platform
+      5.0,
+      when you take an element out of a collection, you must cast it to
+      the
+      type of element stored in the collection. In addition to being
+      inconvenient, this is unsafe. The compiler does not check that
+      your
+      cast is the same as the collection’s type, so the cast can fail at
+      runtime. Generics provide a way for you to communicate the type of
+      a
+      collection to the compiler, so that it can be checked during
+      compile
+      time. Once the compiler knows the element type of the collection,
+      the
+      compiler can check that you have used the collection consistently
+      and
+      can insert the correct casts on values being taken out of the
+      collection. In this Hands-on Lab, you learn how to use generics by
+      writing lines of code in the source editor of NetBeans 4.0
+      software,
+      which immediately informs you of compile errors. Whenever
+      possible,
+      explanations of why certain compile errors have occurred are
+      provided.<br>
+    </p>
+    <br>
+    <p></p>
+    <p align="center"><b>Expected duration: 120 minutes</b></p>
+    <div class="indent"><br>
+      <h3 class="tutorial">Resources<br>
+      </h3>
+      <ul>
+        <li><a
+href="http://www.angelikalanger.com/GenericsFAQ/FAQSections/Fundamentals.html">Fundamentals
+of
+            Java Generics</a> by Angelika Langer</li>
+      </ul>
+      <br>
+      <h3 class="tutorial"><a name="Change_Log"></a>Change Log<br>
+      </h3>
+      <ul>
+        <li>March 7th, 2007: Created</li>
+        <li>May 31st, 2007: Homework is added</li>
+        <li>Jan. 10th, 2009: NetBeans 6.5 is used</li>
+        <li>July 1st, 2010: Tested and updated with NetBeans 6.8 (Sang
+          Shin)</li>
+        <li>Sep. 13th, 2011: Cosmetic changes are made (Sang Shin)</li>
+        <li>Dec. 11th, 2011: Comments from Piotrek are reflected (Sang
+          Shin)</li>
+        <li>March 30th, 2012: Wild card example is cleaned up (Sang
+          Shin)<br>
+        </li>
+      </ul>
+      <br>
+      <h3 class="tutorial"><a name="Tutorial_Exercises"></a>Lab
+        Exercises</h3>
+      <br>
+      Most exercises in this lab are provided in the form of
+      "ready-to-open-and-run"
+      NetBeans projects in order to maximize the effectiveness of the
+      learning
+      process. You are welcome to create them from scratch.&nbsp;&nbsp;
+      It is
+      also
+      strongly encouraged you do as much experimentation of your own by
+      changing the provided code.<br>
+      <ul>
+        <li><a href="#Exercise_1">Exercise 1: Use Generic classes (20
+            minutes)</a><br>
+        </li>
+        <li><a href="#Exercise_2">Exercise 2: Generics and Subtyping (20
+            minutes)</a><br>
+        </li>
+        <li><a href="#Exercise_3">Exercise 3: Wild card
+            (20 minutes)</a></li>
+        <li><a href="#Exercise_4">Exercise 4: Define your own generic
+            class
+            (20 minutes)</a><br>
+        </li>
+        <li><a href="#Exercise_5">Exercise 5: Type erasure (20
+            minutes)</a></li>
+        <li><a href="#Exercise_6">Exercise 6: Interoperating with
+            non-generic
+            code (20 minutes)</a></li>
+        <li><a href="#Homework">Homework Exercise</a></li>
+      </ul>
+      <br>
+      <ul>
+        <ul>
+        </ul>
+      </ul>
+    </div>
+    <!-- ===================================================================================== -->
+    <h2><a name="Exercise_1"></a>Exercise 1: Use Generic classes with
+      type
+      parameters<br>
+    </h2>
+    <div style="margin-left: 40px;">
+      <br>
+      In
+      this exercise, you will learn the basic concept of Generics by
+      adding
+      lines of code to the main method<span style="font-weight: bold;"></span>.&nbsp;
+You
+will
+      try to reason why some code work while others result in
+      compilation errors.&nbsp; Technical explanations are then
+      followed.<br>
+      <ol>
+      </ol>
+    </div>
+    <br>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="1.1"></a>(1.1)
+Compile
+      time type checking through Generics<br>
+    </h3>
+    <div style="margin-left: 40px;"><br>
+      0. Start NetBeans IDE if you have not done so yet.<br>
+      1. Open <span style="font-weight: bold;">GenericsExample1</span>
+      NetBeans project.&nbsp; <br>
+      <ul>
+        <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+            style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>.
+          The <span style="font-weight: bold;">Open Project</span>
+          dialog box appears.</li>
+        <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase5_generics/samples</span>
+          directory.&nbsp; <br>
+        </li>
+        <ul>
+          <li>If you unzipped the <span style="font-weight: bold;">1111_javase5_generics.zip</span>
+            file under <span style="font-weight: bold;">C:\handsonlabs</span>
+            directory under Windows, the directory to which you want
+            to browse down should be <span style="font-weight: bold;">C:\handsonlabs\javase5_generics\samples.</span></li>
+          <li>If you unzipped the <span style="font-weight: bold;">1111_javase5_generics.zip</span>
+            file under <span style="font-weight: bold;">$HOME</span>
+            directory under Solaris/Linux, the directory to which you
+            want
+            to browse down should be <span style="font-weight: bold;">$HOME/javase5_generics/samples.</span><span
+              style="font-weight: bold;"></span></li>
+        </ul>
+        <li>Select <span style="font-weight: bold; color: rgb(255, 0,
+            0);">GenericsExample1</span>.&nbsp; </li>
+        <li>Click <span style="font-weight: bold;">Open Project</span>.&nbsp;
+
+          <br>
+        </li>
+        <li>Observe that the <span style="font-weight: bold;">GenericsExample1</span>
+          project node appears under <span style="font-weight: bold;">Projects
+          </span>tab
+          window.</li>
+      </ul>
+      2. Open <span style="font-weight: bold;">GenericsExample1.java</span>.&nbsp;
+      <br>
+      3. Observe that some lines have compile errors as shown in
+      Figure-1.12
+      below.<br>
+      <br>
+      <img alt="" src="index_files/1_generics2.png" style="width: 864px;
+        height: 725px;"><br>
+      Figure-1.12: Compile errors<br>
+      <br>
+      4. Understand why some lines have compile errors and while others
+      don't
+      by reading the following explanations.<br>
+      <br>
+      <div style="margin-left: 40px;">Line #14: Adding an entry of
+        Integer
+        object to an ArrayList of Integer should work fine as expected.<br>
+        <br>
+        Line #15, #16, #17 (lines that have red x boxes): These three
+        lines of
+        code result in compilation error - cannot find symbol, symbol:
+        method
+        add(..).&nbsp; The compilation errors are generated because
+        Long,
+        String, and Object types are not Integer type nor sub-type of
+        it.&nbsp;
+        In pre-J2SE 5.0, a ClassCastException would have occurred during
+        runtime (if you are casting the extracted object to a
+        incompatible
+        type) not compile time.&nbsp; Here by using generics, you are
+        detecting
+        a problem during compile time. <br>
+        <br>
+        Line #18: Note that you do not have to cast Integer type as you
+        would
+        have done in pre-J2SE 5.0.&nbsp; This is because compiler knows
+        that
+        ArrayList&lt;Integer&gt; contains only Integer's, it is not
+        necessary
+        to cast an element retrieved from the ArrayList of Integer to
+        Integer
+        type.<br>
+        <br>
+        Line #19 (line that has red x box): Compiler generates compile
+        error
+        since String is not Integer type.<br>
+        <br>
+        Line #20: This code works since the Integer type is Object type
+        (meaning Integer type is a sub-class of Object type). <br>
+        <br>
+        Line #22: When you create an instance of an ArrayList class, you
+        also
+        specify a type argument, &lt;String&gt;, to tell the compiler
+        that the
+        ArrayList is only to be used to hold objects of type String.
+        (String is
+        a final class so there should not be any sub-type of it.)<br>
+        <br>
+        Line #23: Adding an entry of String to an ArrayList of String
+        should
+        work fine.<br>
+        <br>
+        Line #24, #25 (lines that have red x boxes): These two lines of
+        code
+        result in compilation error - cannot find symbol, symbol: method
+        add(..).&nbsp; The compilation errors are generated because
+        Integer and
+        Date types are not String type nor subtype of it.<br>
+        <br>
+        Line #27: When you create an instance of an ArrayList class, you
+        also
+        specify a type argument, &lt;Object&gt;, to tell the compiler
+        that the
+        ArrayList is only to be used to hold objects of type Object or
+        sub-type
+        of it.<br>
+        <br>
+        Line #28, #29, #30, #31: Because Integer, Long, String, and
+        Object
+        types are all Object type of subtype of it, adding an entry of
+        these
+        types to an ArrayList of Object should work fine.<br>
+        <br>
+      </div>
+      <br>
+    </div>
+    <div style="margin-left: 40px;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp; <a href="index.html#Exercise_1">return to top of the
+        exercise</a></div>
+    <br>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="1.2"></a>(1.2)
+Do
+      some experimentation<br>
+    </h3>
+    <div style="margin-left: 40px;"><br>
+      1.&nbsp; For your own exercise, do some experimentation by
+      improvising
+      your own code
+      and see if
+      they behave as you expect.&nbsp; A sample code is provided in
+      Code-1.14
+      below.<br>
+      <br>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              //<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Invoke various methods
+              of a collection<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; List&lt;Number&gt; ln2 =
+              new
+              Vector&lt;Number&gt;(20);&nbsp;&nbsp;&nbsp;&nbsp; // Right
+              click this
+              line and select Fix Imports (Alt+Shift+F)<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ln2.add(0, new Integer(3));<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ln2.add(1, new
+              Long(1000L));<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String s2 = new
+              String("passion");<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ln2.add(s2);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number n2 = ln2.get(0);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Integer i2 = ln2.get(0);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Boolean b2 =
+              ln2.contains(new
+              Integer(3));<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Boolean b3 =
+              ln2.contains(s2);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("b2="+b2);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("b3="+b3);<br>
+              <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp; Try to add an
+              ArrayList of
+              Integer to an ArrayList of Number<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ArrayList&lt;Integer&gt;
+              ai2 = new
+              ArrayList&lt;Integer&gt; (10);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ai2.add(new Integer(5));<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ln2.addAll(ai2);<br>
+              <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp; Try to add an
+              ArrayList of
+              String to an ArrayList of Number<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ArrayList&lt;String&gt; as2
+              = new
+              ArrayList&lt;String&gt;(10);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; as2.add(new
+              String("adventure"));<br>
+              <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ln2.addAll(as2);<br>
+              <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (Number n: ln2){<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("number "+ n);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp; <br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      Code-1.14:&nbsp; Sample code
+      <br>
+    </div>
+    <div style="margin-left: 40px;"><br>
+      <ul>
+      </ul>
+      &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp; <a href="index.html#Exercise_1">return to top of the
+        exercise</a><br>
+      <br>
+    </div>
+    <br>
+    <br>
+    <h3 style="margin-left: 40px;" class="tutorial">Summary<br>
+    </h3>
+    <div style="margin-left: 40px;"><br>
+      IIn this exercise, you got a exposure to a generic definition of a
+      collection
+      class,
+      ArrayList&lt;E&gt;.&nbsp; You also learned, &lt;E&gt;, specifies
+      the
+      formal type parameter of the generic'ized ArrayList
+      class.&nbsp; You also learned how to invoke the generic version of
+      ArrayList class by
+      replacing the formal type parameter, &lt;E&gt;, by concrete type
+      argument such as &lt;Integer&gt;, &lt;String&gt;, or
+      &lt;Object&gt;.
+    </div>
+    <div style="margin-left: 40px;"></div>
+    <div style="margin-left: 40px;">
+      <div style="margin-left: 40px;"><br>
+      </div>
+      <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="#Tutorial_Exercises">return to the top</a><br>
+    </div>
+    <br>
+    <br>
+    <h2><a name="Exercise_2"></a>Exercise 2: Generics and subtyping<br>
+    </h2>
+    <p style="margin-left: 40px;">In this exercise, you will learn about
+      a
+      distinct behavior of Generics
+      that might take you a while to get used to.&nbsp; Basically you
+      will
+      learn
+      why Java compiler does not allow the following code, thus
+      generates
+      compilation error.<br>
+    </p>
+    <ol style="margin-left: 40px;">
+    </ol>
+    <div style="margin-left: 40px;">
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">ArrayList&lt;Object&gt; ao
+              = new
+              ArrayList&lt;Integer&gt;();</td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <br>
+    </div>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="2.1"></a>(2.1)
+Experiment
+      with sub-typing<br>
+    </h3>
+    <div style="margin-left: 40px;"><br>
+      1. Open <span style="font-weight: bold;">GenericsSubtyping</span>
+      NetBeans project.&nbsp; <br>
+      <ul>
+        <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+            style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>.
+          The <span style="font-weight: bold;">Open Project</span>
+          dialog box appears.</li>
+        <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase5_generics/samples</span>
+          directory.&nbsp; <br>
+        </li>
+        <li>Select <span style="font-weight: bold; color: rgb(255, 0,
+            0);">GenericsSubtyping</span>.&nbsp; </li>
+        <li>Click <span style="font-weight: bold;">Open Project</span>.&nbsp;
+
+          <br>
+        </li>
+        <li>Observe that the <span style="font-weight: bold;">GenericsSubtyping</span>
+          project node appears under <span style="font-weight: bold;">Projects
+          </span>tab
+          window.</li>
+      </ul>
+      2. Open&nbsp;<span style="font-weight: bold;">GenericsSubtyping</span><span
+        style="font-weight: bold;">.java</span>.&nbsp; <br>
+      3. Observe that some lines have compile errors as shown
+      below.<br>
+      <br>
+      <img alt="" src="index_files/1_generics3.png" style="width: 858px;
+        height: 743px;"><br>
+      Figure-2.12<br>
+      <br>
+      4. Understand why some lines have compile errors and while others
+      don't
+      by reading the following explanations.<br>
+      <br>
+      <div style="margin-left: 40px;">Line #9: When you create an
+        instance of
+        an ArrayList class, you also specify a type argument,
+        &lt;Integer&gt;,
+        to tell the compiler that the ArrayList is only to be used to
+        hold
+        objects of type Integer or sub-type of it.&nbsp; We will call
+        this
+        ArrayList&lt;Integer&gt; as an ArrayList of Integer.<br>
+        <br>
+        Line #9, #10, #11: As we have learned in Exercise 2, when you
+        create an
+        instance of an ArrayList&lt;E&gt; class, you also specify a type
+        argument, for example, ArrayList&lt;Integer&gt; in Line
+        #9,&nbsp;
+        ArrayList&lt;String&gt; in Line #10, and ArrayList&lt;Object&gt;
+        in
+        Line #11, to tell the compiler that the ArrayList is only to be
+        used to
+        hold objects of a particular type or sub-type of it.&nbsp; In
+        other
+        words, ArrayList&lt;Object&gt; can hold objects of Object type
+        or
+        sub-type of it.<br>
+        <br>
+        Line #12, #13: (lines that have red x box): These two lines of
+        code
+        result in compilation error, for example,&nbsp; incompatible
+        types,
+        found: java.util.ArrayList&lt;java.lang.String&gt; required:
+        java.util.ArrayList&lt;java.lang.Object&gt; for Line #12. <br>
+      </div>
+      <br>
+      <hr style="width: 100%; height: 2px;">&lt;Learning point&gt;&nbsp;
+      As
+      it clearly indicates, you cannot
+      assign an instance of <span style="font-weight: bold;">ArrayList&lt;String&gt;</span>
+      to a variable of
+      <span style="font-weight: bold;">ArrayList&lt;Object&gt;</span>
+      type.&nbsp; Nor you can assign an instance of
+      <span style="font-weight: bold;">ArrayList&lt;Integer&gt;</span>
+      to a
+      variableof<span style="font-weight: bold;">
+        ArrayList&lt;Object&gt;</span>
+      type.&nbsp;
+      In
+      other words, an ArrayList of String is not an ArrayList of Object
+      and
+      an ArrayList of Integer is not an ArrayList of Object.&nbsp; This
+      is
+      very counter-intuitive to our understanding of OO concept but
+      it is a very important aspect to remember in Generics. <br>
+      <br>
+      Gilad Bracha (JSR-14 specification lead) explained why this
+      assignment
+      is not allowed in Generics
+      in
+      his <a
+        href="http://java.sun.com/j2se/1.5/pdf/generics-tutorial.pdf">Java
+Programming
+        Language (Chapter 3: Generics and Subtyping)</a> [2].
+      Basically if it had been allowed, then there would be a
+      possibility of <span style="font-weight: bold;">ClassCastException</span>
+      being thrown
+      during runtime, which goes against the "type-safety" principle of
+      Generics.&nbsp;
+      Let's take a look an example code.<br>
+      <br>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><span style="color: rgb(0,
+                0, 0);">List&lt;String&gt; ls = new
+                ArrayList&lt;String&gt;(); //1<br>
+                List&lt;Object&gt; lo = ls; //2<br>
+                lo.add(new Object()); // 3<br>
+                String s = ls.get(0); // 4: attempts to assign an Object
+                to a String!
+                ClassCastException would have to be thrown!</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      Line 1 is certainly legal.&nbsp; But Line 2 is not legal in
+      Generics.&nbsp; If it has been allowed, then during runtime,
+      <span style="font-weight: bold;">ClassCastException </span>would
+      have
+      to be thrown in Line 4. [2]<br>
+      <hr style="width: 100%; height: 2px;"><br>
+      &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp; <a href="index.html#Exercise_2">return to top of the
+        exercise</a><br>
+      <br>
+      <br>
+    </div>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="2.2"></a>(2.2)
+Experiment
+      with sub-typing</h3>
+    <div style="margin-left: 40px;"><br>
+      1.&nbsp; For your own exercise, do some experimentation by
+      improvising
+      your own code
+      and see if
+      they behave as you expect.&nbsp; A sample code is provided in
+      Code-1.14
+      below.<br>
+      <br>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">&nbsp;&nbsp;&nbsp; &nbsp;
+              //<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Assignment of collection
+              with
+              parameter types<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              //&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; List&lt;Object&gt; lo5 =
+              new
+              ArrayList&lt;Integer&gt;();<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; List&lt;Object&gt; lo6 =
+              new
+              Vector&lt;Integer&gt;(5);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Collection&lt;Object&gt;
+              co1 = new
+              Vector&lt;String&gt;();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//
+              Right-click this line and select <span
+                style="font-weight: bold;">Fix
+                Imports</span> first&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp; &nbsp; &nbsp; Collection&lt;Object&gt; co2 = new
+              ArrayList&lt;Integer&gt; (10);&nbsp;&nbsp; <br>
+              &nbsp; &nbsp; &nbsp; Collection&lt;Integer&gt; ci1 = new
+              ArrayList&lt;Integer&gt; (10); </td>
+          </tr>
+        </tbody>
+      </table>
+      Code-1.14:&nbsp; Experimentation code<br>
+      <span style="color: rgb(51, 51, 255); font-weight: bold;"></span><br>
+      &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp; <a href="index.html#Exercise_2">return to top of the
+        exercise</a><br>
+    </div>
+    <div style="margin-left: 40px;"><br>
+      <br>
+    </div>
+    <h3 style="margin-left: 40px;" class="tutorial">Summary</h3>
+    <p style="margin-left: 40px;"><span style="color: rgb(0, 0, 0);">In
+        this exercise, you learned that </span>ArrayList&lt;String&gt;
+      is not an ArrayList&lt;Object&gt; and why that is the case.<br>
+      <br>
+    </p>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp; <a href="index.html#Tutorial_Exercises">return
+      to
+      the top</a><br>
+    <br>
+    <br>
+    <br>
+    <h2><a name="Exercise_3"></a>Exercise 3:Wild card<br>
+    </h2>
+    <br>
+    <div style="margin-left: 40px;">
+      In this exercise, you will learn the concept of wildcard and&nbsp;
+      learn
+      when to use them.&nbsp; The wildcard type is equivalent to saying
+      the
+      type is unknown, so Collection&lt;?&gt; is the same as saying a
+      Collection of unknown type. <br>
+    </div>
+    <p style="margin-left: 40px;"></p>
+    <ul>
+      <ul>
+      </ul>
+    </ul>
+    <br>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="3.1"></a>(3.1)
+Wild
+      card<br>
+    </h3>
+    <br>
+    <div style="margin-left: 40px;">
+      1. Open <span style="font-weight: bold;">GenericsWildcard</span>
+      NetBeans project.&nbsp; <br>
+      <ul>
+        <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+            style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>.
+          The <span style="font-weight: bold;">Open Project</span>
+          dialog box appears.</li>
+        <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase5_generics/samples</span>
+          directory.&nbsp; <br>
+        </li>
+        <li>Select <span style="font-weight: bold; color: rgb(255, 0,
+            0);">GenericsWildcard</span>.&nbsp; </li>
+        <li>Click <span style="font-weight: bold;">Open Project</span>.&nbsp;
+
+          <br>
+        </li>
+        <li>Observe that the <span style="font-weight: bold;">GenericsWildcard</span>
+          project node appears under <span style="font-weight: bold;">Projects
+          </span>tab
+          window.</li>
+      </ul>
+      2. Open <span style="font-weight: bold;">GenericsWildcard</span><span
+        style="font-weight: bold;">.java</span>.&nbsp; <br>
+      3. Observe that some lines have compile errors as shown
+      below.<br>
+      <br>
+      <img alt="" src="index_files/1_generics4.png" style="width: 858px;
+        height: 744px;"><br>
+      Figure-3.12: Compile error<br>
+      <br>
+      4. Understand why some lines have compile errors and while others
+      don't
+      by reading the following explanations.<br>
+      <div style="margin-left: 40px;"><br>
+        <span style="text-decoration: underline;">Line#15 (line that has
+          red x
+          box):</span> Again, the reason
+        the compilation error occurs on this line is because you are
+        passing
+        an instance of&nbsp;
+        ArrayList&lt;Integer&gt; into where Collection&lt;Object&gt; is
+        expected.&nbsp; By now, you should be well aware that
+        ArrayList&lt;Integer&gt; is not sub-type of
+        ArrayList&lt;Object&gt; and
+        ArrayList&lt;Integer&gt; is not a sub-type of
+        Collection&lt;Object&gt;.&nbsp; This is the same
+        compilation error you have experienced in exercise 2.&nbsp; The
+        compilation error you experienced in Figure-40 above has the
+        same
+        effect as the code in
+        Code-41 below.<br>
+        <br>
+        <table style="width: 100%; text-align: left;" border="1"
+          cellpadding="2" cellspacing="2">
+          <tbody>
+            <tr>
+              <td style="vertical-align: top;">Collection&lt;Object&gt;
+                c = new
+                ArrayList&lt;Integer&gt;
+                (10);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                &nbsp;&nbsp; //
+                Compilation error<br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+      </div>
+      <span style="color: rgb(51, 51, 255); font-weight: bold;"></span></div>
+    <div style="margin-left: 40px;"><a href="index.html#Exercise_3"></a><br>
+      5. One way to fix this is to change the printCollection(..) method
+      as
+      following.&nbsp; Note that type, Integer, is matching between the
+      caller and
+      callee.<br>
+      <br>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">import java.util.ArrayList;<br>
+              import java.util.Collection;<br>
+              <br>
+              public class GenericsWildcard {<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; static void printCollection(Collection<span
+                style="font-weight: bold;">&lt;Integer&gt;</span> c){<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (<span
+                style="font-weight: bold;">Object </span>o: c)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println(o);<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; public static void main(String[] args)
+              {<br>
+              <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              ArrayList&lt;Integer&gt; a =
+              new ArrayList&lt;Integer&gt;(10);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              printCollection(a);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      Code-3.14: Use compatible type<br>
+      <br>
+      6. Now suppose you want to pass not only a collection of Integer
+      but
+      also a collection of any type such as Long, Float, or<span
+        style="text-decoration: underline;"> </span>String etc.&nbsp;
+      How
+      would you change the printCollection()?&nbsp; You know you can't
+      use
+      Collection&lt;Object&gt; as you've seen in previous steps.&nbsp;
+      Here
+      is
+      where the unknown type &lt;?&gt; (or it is called wildcard) comes
+      into
+      the
+      picture.&nbsp; In order to accommodate a collection of any type,
+      you
+      can
+      use unknown type &lt;?&gt; as shown in Code-3.15 below. <br>
+      <br>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">import java.util.ArrayList;<br>
+              import java.util.Collection;<br>
+              <br>
+              public class GenericsWildcard {<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; static void printCollection(Collection<span
+                style="font-weight: bold;">&lt;?&gt;</span> c){<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (Object o:
+              c)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println(o);<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; public static void main(String[] args)
+              {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // TODO code
+              application
+              logic here<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              ArrayList&lt;Integer&gt; a =
+              new ArrayList&lt;Integer&gt;(10);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              printCollection(a);<br>
+              &nbsp;<span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ArrayList&lt;Long&gt;
+                l = new ArrayList&lt;Long&gt;(10); </span><br
+                style="font-weight: bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                printCollection(l);</span><br style="font-weight: bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ArrayList&lt;String&gt;
+                s = new ArrayList&lt;String&gt;(10);</span><br
+                style="font-weight: bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                printCollection(s);</span><br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      Code-3.15: Use wildcard<br>
+      <br>
+      &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp; <a href="index.html#Exercise_3">return to top of the
+        exercise</a><br>
+    </div>
+    <br>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="3.2"></a>(3.2)
+Bounded
+      wild card<br>
+    </h3>
+    <div style="margin-left: 40px;"><br>
+      Now we are ready to learn<span style="font-weight: bold;"> Bounded
+        Wildcards</span>. There may well be situations where we want to
+      be able
+      to define a type argument so that it is restricted to a particular
+      class or sub-type of that class.&nbsp;&nbsp; Let's say you want to
+      constrain the <span style="font-weight: bold;">printCollection()</span>
+      method to receive only the Number type
+      and its sub-types instead of any type.&nbsp; In other words, you
+      want
+      compiler to generate a compilation error when the
+      printCollection()
+      method
+      receive a Collection of String type while it receives a Collection
+      of
+      Number, Integer, or Long without compilation errors.&nbsp; This is
+      where you can use a
+      Collection of bounded Wildcards, <span style="font-weight: bold;">&lt;?
+extends
+        Number&gt;.</span><br>
+      <br>
+      1. Open <span style="font-weight: bold;">GenericsBoundedWildcard</span>
+      NetBeans project.&nbsp; <br>
+      <ul>
+        <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+            style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>.
+          The <span style="font-weight: bold;">Open Project</span>
+          dialog box appears.</li>
+        <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase5_generics/samples</span>
+          directory.&nbsp; <br>
+        </li>
+        <li>Select <span style="font-weight: bold; color: rgb(255, 0,
+            0);">GenericsBoundedWildcard</span>.&nbsp; </li>
+        <li>Click <span style="font-weight: bold;">Open Project</span>.&nbsp;
+
+          <br>
+        </li>
+        <li>Observe that the <span style="font-weight: bold;">GenericsBoundedWildcard</span>
+          project node appears under <span style="font-weight: bold;">Projects
+          </span>tab
+          window.</li>
+      </ul>
+      2. Open <span style="font-weight: bold;">GenericsBoundedWildcard</span><span
+        style="font-weight: bold;">.java</span>. <br>
+      3. Observe that some lines have compile errors as shown in
+      Figure-3.22
+      below.<br>
+      <br>
+      <img alt="" src="index_files/1_generics5.png" style="width: 858px;
+        height: 744px;"><br>
+      Figure-3.22: Compile error<br>
+      <br>
+      &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp; <a href="index.html#Exercise_3">return to top of the
+        exercise</a><br>
+    </div>
+    <div style="margin-left: 40px;">
+      <div style="margin-left: 40px;"><br>
+      </div>
+    </div>
+    <h3 style="margin-left: 40px;" class="tutorial">Summary</h3>
+    <div style="margin-left: 40px;"><br>
+      In this exercise, you have learned how to retrieve information on
+      a
+      ThreadGroup.<br>
+      <br>
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+      <a href="index.html#Tutorial_Exercises">return
+        to the top</a><br>
+      <br>
+      <br>
+    </div>
+    <br>
+    <h2><a name="Exercise_4"></a>Exercise 4: Define your own Generic
+      class<br>
+    </h2>
+    <div style="margin-left: 40px;"><br>
+      We
+      are all familiar with defining a class in Java as something like
+      “public class Foo extends Frame implements ActionListener”.&nbsp;
+      This
+      still remains the same under Generics, except that an optional set
+      of
+      type parameters have been added.&nbsp; Again the type
+      parameters are placed between &lt; and &gt;. A generic
+      class can have multiple type parameters and, as with type
+      arguments,
+      they are separated by commas.<br>
+      <br>
+      So far, you have worked with generic classes that are already
+      provided
+      by J2SE 5.0 SDK. In this exercise, you are going to create your
+      own
+      Generic class and then use the class in your code.
+    </div>
+    <div style="margin-left: 40px;">
+      <ol>
+        <li><a href="#4.1">Create a generic class, Pair&lt;F, S&gt;<br>
+          </a></li>
+        <li><a href="#4.2">Use wild card<br>
+          </a></li>
+        <li><a href="#4.3">Create another generic class,
+            PairExtended&lt;F,
+            S, T&gt;</a></li>
+        <li><a href="#4.4">Use another generic type as a parameter</a><br>
+        </li>
+      </ol>
+      <ol>
+      </ol>
+    </div>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="4.1"></a>(4.1)
+Create
+      a generic class, Pair&lt;F, S&gt;<br>
+    </h3>
+    <div style="margin-left: 40px;">
+      <br>
+      1. Create a new NetBeans project<br>
+      <ul>
+        <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+            style="font-weight: bold;">New Project (Ctrl+Shift+N)</span>.
+          The <span style="font-weight: bold;">New Project</span>
+          dialog box appears.</li>
+        <li>Under <span style="font-weight: bold;">Choose Project</span>
+          pane,
+          select <span style="font-weight: bold;">Java </span>under <span
+            style="font-weight: bold;">Categories </span>and <span
+            style="font-weight: bold;">Java Application</span> under <span
+            style="font-weight: bold;">Projects</span>. <br>
+        </li>
+        <li>Click <span style="font-weight: bold;">Next</span>.</li>
+      </ul>
+      <ul>
+        <li>Under <span style="font-weight: bold;">Name and Location</span>
+          pane, for the <span style="font-weight: bold;">Project Name</span>
+          field, type in <span style="font-weight: bold;"><span
+              style="color: rgb(51, 51, 255);">MyOwnGenericClass</span>
+          </span>as
+          project name.</li>
+        <li>For <span style="font-weight: bold;">Create Main Class</span>
+          field, type in <span style="font-weight: bold;"><span
+              style="color: rgb(51, 51, 255);">MyOwnGenericClass</span></span>.&nbsp;
+
+          <br>
+        </li>
+        <li>Click <span style="font-weight: bold;">Finish</span>.</li>
+      </ul>
+      <img alt="" src="index_files/1_generics11.png" style="width:
+        729px; height: 505px;"><br>
+      <ul>
+        <li>Observe that <span style="font-weight: bold;">MyOwnGenericClass
+          </span>project
+          appears and IDE generated <span style="font-weight: bold;">MyOwnGenericClass.java</span>
+          is displayed in the source editor window of NetBeans IDE.</li>
+      </ul>
+      2. Modify the IDE generated <span style="font-weight: bold;">MyOwnGenericClass.java
+      </span>as shown in Code-4.11 below.&nbsp; Note that the code
+      creates an
+      object instance of <span style="font-weight: bold;">Pair&lt;Number,
+        String&gt;</span>.&nbsp; You will define<span
+        style="font-weight: bold;">
+        Pair&lt;F, S&gt;</span> in the subsequent step.<br>
+      <br>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">public class
+              MyOwnGenericClass {<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; public static void main(String[] args)
+              {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create an
+              instance of
+              Pair &lt;F, S&gt; class.&nbsp; Let's call it p1.<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number n1 = new
+              Integer(5);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String s1 = new
+              String("Sun");<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                style="font-weight: bold;"> Pair&lt;Number,String&gt; p1
+                = new Pair&lt;Number,String&gt;(n1, s1);<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // The
+                following line of
+                code should
+                generate compile error<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+                Pair&lt;Number,String&gt;
+                p2 = new Pair&lt;Number,String&gt;(new Integer(4), new
+                Integer(3));<br>
+                <br>
+              </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("first of
+              p1 (right after creation) = " + p1.getFirst());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("second
+              of p2&nbsp; (right after creation) = " + p1.getSecond());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Set internal
+              variables of
+              p1.<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; p1.setFirst(new
+              Long(6L));<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              p1.setSecond(new
+              String("rises"));<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("first of
+              p1(after setting values) = " + p1.getFirst());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("second
+              of p1 (after setting values) = " + p1.getSecond());<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      Code-4.11: MyOwnGenericClass.java<br>
+      <br>
+      3. Write <span style="font-weight: bold;">Pair.java</span> as
+      shown in
+      Code-4.12 below.&nbsp; <br>
+      <br>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><span style="font-weight:
+                bold;"></span>public
+              class Pair<span style="font-weight: bold;">&lt;F, S&gt;</span>
+              {<br>
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp; F
+                first;&nbsp; S second;</span><br style="font-weight:
+                bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp; </span><br
+                style="font-weight: bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp; public
+                Pair(F
+                f, S s) {</span><br style="font-weight: bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+first
+                = f;&nbsp; second = s;</span><br style="font-weight:
+                bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp; }</span><br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; public void setFirst(<span
+                style="font-weight: bold;">F
+                f)</span>{<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; first = f;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; public F getFirst(){<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return first;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; public void setSecond(<span
+                style="font-weight: bold;">S s</span>){<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; second = s;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; public S getSecond(){<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return second;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      Code-4.12: Pair.java<br>
+      <br>
+      4. Build and run the project<br>
+      <ul>
+        <li>Right click <span style="font-weight: bold;">MyOwnGenericClass
+          </span>project
+          and select <span style="font-weight: bold;">Run</span>. </li>
+        <li>Observe the result in the <span style="font-weight: bold;">Output
+
+          </span>window.
+          (Figure-4.14 below)</li>
+      </ul>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">first of p1 (right after
+              creation) = 5<br>
+              second of p2&nbsp; (right after creation) = Sun<br>
+              first of p1(after setting values) = 6<br>
+              second of p1 (after setting values) = rises<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      Figure-4.14: Result of running MyOwnGenericClass application<span
+        style="color: rgb(51, 51, 255); font-weight: bold;"></span><br>
+      <br>
+      &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp; <a href="index.html#Exercise_4">return to top of the
+        exercise</a><br>
+      <br>
+    </div>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="4.2"></a>(4.2)
+Use
+      wild card<br>
+    </h3>
+    <div style="margin-left: 40px;">
+      <br>
+      1. Modify the <span style="font-weight: bold;">MyOwnGenericClass.java
+      </span>as shown in Code-4.21 below.&nbsp; The code fragments that
+      need
+      to be added are highlighted in bold and blue-colored font.<br>
+      <br>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">public class
+              MyOwnGenericClass {<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; public static void main(String[] args)
+              {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create an
+              instance of
+              Pair &lt;F, S&gt; class.&nbsp; Let's call it p1.<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number n1 = new
+              Integer(5);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String s1 = new
+              String("Sun");<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              Pair&lt;Number,String&gt; p1
+              = new Pair&lt;Number,String&gt;(n1, s1);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("first of
+              p1 (right after creation) = " + p1.getFirst());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("second
+              of p2&nbsp; (right after creation) = " + p1.getSecond());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Set internal
+              variables of
+              p1.<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; p1.setFirst(new
+              Long(6L));<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              p1.setSecond(new
+              String("rises"));<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("first of
+              p1(after setting values) = " + p1.getFirst());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("second
+              of p1 (after setting values) = " + p1.getSecond());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;<span style="font-weight: bold;">&nbsp;&nbsp;<span
+                  style="color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;
+//
+                  Create an instance of Pair &lt;F, S&gt; class using
+                  wildcard type
+                  arguments.</span></span><br style="font-weight: bold;
+                color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Number
+                n2 = new Integer(15);</span><br style="font-weight:
+                bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+String
+                s2 = new String("again");</span><br style="font-weight:
+                bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <span style="color: rgb(255, 0, 0);">Pair&lt;?, ?&gt; </span>p2
+=
+                new Pair&lt;Number, String&gt;(n2, s2);</span><br
+                style="font-weight: bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+System.out.println("first
+                of p2 = " + p2.getFirst());</span><br
+                style="font-weight: bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+System.out.println("second
+                of p2 = " + p2.getSecond());</span><br
+                style="font-weight: bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+              </span><br style="font-weight: bold; color: rgb(51, 51,
+                255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//
+                Create an instance of Pair &lt;F, S&gt; class using
+                wildcard with
+                bounded type arguments.</span><br style="font-weight:
+                bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Number
+                n3 = new Integer(25);</span><br style="font-weight:
+                bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+String
+                s3 = new String("and again!");</span><br
+                style="font-weight: bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <span style="color: rgb(255, 0, 0);">Pair&lt;? extends
+                  String,
+                  ?&gt;</span> p3 = new Pair&lt;String, String&gt;(s3,
+                s3);</span><br style="font-weight: bold; color: rgb(51,
+                51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+System.out.println("first
+                of p3 = " + p3.getFirst());</span><br
+                style="font-weight: bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+System.out.println("second
+                of p3 = " + p3.getSecond());</span><br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      Code-4.21: MyOwnGenericClass.java<br>
+      <br>
+      2. Build and run the project<br>
+      <ul>
+        <li>Right click <span style="font-weight: bold;">MyOwnGenericClass
+          </span>project
+          and select <span style="font-weight: bold;">Run</span>. </li>
+        <li>Observe the result in the <span style="font-weight: bold;">Output
+
+          </span>window.
+          (Figure-4.24 below)</li>
+      </ul>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">first of p1 (right after
+              creation) = 5<br>
+              second of p2&nbsp; (right after creation) = Sun<br>
+              first of p1(after setting values) = 6<br>
+              second of p1 (after setting values) = rises<br>
+              first of p2 = 15<br>
+              second of p2 = again<br>
+              first of p3 = and again!<br>
+              second of p3 = and again!<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      Figure-4.24: Result of running MyOwnGenericClass1 application<br>
+      <span style="color: rgb(51, 51, 255); font-weight: bold;"></span><br>
+      <br>
+      &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp; <a href="index.html#Exercise_4">return to top of the
+        exercise</a></div>
+    <div style="margin-left: 40px;"><br>
+    </div>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="4.3"></a>(4.3)
+Create
+      another Generic class, PairExtended&lt;F, S, T&gt;
+    </h3>
+    <div style="margin-left: 40px;"><br>
+      Now you are going to create a definition of another generic
+      class, PairExtended&lt;F, S, T&gt;, which extends Pair&lt;F, S&gt;
+      you
+      created in previous step. <br>
+      <br>
+      1. Write <span style="font-weight: bold;">PairExtended.java</span>
+      as
+      shown in Code-4.32 below.&nbsp;
+      Study the code by paying
+      special attention to the bold fonted parts.<br>
+      <br>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><span style="font-weight:
+                bold;">public
+                class PairExtended &lt;F, S, T&gt; extends Pair&lt;F,
+                S&gt;</span> {<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; T third;<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; /** Creates a new instance of
+              PairExtended */<br>
+              &nbsp;&nbsp;&nbsp; PairExtended(F f, S s, T t){<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; super(f, s);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; third = t;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; public T getThird(){<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return third;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      Code-4.32: PrintStringsThread.java<br>
+      <br>
+      2. Modify the <span style="font-weight: bold;">MyOwnGenericClass.java</span>
+      as shown in Code-4.33 below.&nbsp; The code fragments that need to
+      be
+      added are highlighted in bold and blue-colored font.<br>
+      <br>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><span style="font-weight:
+                bold;"></span>public
+              class MyOwnGenericClass {<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; public static void main(String[] args)
+              {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create an
+              instance of
+              Pair &lt;F, S&gt; class.&nbsp; Let's call it p1.<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number n1 = new
+              Integer(5);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String s1 = new
+              String("Sun");<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              Pair&lt;Number,String&gt; p1
+              = new Pair&lt;Number,String&gt;(n1, s1);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("first of
+              p1 (right after creation) = " + p1.getFirst());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("second
+              of p2&nbsp; (right after creation) = " + p1.getSecond());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Set internal
+              variables of
+              p1.<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; p1.setFirst(new
+              Long(6L));<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              p1.setSecond(new
+              String("rises"));<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("first of
+              p1(after setting values) = " + p1.getFirst());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("second
+              of p1 (after setting values) = " + p1.getSecond());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create an
+              instance of
+              Pair &lt;F, S&gt; class using wildcard type arguments.<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number n2 = new
+              Integer(15);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String s2 = new
+              String("again");<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pair&lt;?,
+              ?&gt; p2 = new
+              Pair&lt;Number, String&gt;(n2, s2);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("first of
+              p2 = " + p2.getFirst());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("second
+              of p2 = " + p2.getSecond());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create an
+              instance of
+              Pair &lt;F, S&gt; class using wildcard with bounded type
+              arguments.<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number n3 = new
+              Integer(25);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String s3 = new
+              String("and
+              again!");<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pair&lt;?
+              extends String,
+              ?&gt; p3 = new Pair&lt;String, String&gt;(s3, s3);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("first of
+              p3 = " + p3.getFirst());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("second
+              of p3 = " + p3.getSecond());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;<span style="font-weight: bold;">&nbsp;<span
+                  style="color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//
+                  Create an instance of PairExtended&lt;F, S, T&gt;
+                  class with
+                  concrete type arguments,</span></span><br
+                style="font-weight: bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//
+                &lt;Number, String, Integer&gt;</span><br
+                style="font-weight: bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Number
+                n4 = new Long(3000L);</span><br style="font-weight:
+                bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+String
+                s4 = new String("james");</span><br style="font-weight:
+                bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Integer
+                i4 = new Integer(7);</span><br style="font-weight: bold;
+                color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+PairExtended&lt;Number,
+                String, Integer&gt; pe4</span><br style="font-weight:
+                bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+=
+                new PairExtended&lt;Number, String, Integer&gt;(n4, s4,
+                i4);</span><br style="font-weight: bold; color: rgb(51,
+                51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+System.out.println("first
+                of PairExtended = " + pe4.getFirst());</span><br
+                style="font-weight: bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+System.out.println("second
+                of PairExtended = " + pe4.getSecond());</span><br
+                style="font-weight: bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+System.out.println("third
+                of PairExtended = " + pe4.getThird());</span><br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      Code-4.33: TwoStrings.java<br>
+      <br>
+      3. Build and run the project<br>
+      <ul>
+        <li>Right click <span style="font-weight: bold;">MyOwnGenericClass
+          </span>project
+          and select <span style="font-weight: bold;">Run</span>. </li>
+        <li>Observe the result in the <span style="font-weight: bold;">Output
+
+          </span>window.
+          (Figure-4.34 below)</li>
+      </ul>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">first of p1 (right after
+              creation) = 5<br>
+              second of p2&nbsp; (right after creation) = Sun<br>
+              first of p1(after setting values) = 6<br>
+              second of p1 (after setting values) = rises<br>
+              first of p2 = 15<br>
+              second of p2 = again<br>
+              first of p3 = and again!<br>
+              second of p3 = and again!<br>
+              first of PairExtended = 3000<br>
+              second of PairExtended = james<br>
+              third of PairExtended = 7<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      Figure-4.34: Result of running MyOwnGenericClass application<br>
+      <br>
+      &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp; <a href="index.html#Exercise_4">return to top of the
+        exercise</a><br>
+      <span style="font-weight: bold;"><br>
+        <br>
+      </span></div>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="4.4"></a>(4.4)
+Use
+      another generic type as a parameter<br>
+    </h3>
+    <div style="margin-left: 40px;"><span style="font-weight: bold;"><br>
+      </span>1. Modify <span style="font-weight: bold;">MyOwnGenericClass.java</span>
+      as shown in Code-4.41 below.&nbsp; The code fragments that need to
+      be
+      added are highlighted in bold and blue-colored font.&nbsp; <br>
+      <br>
+      This code
+      fragment contains lines of code in which invocation of
+      PairExtended&lt;F,S,T&gt; generic class with concrete type
+      arguments.&nbsp; This time, the third type argument is set to an
+      instance of another collection class, ArrayList&lt;Integer&gt;.<span
+        style="font-weight: bold;"> </span><br>
+      <br>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><span style="font-weight:
+                bold; color: rgb(51, 51, 255);">import
+                java.util.ArrayList;</span><br>
+              <br>
+              public class MyOwnGenericClass {<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; public static void main(String[] args)
+              {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create an
+              instance of
+              Pair &lt;F, S&gt; class.&nbsp; Let's call it p1.<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number n1 = new
+              Integer(5);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String s1 = new
+              String("Sun");<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              Pair&lt;Number,String&gt; p1
+              = new Pair&lt;Number,String&gt;(n1, s1);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("first of
+              p1 (right after creation) = " + p1.getFirst());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("second
+              of p2&nbsp; (right after creation) = " + p1.getSecond());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Set internal
+              variables of
+              p1.<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; p1.setFirst(new
+              Long(6L));<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              p1.setSecond(new
+              String("rises"));<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("first of
+              p1(after setting values) = " + p1.getFirst());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("second
+              of p1 (after setting values) = " + p1.getSecond());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create an
+              instance of
+              Pair &lt;F, S&gt; class using wildcard type arguments.<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number n2 = new
+              Integer(15);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String s2 = new
+              String("again");<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pair&lt;?,
+              ?&gt; p2 = new
+              Pair&lt;Number, String&gt;(n2, s2);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("first of
+              p2 = " + p2.getFirst());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("second
+              of p2 = " + p2.getSecond());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create an
+              instance of
+              Pair &lt;F, S&gt; class using wildcard with bounded type
+              arguments.<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number n3 = new
+              Integer(25);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String s3 = new
+              String("and
+              again!");<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pair&lt;?
+              extends String,
+              ?&gt; p3 = new Pair&lt;String, String&gt;(s3, s3);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("first of
+              p3 = " + p3.getFirst());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("second
+              of p3 = " + p3.getSecond());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create an
+              instance of
+              PairExtended&lt;F, S, T&gt; class with concrete type
+              arguments,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // &lt;Number,
+              String,
+              Integer&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number n4 = new
+              Long(3000L);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String s4 = new
+              String("james");<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Integer i4 =
+              new Integer(7);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              PairExtended&lt;Number,
+              String, Integer&gt; pe4<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+=
+              new PairExtended&lt;Number, String, Integer&gt;(n4, s4,
+              i4);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("first of
+              PairExtended = " + pe4.getFirst());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("second
+              of PairExtended = " + pe4.getSecond());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("third of
+              PairExtended = " + pe4.getThird());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              <span style="color: rgb(51, 51, 255);">&nbsp;</span><span
+                style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//
+                Create an instance of PairExtended&lt;F. S, T&gt; class
+                with</span><br style="font-weight: bold; color: rgb(51,
+                51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//
+                with ArrayList&lt;E&gt; as a third type argument.</span><br
+                style="font-weight: bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ArrayList&lt;Integer&gt;
+                ar4 = new
+                ArrayList&lt;Integer&gt;();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                //
+                Right-click this line and select Fix Imports first</span><br
+                style="font-weight: bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                ar4.add(6000);</span><br style="font-weight: bold;
+                color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                ar4.add(7000);</span><br style="font-weight: bold;
+                color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+PairExtended&lt;Number,
+                String, ArrayList&lt;Integer&gt;&gt; pe5</span><br
+                style="font-weight: bold; color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+=
+                new PairExtended&lt;Number, String,
+                ArrayList&lt;Integer&gt;&gt;(n4,
+                s4, ar4);</span><br style="font-weight: bold; color:
+                rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+System.out.println("first
+                of PairExtended with ArrayList = " +
+                pe5.getFirst());</span><br style="font-weight: bold;
+                color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+System.out.println("second
+                of PairExtended with ArrayList = " +
+                pe5.getSecond());</span><br style="font-weight: bold;
+                color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+System.out.println("third
+                of PairExtended with ArrayList = " +
+                pe5.getThird());</span><br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      Code-4.41: MyOwnGenericClass.java<br>
+      <br>
+      2. Build and run the project<br>
+      <ul>
+        <li>Right click <span style="font-weight: bold;">MyOwnGenericClass
+          </span>project
+          and select <span style="font-weight: bold;">Run</span>. </li>
+        <li>Observe the result in the <span style="font-weight: bold;">Output
+
+          </span>window.
+          (Figure-4.34 below)</li>
+      </ul>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">first of p1 (right after
+              creation) = 5<br>
+              second of p2&nbsp; (right after creation) = Sun<br>
+              first of p1(after setting values) = 6<br>
+              second of p1 (after setting values) = rises<br>
+              first of p2 = 15<br>
+              second of p2 = again<br>
+              first of p3 = and again!<br>
+              second of p3 = and again!<br>
+              first of PairExtended = 3000<br>
+              second of PairExtended = james<br>
+              third of PairExtended = 7<br>
+              first of PairExtended with ArrayList = 3000<br>
+              second of PairExtended with ArrayList = james<br>
+              third of PairExtended with ArrayList = [6000, 7000]<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      Code-4.42: Result<br>
+      <br>
+      <span style="color: rgb(51, 51, 255); font-weight: bold;">NetBeans
+        project</span>:
+      This exercise up to this point is provided as a
+      ready-to-open-and-run
+      NetBeans project as part of hands-on lab zip file. You can find it
+      as <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase5_generics/samples/</span><span
+        style="font-weight: bold;">MyOwnGenericClass</span><span
+        style="font-weight: bold;">.&nbsp;
+      </span>You can just open it and run it. <br>
+      <br>
+      <br>
+    </div>
+    <h3 style="margin-left: 40px;" class="tutorial">Summary</h3>
+    <div style="margin-left: 40px;"><br>
+      In this exercise, you learned how to
+      create your own generic class and how to use it.<br>
+      <br>
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+      <a href="index.html#Tutorial_Exercises">return
+        to the top</a><br>
+    </div>
+    <div style="margin-left: 40px;"><br>
+    </div>
+    <h2><a name="Exercise_5"></a>Exercise 5: Type erasure<br>
+    </h2>
+    <br>
+    <div style="margin-left: 40px;">Generics are implemented by the Java
+      compiler as a front-end conversion called <span
+        style="font-weight: bold;">type erasure</span>. You can (almost)
+      think
+      of
+      it as a source-to-source translation, whereby the generic version
+      of
+      your code is converted to the non-generic version.&nbsp;
+      Basically,
+      type erasure gets rid of (or erases) all generic type information.
+      All
+      the
+      type information between angle brackets is thrown out, so, for
+      example, a parameterized type like <span style="font-weight:
+        bold;">List&lt;String&gt;</span>
+      is converted into a raw type <span style="font-weight: bold;">List</span>
+      and similarly <span style="font-weight: bold;">List&lt;Date&gt;</span>
+      is converted into <span style="font-weight: bold;">List</span>.
+      All
+      remaining uses of type variables are replaced by the upper bound
+      of the
+      type variable (usually Object). And, whenever the resulting code
+      isn't
+      type-correct, a cast to the appropriate type is inserted.<br>
+      <pre style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);" wrap="">The two important things about type erasure are <br></pre>
+      <ul>
+        <li>Assuming all code is compiled under 5.0 and uses
+          parameterized
+          types you can guarantee that you won't get a
+          ClassCastException at
+          runtime</li>
+        <li>There is full backwards compatibility with existing compiled
+          code
+          that was generated with pre-J2SE 5.0 compilers</li>
+      </ul>
+    </div>
+    <div style="margin-left: 40px;"><br>
+    </div>
+    <br>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="5.1"></a>(5.1)
+Type
+      erasure example 1<br>
+    </h3>
+    <div style="margin-left: 40px;"><br>
+      1. Open <span style="font-weight: bold;">TypeErasure</span>
+      NetBeans project.&nbsp; <br>
+      <ul>
+        <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+            style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>.
+          The <span style="font-weight: bold;">Open Project</span>
+          dialog box appears.</li>
+        <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase5_generics/samples</span>
+          directory.&nbsp; <br>
+        </li>
+        <li>Select <span style="font-weight: bold; color: rgb(255, 0,
+            0);">TypeErasure</span>.&nbsp; </li>
+        <li>Click <span style="font-weight: bold;">Open Project</span>.&nbsp;
+
+          <br>
+        </li>
+        <li>Observe that the <span style="font-weight: bold;">TypeErasure</span>
+          project node appears under <span style="font-weight: bold;">Projects
+          </span>tab
+          window.</li>
+      </ul>
+      2. Build and run the project<br>
+      <ul>
+        <li>Right click <span style="font-weight: bold;">TypeErasure </span>project
+and
+          select <span style="font-weight: bold;">Run</span>. </li>
+        <li>Observe the result in the <span style="font-weight: bold;">Output
+
+          </span>window.
+          (Figure-5.15 below)</li>
+      </ul>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">Class of
+              ArrayList&lt;Integer&gt; = class java.util.ArrayList<br>
+              Class of List&lt;Integer&gt; = class java.util.ArrayList<br>
+              Class of ArrayList&lt;String&gt; = class
+              java.util.ArrayList<br>
+              Class of ArrayList&nbsp; = class java.util.ArrayList<br>
+              Do ArrayList&lt;Integer&gt; and ArrayList&lt;String&gt;
+              share same
+              class? true<br>
+              Do ArrayList&lt;Integer&gt; and ArrayList (raw type) share
+              same class?
+              true<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      Figure-5.15: Result of running TypeErasure
+      application<br>
+      <br>
+      3. Study the code,<br>
+      <br>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">import java.util.ArrayList;<br>
+              import java.util.Collection;<br>
+              import java.util.List;<br>
+              <br>
+              <br>
+              public class TypeErasure {<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; static void
+              printCollection(Collection&lt;? extends
+              Number&gt; c){<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (Object o:
+              c)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println(o);<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; public static void main(String[] args)
+              {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Display
+              class information
+              of the various ArrayList instances<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              ArrayList&lt;Integer&gt; ai
+              = new ArrayList&lt;Integer&gt;();<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("Class of
+              ArrayList&lt;Integer&gt; = " + ai.getClass());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              List&lt;Integer&gt; li = new
+              ArrayList&lt;Integer&gt;();<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("Class of
+              List&lt;Integer&gt; = " + li.getClass());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              ArrayList&lt;String&gt; as =
+              new ArrayList&lt;String&gt;();<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("Class of
+              ArrayList&lt;String&gt; = " + as.getClass());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ArrayList ar =
+              new
+              ArrayList();<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              System.out.println("Class of
+              ArrayList&nbsp; = " + ar.getClass());<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                style="font-weight: bold;">&nbsp;
+                // Check if two ArrayList instances with different type
+                parameters</span><br style="font-weight: bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//
+                (one with Integer and the other with String) share the
+                same class
+                (bytecode).</span><br style="font-weight: bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                //</span><br style="font-weight: bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Boolean
+                b1 = (ai.getClass() == as.getClass());</span><br
+                style="font-weight: bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+System.out.println("Do
+                ArrayList&lt;Integer&gt; and
+                ArrayList&lt;String&gt; share same class? " + b1);</span><br
+                style="font-weight: bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+              </span><br style="font-weight: bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//
+                Check if two ArrayList instances with different type
+                parameters</span><br style="font-weight: bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//
+                (one with Integer and the other with raw type) share the
+                same class
+                (bytecode).</span><br style="font-weight: bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                //</span><br style="font-weight: bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Boolean
+                b2 = (ai.getClass() == ar.getClass());</span><br
+                style="font-weight: bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+System.out.println("Do
+                ArrayList&lt;Integer&gt; and ArrayList (raw
+                type) share same class? " + b2);</span><br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <span style="font-weight: bold;"></span><br>
+      &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp; <a href="index.html#Exercise_5">return to top of the
+        exercise</a><br>
+    </div>
+    <br>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="5.2"></a>(5.2)
+Type
+      erasure example 2<br>
+    </h3>
+    <br>
+    <div style="margin-left: 40px;">1. Open <span style="font-weight:
+        bold;">TypeErasure2</span>
+      NetBeans project.&nbsp; <br>
+    </div>
+    <ul style="margin-left: 40px;">
+      <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+          style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>.
+        The <span style="font-weight: bold;">Open Project</span> dialog
+        box appears.</li>
+      <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase5_generics/samples</span>
+        directory.&nbsp; <br>
+      </li>
+      <li>Select <span style="font-weight: bold; color: rgb(255, 0,
+          0);">TypeErasure2</span>.&nbsp; </li>
+      <li>Click <span style="font-weight: bold;">Open Project</span>.&nbsp;
+
+        <br>
+      </li>
+      <li>Observe that the <span style="font-weight: bold;">TypeErasure2</span>
+        project node appears under <span style="font-weight: bold;">Projects
+        </span>tab
+        window.</li>
+    </ul>
+    <div style="margin-left: 40px;">2. Build and run the project<br>
+    </div>
+    <ul style="margin-left: 40px;">
+      <li>Right click <span style="font-weight: bold;">TypeErasure2 </span>project
+and
+        select <span style="font-weight: bold;">Run</span>. </li>
+      <li>Observe the result in the <span style="font-weight: bold;">Output
+
+        </span>window</li>
+    </ul>
+    <div style="margin-left: 40px;">
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">Class of
+              List&lt;Number&gt;&nbsp; =class java.util.Vector<br>
+              Interface = interface java.util.List<br>
+              Interface = interface java.util.RandomAccess<br>
+              Interface = interface java.lang.Cloneable<br>
+              Interface = interface java.io.Serializable<br>
+              Superclass = class java.util.AbstractList</td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+    </div>
+    <div style="margin-left: 40px;">3. Study the code.<br>
+      <br>
+    </div>
+    <table style="width: 100%; text-align: left; margin-left: 40px;"
+      border="1" cellpadding="2" cellspacing="2">
+      <tbody>
+        <tr>
+          <td style="vertical-align: top;">import java.util.List;<br>
+            import java.util.Vector;<br>
+            <br>
+            public class TypeErasure2 {<br>
+            &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; public static void main(String[] args) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Get class and
+            type
+            information of a collection class<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            List&lt;Number&gt; ln5 = new
+            Vector&lt;Number&gt;(20);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Class c3&nbsp; =
+            ln5.getClass();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//
+            Right-click this line and select Fix Imports first<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            System.out.println("Class of
+            List&lt;Number&gt;&nbsp; =" + c3);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Class [] c4 =
+            c3.getInterfaces();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//
+            Right-click this line and select Fix Imports first<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (Class c:
+            c4){<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+System.out.println("Interface
+            = " + c);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Class c5 =
+            c3.getSuperclass();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            System.out.println("Superclass = " + c5);<br>
+            &nbsp;&nbsp;&nbsp; }<br>
+            &nbsp;&nbsp;&nbsp; <br>
+            }<br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-left: 40px;">Code-5.21: TypeErasure2.java<br>
+    </div>
+    <div style="margin-left: 40px;"><br>
+    </div>
+    <div style="margin-left: 40px;"><br>
+      &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp; <a href="index.html#Exercise_5">return to top of the
+        exercise</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="index.html#Tutorial_Exercises">return
+        to the top</a><br>
+    </div>
+    <br>
+    <br>
+    <br>
+    <h2><a name="Exercise_6"></a>Exercise 6: Interoperating with
+      non-generic code<br>
+    </h2>
+    <br>
+    <div style="margin-left: 40px;">In this exercise, you will learn how
+      generic and non-generic codes are used together. You will also
+      learn
+      about unchecked exception.<br>
+      <br>
+    </div>
+    <br>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="6.1"></a>(6.1)
+Schedule
+      one-time task<br>
+    </h3>
+    <div style="margin-left: 40px;"><br>
+    </div>
+    <div style="margin-left: 40px;">1. Open <span style="font-weight:
+        bold;"><span style="color: rgb(51, 51, 255);">GenericsInteroperability
+        </span></span>NetBeans project.&nbsp; <br>
+    </div>
+    <ul style="margin-left: 40px;">
+      <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+          style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>.
+        The <span style="font-weight: bold;">Open Project</span> dialog
+        box appears.</li>
+      <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase5_generics/samples</span>
+        directory.&nbsp; <br>
+      </li>
+      <li>Select <span style="font-weight: bold;"><span style="color:
+            rgb(51, 51, 255);">GenericsInteroperability</span></span></li>
+      <li>Click <span style="font-weight: bold;">Open Project</span>.&nbsp;
+
+        <br>
+      </li>
+      <li>Observe that the <span style="font-weight: bold;"><span
+            style="color: rgb(51, 51, 255);">GenericsInteroperability </span></span>project
+node
+        appears under <span style="font-weight: bold;">Projects </span>tab
+        window.<br>
+      </li>
+    </ul>
+    <div style="margin-left: 40px;">2. Compile the file.<br>
+      <ul>
+        <li>Right click <span style="font-weight: bold;">GenericsInteroperability.java</span>
+          and select <span style="font-weight: bold;">Compile file</span>.
+          (Or
+          Right click <span style="font-weight: bold;">GenericsInteroperability
+          </span>project
+          and select <span style="font-weight: bold;">Build Project.)</span></li>
+        <li>Observe the waring message below.&nbsp; Note that the
+          compiler
+          warns unchecked or unsafe operation.<br>
+        </li>
+      </ul>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">Compiling 1 source file to
+C:\javase5_generics\samples\GenericsInteroperability\build\classes<br>
+              <span style="color: rgb(255, 0, 0);">Note:
+                C:\javase5_generics\samples\GenericsInteroperability\src\GenericsInteroperability.java
+uses
+                unchecked or unsafe operations.</span><br style="color:
+                rgb(255, 0, 0);">
+              <span style="color: rgb(255, 0, 0);">Note: Recompile with
+                -Xlint:unchecked for details.</span><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      Figure-6.12: Warning message<br>
+      <br>
+      3. Run the project<br>
+      <ul>
+        <li>Right click <span style="font-weight: bold;">GenericsInteroperability
+
+          </span>project
+          and select <span style="font-weight: bold;">Run</span>. </li>
+        <li>Observe the runtime <span style="font-weight: bold;">ClassCastException.
+
+          </span>(Figure-6.13 below)&nbsp; This is highly
+          undesirable. (This is not type-safe.)&nbsp; Because of this
+          reason, it
+          is highly recommended that you do not invoke non-Generic code
+          whenever
+          possible.</li>
+      </ul>
+      <img alt="" src="index_files/1_generics6.png" style="width: 868px;
+        height: 717px;"><br>
+      Figure-6.13: Result of running UnGenericsInteroperability
+      application<br>
+      <span style="color: rgb(51, 51, 255); font-weight: bold;"></span><br>
+      4. Modify the&nbsp; <span style="font-weight: bold;">GenericsInteroperability.java
+      </span>as shown in Code-6.14 below.&nbsp; The code fragment that
+      needs
+      to be removed (or commented out) is highlighted in bold and
+      red-colored
+      font while the code fragment that needs to be added is highlighted
+      in
+      bold and blue-colored font.<br>
+      <br>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">import
+              java.util.LinkedList;<br>
+              import java.util.List;<br>
+              <br>
+              public class GenericsInteroperability {<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; public static void main(String[] args)
+              {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              List&lt;String&gt; ls = new
+              LinkedList&lt;String&gt;();<br>
+              &nbsp;<span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                  style="color: rgb(255, 0, 0);">&nbsp; //List lraw =
+                  ls;</span></span><br style="font-weight: bold; color:
+                rgb(255, 0, 0);">
+              <span style="font-weight: bold; color: rgb(255, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//lraw.add(new
+                Integer(4));</span><br style="font-weight: bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                  style="color: rgb(51, 51, 255);"> List&lt;String&gt;
+                  ls2 = ls;</span></span><br style="font-weight: bold;
+                color: rgb(51, 51, 255);">
+              <span style="font-weight: bold; color: rgb(51, 51, 255);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ls2.add(new
+Integer(4));&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                // Compile error</span><br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String s =
+              ls.iterator().next();<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      Code-6.14: GenericsInteroperability.java<br>
+      <br>
+      5. You should experience the compile error, which means you were
+      able
+      to
+      detect type mismatch problem during the compile time rather than
+      during
+      runtime.&nbsp; (Figure-6.15 below)<br>
+      <br>
+      <img alt="" src="index_files/1_generics7.png" style="width: 868px;
+        height: 672px;"><br>
+      Figure-6.15: Compile time type mismatch detection<br>
+      <br>
+      <span style="color: rgb(51, 51, 255); font-weight: bold;">NetBeans
+        project</span>:
+      This exercise up to this point is provided as a
+      ready-to-open-and-run
+      NetBeans project as part of hands-on lab zip file. You can find it
+      as&nbsp;<span style="font-weight: bold;"></span> <span
+        style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase5_generics/samples/</span><span
+        style="font-weight: bold;">GenericsInteroperabilityCompileError</span><span
+        style="font-weight: bold;">.&nbsp;
+      </span><br>
+      <br>
+      <br>
+      &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp; <a href="index.html#Exercise_5">return to top of the
+        exercise</a><br>
+    </div>
+    <br>
+    <h3 style="margin-left: 40px;" class="tutorial">Summary</h3>
+    <div style="margin-left: 40px;"><br>
+      In this exercise, you learned how generic and non-generic code are
+      used
+      together.&nbsp; You alo learned when unchecked exception would
+      occur.<br>
+      <br>
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+      <a href="index.html#Tutorial_Exercises">return
+        to the top</a><br>
+    </div>
+    <br>
+    <h2><a name="Homework"></a>Homework
+      exercise<br>
+    </h2>
+    <br>
+    <div style="margin-left: 40px;">1. The homework is to modify<span
+        style="font-weight: bold;"></span> <span style="font-weight:
+        bold;"><span style="color: rgb(51, 51, 255);">MyOwnGenericClass</span></span>
+      NetBeans project you've done in <a
+        href="../javase5language/index.html#Exercise_5">Exercise 5 above</a>
+      as following.&nbsp;
+      (You might want to create a new project by copying
+      the&nbsp;<span style="font-weight: bold;"></span><span
+        style="font-weight: bold;"><span style="color: rgb(51, 51,
+          255);">MyOwnGenericClass</span></span>
+      project.&nbsp; You can name the homework project in any way you
+      want
+      but here I am going to call it <span style="font-weight: bold;"><span
+          style="color: rgb(51, 51, 255);">MyMyOwnGenericClass</span></span>.)
+      <br>
+      <ul>
+        <li>Create <span style="font-weight: bold;">PairExtendedAgain(F,
+            S,
+            T, F1)</span> generic class by extending <span
+            style="font-weight: bold;">PairExtended(F, S, T)</span></li>
+        <li>Modify <span style="font-weight: bold;">MyMyOwnGenericClass.java</span>
+          to invoke <span style="font-weight: bold;">PairExtendedAgain(F,
+            S, T,
+            F1)</span>
+          class with concrete type arguments <span style="font-weight:
+            bold;">&lt;Integer,
+            Long, Object,
+            Boolean&gt;</span></li>
+        <li>Build and run the project<br>
+        </li>
+      </ul>
+    </div>
+    <br>
+    <div style="margin-left: 40px;">2. Send the following files to <a
+        href="mailto:javase_adv_homework@javapassion.com">javase_adv_homework@javapassion.com</a>
+      with <span style="font-weight: bold;">Subject </span>as <span
+        style="font-weight: bold;">javase5_generics.<br>
+      </span></div>
+    <ul style="margin-left: 40px;">
+      <li>Zip file of the<span style="font-weight: bold;">
+          MyMyOwnGenericClass</span>
+        NetBeans project.&nbsp; (Someone else
+        should be able to open and run it as a NetBeans project.)&nbsp;
+        You can
+        use your favorite zip utility or you can use "jar" utility that
+        comes
+        with JDK as following.<br>
+      </li>
+      <ul>
+        <li><span style="font-weight: bold;">cd &lt;parent directory
+            that
+            contains MyMyOwnGenericClass
+            directory&gt;</span>
+          (assuming you named your project as <span style="font-weight:
+            bold;">MyMyOwnGenericClass</span>)<br>
+        </li>
+        <li><span style="font-weight: bold;">jar cvf
+            MyMyOwnGenericClass.zip MyMyOwnGenericClass</span>
+          (<span style="font-weight: bold;">MyMyOwnGenericClass </span>should
+contain
+          <span style="font-weight: bold;">nbproject </span>directory)</li>
+      </ul>
+      <li>Captured output screen&nbsp;<span style="font-weight: bold;">
+        </span>-
+        name it as <span style="font-weight: bold;">javase5_generics.gif</span>
+        or<span style="font-weight: bold;"> javase5_generics</span><span
+          style="font-weight: bold;">.jpg</span> (or
+        javase5_generics.&lt;whatever
+        graphics format&gt;)</li>
+      <ul>
+        <li>Any screen capture that shows that your program is working
+          is
+          good enough.&nbsp; No cosmetic polishment is required.</li>
+      </ul>
+      <li>If you decide to use
+        different IDE other than NetBeans, the zip
+        file should contain all the files that are needed for rebuilding
+        the
+        project.</li>
+    </ul>
+    <br>
+    <br>
+    <div style="margin-left: 40px;"><br>
+    </div>
+    <p> </p>
+    <!-- ======================================================================================== -->
+  </body>
+</html>
