@@ -1,0 +1,1 @@
+                ALTER table siifpppprefichaobserv add idperfil int;
